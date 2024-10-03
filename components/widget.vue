@@ -16,6 +16,10 @@ const textElement = ref(null);
 const textContent = "Xin chào! Tôi có thể giúp gì cho bạn không?";
 const typingSpeed = 50;
 
+import useInactivity from '~/composables/useInactiveTimeOut';
+
+const { isInactive } = useInactivity(10000);
+
 onMounted(()=>{
   userIDStore.getExistedID()
 })
@@ -110,6 +114,7 @@ onUnmounted(() => {
     <div
       class="bg-white z-40 fixed bottom-0 right-0 m-[15px] h-[90vh] sm:w-[50vw] lg:w-[30vw] md:w-[50vw] widget-container rounded-lg grid grid-rows-12 overflow-hidden shadow-lg"
       v-show="modalStore.showWidget && userIDStore.userID !== null"
+      v-if="!isInactive"
     >
       <Header class="row-span-2" />
       <ChatScreen class="row-span-8 p-4" />

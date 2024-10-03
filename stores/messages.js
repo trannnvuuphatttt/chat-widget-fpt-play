@@ -38,10 +38,7 @@ export const useMessage = defineStore("message", {
         this.responseData = response.data;
         //this.messagesArray.push(response.data.data);
         console.log(response.data.data.answer.text);
-        this.newMessageArray.push({
-          userMessage: inputData,
-          botMessage: response.data.data.answer.text,
-        });
+        this.messagesArray.push(this.responseData);
         console.log(this.newMessageArray);
         this.userInput = "";
       } catch (error) {

@@ -5,13 +5,9 @@
       class="bg-gray-200 col-span-9 rounded-lg m-2 text-md pl-2 focus:outline-none"
       placeholder="Nhập tin nhắn"
       v-model="messageStore.userInput"
+      @keyup.enter="handleSendMessage"
     />
-    <button
-      class="col-span-1 pr-1 cursor-pointer"
-      @click="
-        messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
-      "
-    >
+    <button class="col-span-1 pr-1 cursor-pointer" @click="handleSendMessage">
       <i
         v-if="resultMessage === 'Input is empty!'"
         class="fa-solid fa-paper-plane text-gray-400"
@@ -50,24 +46,20 @@
 import { useModalStore } from '~/stores/modal';
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "../../stores/userID";
+import {useScroll} from "../../stores/scroll"
 
 
 const modalStore = useModalStore();
 const messageStore = useMessage()
 const userIDStore = useUserIDStore();
+const scrollStore = useScroll()
 
-
- const resultMessage = ref('Input is empty!');
+const handleSendMessage = () => {
+  messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
+  scrollStore.triggerScroll();
+}
+const resultMessage = ref('Input is empty!');
 console.log(messageStore.userInput)
-
-watch(messageStore.userInput, (newValue) => {
-  console.log(messageStore.userInput)
-  if (newValue.trim() === '') {
-    resultMessage.value = 'Input is empty!';
-  } else {
-    resultMessage.value = 'Input has a value.';
-  }
-});
 </script>
 
 <style></style>

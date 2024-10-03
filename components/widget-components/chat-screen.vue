@@ -1,5 +1,9 @@
 <template>
-  <div id="chat-screen" class="bg-gray-200 overflow-y-scroll overflow-x-hidden">
+  <div
+    id="chat-screen"
+    class="bg-gray-200 overflow-y-scroll overflow-x-hidden"
+    ref="chatContainer"
+  >
     <div v-for="(message, key, index) in messageStore.messagesArray" :key="key">
       <userChatBubble :message="message.query" v-if="message.query !== ''" />
       <botChatBubble
@@ -8,20 +12,6 @@
         :chatID="message.message_uuid"
         :userID="UserIDStore.userID"
         :flag="isLastElement(key)"
-      />
-    </div>
-    <div
-      v-for="(message, key, index) in messageStore.newMessageArray"
-      :key="key"
-    >
-      <userChatBubble
-        :message="message.userMessage"
-        v-if="message.userMessage !== ''"
-      />
-      <botChatBubble
-        :message="message.botMessage"
-        :timeStamp="timeAgo(message.timestamp)"
-        v-if="message.botMessage !== ''"
       />
     </div>
   </div>
@@ -33,6 +23,7 @@ import userChatBubble from "./chat-bubble-components/user-chat-bubble.vue";
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "~/stores/userID";
 import { useFormatDateTime } from "~/composables/useFormatDateTime";
+import { useScroll } from "~/stores/scroll";
 
 const UserIDStore = useUserIDStore()
 
@@ -43,6 +34,19 @@ onMounted(() => {
 
 })
 
+const scrollStore = useScroll();
+const chatContainer = ref(null);
+
+const scrollToBottom = () => {
+  chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
+};
+
+watch(() => scrollStore.shouldScroll, (newVal) => {
+  if (newVal) {
+    scrollToBottom();
+    scrollStore.resetScroll();
+  }
+});
 
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.messagesArray);
