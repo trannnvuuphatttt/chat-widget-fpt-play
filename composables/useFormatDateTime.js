@@ -1,24 +1,35 @@
+import { onMounted, onUnmounted, ref } from "vue";
+
 export const useFormatDateTime = () => {
+  const currentTime = ref(Date.now() / 1000);
+
+  const updateCurrentTime = () => {
+    currentTime.value = Date.now() / 1000;
+  };
+
+  onMounted(() => {
+    const interval = setInterval(updateCurrentTime, 1000);
+
+    onUnmounted(() => {
+      clearInterval(interval);
+    });
+  });
+
   function timeAgo(timestamp) {
-    const now = new Date().getTime();
-    const messageTime = parseFloat(timestamp) * 1000;
-    const difference = now - messageTime;
+    const messageTime = parseFloat(timestamp);
+    const differenceInSeconds = currentTime.value - messageTime;
 
-    const seconds = Math.floor(difference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      return `${days} ngày trước`;
-    } else if (hours > 0) {
-      return `${hours} giờ trước`;
-    } else if (minutes > 0) {
-      return `${minutes} phút trước`;
+    if (differenceInSeconds < 60) {
+      return "Vừa xong";
+    } else if (differenceInSeconds < 3600) {
+      return `${Math.floor(differenceInSeconds / 60)} phút trước`;
+    } else if (differenceInSeconds < 86400) {
+      return `${Math.floor(differenceInSeconds / 3600)} giờ trước`;
     } else {
-      return `${seconds} giây trước`;
+      return `${Math.floor(differenceInSeconds / 86400)} ngày trước`;
     }
   }
+
   return {
     timeAgo,
   };

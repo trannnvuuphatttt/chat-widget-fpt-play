@@ -18,7 +18,7 @@ const typingSpeed = 50;
 
 import useInactivity from '~/composables/useInactiveTimeOut';
 
-const { isInactive } = useInactivity(10000);
+const { isInactive } = useInactivity(30000);
 
 onMounted(()=>{
   userIDStore.getExistedID()

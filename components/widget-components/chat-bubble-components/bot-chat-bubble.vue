@@ -1,11 +1,12 @@
 <template class="relative">
-  <span class="mt-2">
+  <span class="mt-2" v-if="props.isAttachment">
     <img
       src="assets/images/avatar.png"
       class="h-6 w-6 inline-block mb-2 mr-1"
     />
     <p class="text-md inline-block mb-2 ml-1">Chatbot</p>
   </span>
+
   <div
     class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2"
   >
@@ -16,7 +17,7 @@
     <p class="text-[12px] mt-1 mb-2 text-gray-400">
       {{ props.timeStamp }}
     </p>
-    <div v-if="props.flag">
+    <div v-if="props.flag && modalStore.isChatting">
       <button class="mr-1 cursor-pointer" @click="Like()">
         <i v-if="!reviewStateLike" class="fa-regular fa-thumbs-up text-md"></i>
         <i
@@ -68,13 +69,16 @@
         >
           Đóng
         </button>
-        <!-- <button
+
+        <button
           class="p-4 border-2 border-gray-300 text-gray-400 bg-gray-300 w-[120px] rounded-md"
+          v-if="inputValue === ''"
         >
           Gửi yêu cầu
-        </button> -->
+        </button>
         <button
           class="p-4 border-2 border-orange-500 text-white bg-orange-500 w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
+          v-if="inputValue !== ''"
           @click="
             messageStore.messageEvaluate(
               false,
@@ -100,6 +104,8 @@ import RecommendList from "./recommend-list.vue";
 import { useModalStore } from "~/stores/modal";
 import {useSnackBarStore} from "~/stores/snackbar"
 import { useMessage } from "~/stores/messages";
+import { useFormatDateTime } from "../../../composables/useFormatDateTime";
+
 
 
 const props = defineProps({
@@ -107,11 +113,12 @@ const props = defineProps({
   timeStamp:String,
   chatID:String,
   userID:String,
-  flag: Boolean
+  flag: Boolean,
+  isAttachment:Boolean
 });
-console.log("props:",props.flag)
 
-//const {useFormatDateTime} = useFormatDateTime()
+
+const {timeAgo} = useFormatDateTime()
 const modalStore = useModalStore();
 const snackBarStore = useSnackBarStore();
 const messageStore = useMessage();
@@ -130,17 +137,13 @@ function Like() {
   }
   messageStore.messageEvaluate(true, "", props.chatID,props.userID )
 
-
-
 }
 function Dislike() {
-  reviewStateLike.value = false;
   reviewStateDislike.value = !reviewStateDislike.value;
-  if(!reviewStateLike.value){
-
+  reviewStateLike.value = false;
+  if(!reviewStateDislike.value){
     modalStore.toggleModal();
   }
-
 
 }
 </script>

@@ -9,11 +9,11 @@
     />
     <button class="col-span-1 pr-1 cursor-pointer" @click="handleSendMessage">
       <i
-        v-if="resultMessage === 'Input is empty!'"
+        v-if="messageStore.userInput === ''"
         class="fa-solid fa-paper-plane text-gray-400"
       ></i>
       <i
-        v-if="resultMessage === 'Input has a value.'"
+        v-if="messageStore.userInput !== ''"
         class="fa-solid fa-paper-plane text-orange-500"
       ></i>
     </button>
@@ -55,9 +55,12 @@ const userIDStore = useUserIDStore();
 const scrollStore = useScroll()
 
 const handleSendMessage = () => {
-  messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
-  scrollStore.triggerScroll();
-}
+  if(messageStore.userInput !== ''){
+
+    messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
+    scrollStore.triggerScroll();
+  }
+  }
 const resultMessage = ref('Input is empty!');
 console.log(messageStore.userInput)
 </script>

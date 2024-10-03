@@ -1,7 +1,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { useModalStore } from "~/stores/modal";
 
-export default function useInactivity(timeoutDuration = 10000) {
+export default function useInactivity(timeoutDuration = 30000) {
   const modalStore = useModalStore();
   const isInactive = ref(false);
   let timeoutId = null;
@@ -9,7 +9,6 @@ export default function useInactivity(timeoutDuration = 10000) {
   const resetTimeout = () => {
     clearTimeout(timeoutId);
     isInactive.value = false;
-
     timeoutId = setTimeout(() => {
       isInactive.value = true;
       onUserInactive();
