@@ -11,41 +11,40 @@ onMounted(() => {
     container.addEventListener("mousedown", (e) => {
       isDown = true;
       container.classList.add("active");
-      startX = e.clientX;  // Lấy vị trí chính xác của chuột
+      startX = e.clientX;
       scrollLeft = container.scrollLeft;
       container.style.cursor = "grabbing";
-      console.log('mousedown', startX);  // Kiểm tra sự kiện mousedown
+
     });
 
     container.addEventListener("mouseleave", () => {
       isDown = false;
       container.classList.remove("active");
       container.style.cursor = "grab";
-      console.log('mouseleave');  // Kiểm tra sự kiện mouseleave
+
     });
 
     container.addEventListener("mouseup", () => {
       isDown = false;
       container.classList.remove("active");
       container.style.cursor = "grab";
-      console.log('mouseup');  // Kiểm tra sự kiện mouseup
+
     });
 
     container.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
-      const x = e.clientX;  // Tính toán lại vị trí con trỏ
-      const walk = (x - startX) * 3;  // Tăng giá trị này nếu muốn kéo nhanh hơn
+      const x = e.clientX;
+      const walk = (x - startX) * 3;
       container.scrollLeft = scrollLeft - walk;
-      console.log('mousemove', x, walk);  // Kiểm tra sự kiện mousemove
+
     });
   }
 });
 </script>
 
 <template>
-  <div class="flex movieList cursor-grab overflow-x-scroll">
-    <!-- Bổ sung thêm nhiều nội dung để kiểm tra việc cuộn -->
+  <div class="flex movieList cursor-grab overflow-x-scroll mb-2">
     <div
       class="inline-block bg-white shadow-md rounded-lg m-1 flex-shrink-0 select-none"
     >
@@ -64,7 +63,7 @@ onMounted(() => {
         <span>Nhật Bản</span>
       </div>
     </div>
-    <!-- Lặp lại nhiều lần để tạo nội dung -->
+
     <div
       class="inline-block bg-white shadow-md rounded-lg m-1 flex-shrink-0 select-none"
     >

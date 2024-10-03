@@ -1,13 +1,13 @@
 <template>
   <div id="chat-header " class="grid grid-cols-5 mt-4 shadow-md">
-    <div id="avatar" class="relative m-2 col-span-1">
+    <div id="avatar" class="relative m-2 col-span-1 h-fit w-fit">
       <img
         src="assets/images/avatar.png"
         placeholder="avatar"
         class="w-12 h-12"
       />
       <div
-        class="w-4 h-4 rounded-full bg-green-400 absolute bottom-2 right-2"
+        class="w-4 h-4 rounded-full bg-green-400 absolute bottom-0 right-0"
       ></div>
     </div>
     <div id="status" class="col-span-3 p-2">

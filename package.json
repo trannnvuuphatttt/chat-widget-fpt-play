@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --hostname my.fptplay.net --port 88",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -14,16 +14,26 @@
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/fontawesome": "^1.1.2",
+    "@nuxtjs/proxy": "^2.1.0",
+    "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.4",
+    "animate.css": "^4.1.1",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "http-proxy-middleware": "^3.0.2",
     "nuxt": "^3.13.0",
+    "nuxt-helm": "^0.0.2",
+    "nuxt-security": "^2.0.0",
     "nuxt-snackbar": "^1.1.2",
     "pinia": "^2.2.2",
     "swiper": "^11.1.14",
+    "uuidv4": "^6.2.13",
     "vue": "latest",
     "vue-router": "latest",
     "vue-toastification": "^2.0.0-rc.5",
-    "vuetify": "^3.7.0-beta.1"
+    "vuetify": "^3.7.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
