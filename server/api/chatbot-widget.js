@@ -10,7 +10,7 @@ export default defineEventHandler((event) => {
 
 
       const script = document.createElement('script');
-      script.src = 'chatbot-widget-ruby.vercel.app'; 
+      script.src = 'https://chatbot-widget-ruby.vercel.app'; 
       document.body.appendChild(script);
 
       
