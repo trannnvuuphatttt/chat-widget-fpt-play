@@ -59,17 +59,13 @@ const deleteText = () => {
 
         container.value.classList.add('animate__zoomOut');
         setTimeout(startAnimation, 1000);
-        //container.value.addEventListener('animationend', zoomOutDone, { once: true });
+
       }
     }, typingSpeed / 2);
   }
 };
 
-// const zoomOutDone = () => {
-//   console.log("zoomOutDone")
-//   //container.value.classList.remove('animate__zoomOut');
 
-// };
 
 const startAnimation = () => {
   container.value.style.visibility = 'visible';
@@ -80,22 +76,17 @@ const startAnimation = () => {
 
     container.value.classList.add('animate__animated', 'animate__zoomIn');
     typeText();
-    //container.value.addEventListener('animationend', zoomInDone, { once: true });
+
 
   }
 };
 
-// const zoomInDone = () => {
-//    console.log("zoomInDone")
-//   container.value.classList.remove('animate__zoomIn');
 
-// };
 
 onMounted(async () => {
-  // Đảm bảo DOM đã sẵn sàng
+
   await nextTick();
 
-  // Gán các giá trị cho ref
   container.value = document.getElementById('zoom-container');
   textElement.value = document.getElementById('text');
 

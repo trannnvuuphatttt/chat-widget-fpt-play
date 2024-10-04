@@ -12,6 +12,11 @@ export const useMessage = defineStore("message", {
       {
         userMessage: "",
         botMessage: "",
+        timeStamp: null,
+        videos: [],
+        images: [],
+        contents: [],
+        link: "",
       },
     ],
     botMessageID: "",
@@ -36,14 +41,36 @@ export const useMessage = defineStore("message", {
           }
         );
         this.responseData = response.data;
-        //this.messagesArray.push(response.data.data);
+
         console.log(response.data.data.answer.text);
         this.messagesArray.push(this.responseData);
+        this.newMessageArray.push({
+          userMessage: this.responseData.data.query,
+          botMessage: this.responseData.data.answer.text,
+          timeStamp: this.responseData.data.timeStamp,
+          videos: this.responseData.data.answer.videos,
+          images: this.responseData.data.answer.images,
+          contents: this.responseData.data.answer.contents,
+          link: "",
+          chatID: this.responseData.data.message_uuid,
+        });
         console.log(this.newMessageArray);
         this.userInput = "";
       } catch (error) {
         console.log("Lỗi khi gọi API:", error);
       }
+    },
+    sendMessage(userChat, botChat) {
+      this.newMessageArray.push({
+        userMessage: userChat,
+        botMessage: botChat,
+        timeStamp: Date.now() / 1000,
+        videos: [],
+        images: [],
+        contents: [],
+        link: "",
+        chatID: "",
+      });
     },
     async getChatHistory(userID) {
       try {
@@ -64,14 +91,12 @@ export const useMessage = defineStore("message", {
             },
           }
         );
-        //console.log(chatHistory.data.data.messages);
+
         this.messagesArray = chatHistory.data.data.messages;
         console.log(this.messagesArray);
-        // console.log(typeof chatHistory.data.data.messages[0].timestamp);
       } catch (error) {
         console.log("Lỗi khi gọi API:", error);
       }
-      //this.messagesArray = chatHistory.data.messages;
     },
     async messageEvaluate(evaluate, evaMessage, botMessageID, userID) {
       try {

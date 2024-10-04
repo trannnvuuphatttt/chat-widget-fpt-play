@@ -4,25 +4,32 @@
     class="bg-gray-200 overflow-y-scroll overflow-x-hidden"
     ref="chatContainer"
   >
-    <div v-for="(text, key, index) in preChatTexts" :key="key">
+    <!-- <div v-for="(text, key, index) in preChatTexts" :key="key">
       <botChatBubble
         :message="text.text"
-        :timeStamp="''"
+        :timeStamp="timeAgo(String(Date.now() / 1000))"
         :chatID="''"
         :userID="UserIDStore.userID"
         :flag="false"
         :isAttachment="isAttachment(key)"
       />
-    </div>
-    <div v-for="(message, key, index) in messageStore.messagesArray" :key="key">
-      <userChatBubble :message="message.query" v-if="message.query !== ''" />
+    </div> -->
+    <div
+      v-for="(message, key, index) in messageStore.newMessageArray"
+      :key="key"
+    >
+      <userChatBubble
+        :message="message.userMessage"
+        v-if="message.userMessage !== ''"
+      />
       <botChatBubble
-        :message="message.answer.text"
-        :timeStamp="timeAgo(String(message.timestamp))"
-        :chatID="message.message_uuid"
+        :message="message.botMessage"
+        :timeStamp="timeAgo(String(message.timeStamp))"
+        :chatID="message.chatID"
         :userID="UserIDStore.userID"
         :flag="isLastElement(key)"
-        :isAttachment="true"
+        :isAttachment="isAttachment(key)"
+        v-if="message.botMessage !== ''"
       />
     </div>
   </div>
@@ -43,13 +50,21 @@ const messageStore = useMessage();
 const {timeAgo} = useFormatDateTime()
 onMounted(() => {
   messageStore.getChatHistory(UserIDStore.userID);
+  for(let i = 0; i<preChatTexts.length; i++){
+ messageStore.sendMessage('',preChatTexts[i])
+}
 
 })
 const preChatTexts = [
-  {text: "Xin chào 👋 ! Tôi là trợ lý thông minh của bạn."},
-  {text: "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play."},
-  {text: "Vậy tôi có thể giúp gì cho bạn?"},
+   "Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.",
+ "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.",
+"Vậy tôi có thể giúp gì cho bạn?",
 ]
+
+
+
+
+
 const scrollStore = useScroll();
 const chatContainer = ref(null);
 
@@ -66,11 +81,16 @@ watch(() => scrollStore.shouldScroll, (newVal) => {
 
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.messagesArray);
-  //console.log("keys size: ", keys.length - 1)
+
   return currentKey === keys.length - 1;
 };
 const isAttachment = (currentKey) => {
-  return currentKey === 0;
+  if(currentKey===0){
+    return false
+  }else{
+
+    return (messageStore.newMessageArray[currentKey] - messageStore.newMessageArray[currentKey-1] <= 6000)
+  }
 }
 </script>
 
