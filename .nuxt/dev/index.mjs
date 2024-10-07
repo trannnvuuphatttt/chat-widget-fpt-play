@@ -873,9 +873,11 @@ const errorHandler = (async function errorhandler(error, event) {
   return send(event, html);
 });
 
+const _lazy_XSDLYq = () => Promise.resolve().then(function () { return chatbotWidget$1; });
 const _lazy_Pd6nDU = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
+  { route: '/api/chatbot-widget', handler: _lazy_XSDLYq, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_Pd6nDU, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_Pd6nDU, lazy: true, middleware: false, method: undefined }
 ];
@@ -1070,6 +1072,36 @@ const template$1 = (messages) => {
 const errorDev = /*#__PURE__*/Object.freeze({
   __proto__: null,
   template: template$1
+});
+
+const chatbotWidget = defineEventHandler((event) => {
+  event.res.setHeader("Content-Type", "application/javascript");
+  return `
+    (function() {
+      const script = document.createElement('script');
+      script.src = 'https://your-domain.com/_nuxt/chatbot-core.js'; // \u0110\u01B0\u1EDDng d\u1EABn \u0111\u1EBFn file script
+      script.onload = function() {
+        const chatbotContainer = document.createElement('div');
+        chatbotContainer.id = 'chatbot-container';
+        document.body.appendChild(chatbotContainer);
+        
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://chatbot-widget-ruby.vercel.app/chatbot';
+        iframe.style.width = '400px';
+        iframe.style.height = '600px';
+        iframe.style.position = 'fixed';
+        iframe.style.bottom = '20px';
+        iframe.style.right = '20px';
+        document.getElementById('chatbot-container').appendChild(iframe);
+      };
+      document.head.appendChild(script);
+    })();
+  `;
+});
+
+const chatbotWidget$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: chatbotWidget
 });
 
 const Vue3 = version[0] === "3";

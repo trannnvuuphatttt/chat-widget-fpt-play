@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "vue-cli-service build --target lib --formats umd --name ChatBotWidget ./components/widget.vue",
     "dev": "nuxt dev --hostname my.fptplay.net --port 88",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
