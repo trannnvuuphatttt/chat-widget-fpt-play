@@ -1,15 +1,17 @@
 import { defineStore } from "pinia";
 
-export const useScroll = defineStore("scroll", {
+export const useScrollStore = defineStore("scrollStore", {
   state: () => ({
-    shouldScroll: false,
+    scrollToBottom: null, // Hàm sẽ được lưu trữ tại đây
   }),
   actions: {
-    triggerScroll() {
-      this.shouldScroll = true;
+    setScrollToBottom(fn) {
+      this.scrollToBottom = fn;
     },
-    resetScroll() {
-      this.shouldScroll = false;
+    triggerScrollToBottom() {
+      if (this.scrollToBottom) {
+        this.scrollToBottom();
+      }
     },
   },
 });

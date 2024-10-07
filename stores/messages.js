@@ -11,8 +11,13 @@ export const useMessage = defineStore("message", {
     newMessageArray: [
       {
         userMessage: "",
-        botMessage: "",
-        timeStamp: null,
+        botMessage: [
+          "Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.",
+          "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.",
+          "Vậy tôi có thể giúp gì cho bạn?",
+        ],
+
+        timeStamp: Date.now() / 1000,
         videos: [],
         images: [],
         contents: [],
@@ -46,7 +51,7 @@ export const useMessage = defineStore("message", {
         this.messagesArray.push(this.responseData);
         this.newMessageArray.push({
           userMessage: this.responseData.data.query,
-          botMessage: this.responseData.data.answer.text,
+          botMessage: [this.responseData.data.answer.text],
           timeStamp: this.responseData.data.timeStamp,
           videos: this.responseData.data.answer.videos,
           images: this.responseData.data.answer.images,
@@ -71,6 +76,7 @@ export const useMessage = defineStore("message", {
         link: "",
         chatID: "",
       });
+      this.userInput = "";
     },
     async getChatHistory(userID) {
       try {
@@ -126,7 +132,22 @@ export const useMessage = defineStore("message", {
       this.userInput = input;
     },
     emptyArray() {
-      this.messagesArray = [];
+      this.newMessageArray = [
+        {
+          userMessage: "",
+          botMessage: [
+            "Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.",
+            "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.",
+            "Vậy tôi có thể giúp gì cho bạn?",
+          ],
+
+          timeStamp: Date.now() / 1000,
+          videos: [],
+          images: [],
+          contents: [],
+          link: "",
+        },
+      ];
     },
   },
 });

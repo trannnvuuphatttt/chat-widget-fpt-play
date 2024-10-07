@@ -1,5 +1,5 @@
 <template class="relative">
-  <span class="mt-2" v-if="props.isAttachment">
+  <span class="mt-2">
     <img
       src="assets/images/avatar.png"
       class="h-6 w-6 inline-block mb-2 mr-1"
@@ -8,9 +8,10 @@
   </span>
 
   <div
-    class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2"
+    class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mt-2"
+    v-for="(item, index) in props.message"
   >
-    <p>{{ props.message }}</p>
+    <p>{{ item }}</p>
   </div>
 
   <span class="flex flex-row justify-between flex-wrap">
@@ -109,12 +110,12 @@ import { useFormatDateTime } from "../../../composables/useFormatDateTime";
 
 
 const props = defineProps({
-  message: String,
+  message: [String],
   timeStamp:String,
   chatID:String,
   userID:String,
   flag: Boolean,
-  isAttachment:Boolean
+
 });
 
 

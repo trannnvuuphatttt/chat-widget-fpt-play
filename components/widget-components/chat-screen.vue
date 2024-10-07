@@ -1,22 +1,9 @@
 <template>
-  <div
-    id="chat-screen"
-    class="bg-gray-200 overflow-y-scroll overflow-x-hidden"
-    ref="chatContainer"
-  >
-    <!-- <div v-for="(text, key, index) in preChatTexts" :key="key">
-      <botChatBubble
-        :message="text.text"
-        :timeStamp="timeAgo(String(Date.now() / 1000))"
-        :chatID="''"
-        :userID="UserIDStore.userID"
-        :flag="false"
-        :isAttachment="isAttachment(key)"
-      />
-    </div> -->
+  <div ref="chatScreen" class="bg-gray-200 overflow-y-scroll overflow-x-hidden">
     <div
       v-for="(message, key, index) in messageStore.newMessageArray"
       :key="key"
+      ref="scrollContainer"
     >
       <userChatBubble
         :message="message.userMessage"
@@ -28,8 +15,8 @@
         :chatID="message.chatID"
         :userID="UserIDStore.userID"
         :flag="isLastElement(key)"
-        :isAttachment="isAttachment(key)"
         v-if="message.botMessage !== ''"
+        class="botMessage"
       />
     </div>
   </div>
@@ -41,57 +28,41 @@ import userChatBubble from "./chat-bubble-components/user-chat-bubble.vue";
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "~/stores/userID";
 import { useFormatDateTime } from "~/composables/useFormatDateTime";
-import { useScroll } from "~/stores/scroll";
+import { useScrollStore } from "~/stores/scroll";
 import { onMounted } from "vue";
 
 const UserIDStore = useUserIDStore()
 
 const messageStore = useMessage();
 const {timeAgo} = useFormatDateTime()
-onMounted(() => {
-  messageStore.getChatHistory(UserIDStore.userID);
-  for(let i = 0; i<preChatTexts.length; i++){
- messageStore.sendMessage('',preChatTexts[i])
-}
-
-})
-const preChatTexts = [
-   "Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.",
- "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.",
-"Vậy tôi có thể giúp gì cho bạn?",
-]
 
 
-
-
-
-const scrollStore = useScroll();
-const chatContainer = ref(null);
+const chatScreen = ref(null);
 
 const scrollToBottom = () => {
-  chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
+  nextTick(() => {
+    if (chatScreen.value) {
+      chatScreen.value.scrollTop = chatScreen.value.scrollHeight;
+    }
+  });
 };
 
-watch(() => scrollStore.shouldScroll, (newVal) => {
-  if (newVal) {
-    scrollToBottom();
-    scrollStore.resetScroll();
-  }
+onMounted(() => {
+  scrollToBottom()
+  window.addEventListener('scroll-to-bottom', scrollToBottom);
 });
+
 
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.messagesArray);
 
-  return currentKey === keys.length - 1;
+  return currentKey === keys.length -1;
 };
-const isAttachment = (currentKey) => {
-  if(currentKey===0){
-    return false
-  }else{
-
-    return (messageStore.newMessageArray[currentKey] - messageStore.newMessageArray[currentKey-1] <= 6000)
-  }
-}
+// const isAttachment = (currentKey) => {
+//   if(currentKey===0){
+//     return true
+//   }
+// }
 </script>
 
 <style></style>

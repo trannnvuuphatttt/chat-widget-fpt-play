@@ -46,22 +46,25 @@
 import { useModalStore } from '~/stores/modal';
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "../../stores/userID";
-import {useScroll} from "../../stores/scroll"
+import {useScrollStore} from "../../stores/scroll"
 
 
 const modalStore = useModalStore();
 const messageStore = useMessage()
 const userIDStore = useUserIDStore();
-const scrollStore = useScroll()
+const scrollStore = useScrollStore();
+
+
 
 const handleSendMessage = () => {
   if(messageStore.userInput !== ''){
 
-    messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
-    scrollStore.triggerScroll();
+    messageStore.sendMessage(messageStore.userInput, ["Tin nhắn mẫu", "Tin nhắn mẫu"])
+     const event = new Event('scroll-to-bottom');
+  window.dispatchEvent(event);
   }
-  }
-const resultMessage = ref('Input is empty!');
+}
+
 console.log(messageStore.userInput)
 </script>
 
