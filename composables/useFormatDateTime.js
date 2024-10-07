@@ -7,12 +7,14 @@ export const useFormatDateTime = () => {
     currentTime.value = Date.now() / 1000;
   };
 
-  onMounted(() => {
-    const interval = setInterval(updateCurrentTime, 1000);
+  let interval;
 
-    onUnmounted(() => {
-      clearInterval(interval);
-    });
+  onMounted(() => {
+    interval = setInterval(updateCurrentTime, 1000);
+  });
+
+  onUnmounted(() => {
+    clearInterval(interval);
   });
 
   function timeAgo(timestamp) {
