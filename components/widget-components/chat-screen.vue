@@ -9,12 +9,17 @@
         :message="message.userMessage"
         v-if="message.userMessage !== ''"
       />
+
       <botChatBubble
         :message="message.botMessage"
-        :timeStamp="timeAgo(String(message.timeStamp))"
+        :timeStamp="timeAgo(String(message.timestamp))"
         :chatID="message.chatID"
         :userID="UserIDStore.userID"
         :flag="isLastElement(key)"
+        :videos="message.videos"
+        :images="message.images"
+        :contents="message.contents"
+        :urls="message.urls"
         v-if="message.botMessage !== ''"
         class="botMessage"
       />
@@ -30,39 +35,52 @@ import { useUserIDStore } from "~/stores/userID";
 import { useFormatDateTime } from "~/composables/useFormatDateTime";
 import { useScrollStore } from "~/stores/scroll";
 import { onMounted } from "vue";
+import { useModalStore } from "~/stores/modal";
 
 const UserIDStore = useUserIDStore()
+const modalStore = useModalStore()
 
 const messageStore = useMessage();
 const {timeAgo} = useFormatDateTime()
 
 
-const chatScreen = ref(null);
+const fetchHistory = () => {
+messageStore.getChatHistory(UserIDStore.userID);
+}
 
+const chatScreen = ref(null);
 const scrollToBottom = () => {
   nextTick(() => {
     if (chatScreen.value) {
-      chatScreen.value.scrollTop = chatScreen.value.scrollHeight;
+      setTimeout(() => {
+        chatScreen.value.scrollTo({
+          top: chatScreen.value.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 500);
     }
+    console.log("Scrolled")
   });
 };
-
-onMounted(() => {
-  scrollToBottom()
+watch(
+  () => modalStore.showWidget,
+  (newValue) => {
+    if (newValue === true) {
+      console.log("true")
+      scrollToBottom();
+    }
+  }
+);
+onMounted(async () => {
+  await fetchHistory();
+  await nextTick();
   window.addEventListener('scroll-to-bottom', scrollToBottom);
 });
-
-
 const isLastElement = (currentKey) => {
-  const keys = Object.keys(messageStore.messagesArray);
+  const keys = Object.keys(messageStore.newMessageArray);
 
   return currentKey === keys.length -1;
 };
-// const isAttachment = (currentKey) => {
-//   if(currentKey===0){
-//     return true
-//   }
-// }
 </script>
 
 <style></style>

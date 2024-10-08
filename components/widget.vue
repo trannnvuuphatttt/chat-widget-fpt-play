@@ -65,8 +65,6 @@ const deleteText = () => {
   }
 };
 
-
-
 const startAnimation = () => {
   container.value.style.visibility = 'visible';
 
@@ -80,8 +78,6 @@ const startAnimation = () => {
 
   }
 };
-
-
 
 onMounted(async () => {
 

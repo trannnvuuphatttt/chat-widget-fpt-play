@@ -47,6 +47,7 @@ import { useModalStore } from '~/stores/modal';
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "../../stores/userID";
 import {useScrollStore} from "../../stores/scroll"
+import { nextTick } from 'vue';
 
 
 const modalStore = useModalStore();
@@ -59,13 +60,15 @@ const scrollStore = useScrollStore();
 const handleSendMessage = () => {
   if(messageStore.userInput !== ''){
 
-    messageStore.sendMessage(messageStore.userInput, ["Tin nhắn mẫu", "Tin nhắn mẫu"])
-     const event = new Event('scroll-to-bottom');
-  window.dispatchEvent(event);
+    messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
+    nextTick(() => {
+      const event = new Event('scroll-to-bottom');
+      window.dispatchEvent(event);
+    })
   }
 }
 
-console.log(messageStore.userInput)
+//console.log(messageStore.userInput)
 </script>
 
 <style></style>

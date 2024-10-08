@@ -31,7 +31,7 @@ export { useFormatDateTime } from '../composables/useFormatDateTime';
 export { default as useInactiveTimeOut } from '../composables/useInactiveTimeOut';
 export { useMessage } from '../stores/messages';
 export { useModalStore } from '../stores/modal';
-export { useScroll } from '../stores/scroll';
+export { useScrollStore } from '../stores/scroll';
 export { useSnackBarStore } from '../stores/snackbar';
 export { useUserIDStore } from '../stores/userID';
 export { useSnackbar } from 'vue3-snackbar';

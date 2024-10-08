@@ -3,23 +3,24 @@ import { onMounted, onUnmounted, ref } from "vue";
 export const useFormatDateTime = () => {
   const currentTime = ref(Date.now() / 1000);
 
-  const updateCurrentTime = () => {
-    currentTime.value = Date.now() / 1000;
-  };
+  // const updateCurrentTime = () => {
+  //   currentTime.value = Date.now() / 1000;
+  // };
 
-  let interval;
+  // let interval;
 
-  onMounted(() => {
-    interval = setInterval(updateCurrentTime, 1000);
-  });
+  // onMounted(() => {
+  //   interval = setInterval(updateCurrentTime, 1000);
+  // });
 
-  onUnmounted(() => {
-    clearInterval(interval);
-  });
+  // onUnmounted(() => {
+  //   clearInterval(interval);
+  // });
 
   function timeAgo(timestamp) {
     const messageTime = parseFloat(timestamp);
     const differenceInSeconds = currentTime.value - messageTime;
+    // console.log(currentTime.value, messageTime, differenceInSeconds);
 
     if (differenceInSeconds < 60) {
       return "Vừa xong";

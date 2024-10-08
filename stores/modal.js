@@ -9,6 +9,7 @@ export const useModalStore = defineStore("modal", {
   actions: {
     toggleWidget() {
       this.showWidget = !this.showWidget;
+      this.showModal = false;
     },
 
     closeWidget() {
@@ -18,6 +19,7 @@ export const useModalStore = defineStore("modal", {
 
     toggleModal() {
       this.showModal = !this.showModal;
+      console.log(this.showModal);
     },
   },
 });

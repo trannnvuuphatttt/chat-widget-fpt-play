@@ -10,15 +10,46 @@
   <div
     class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mt-2"
     v-for="(item, index) in props.message"
+    v-if="Array.isArray(props.message)"
+  >
+    <p>{{ item }}</p>
+  </div>
+  <div
+    class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mt-2"
+    v-if="Array.isArray(props.message)"
+    v-for="(item, index) in props.urls"
+  >
+    <a :href="item" target="_blank" class="underline">{{ item }}</a>
+  </div>
+  <div
+    class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mt-2"
+    v-for="(item, index) in props.images"
+    v-if="Array.isArray(props.images)"
+  >
+    <p>{{ item }}</p>
+  </div>
+  <div
+    class="bg-white p-2 rounded-tl-sm rounded-r-lg rounded-b-lg text-md mt-2"
+    v-for="(item, index) in props.videos"
+    v-if="Array.isArray(props.videos)"
   >
     <p>{{ item }}</p>
   </div>
 
   <span class="flex flex-row justify-between flex-wrap">
-    <p class="text-[12px] mt-1 mb-2 text-gray-400">
+    <p
+      class="text-[12px] mt-1 mb-2 text-gray-400"
+      v-if="props.timeStamp !== 'NaN ngày trước'"
+    >
       {{ props.timeStamp }}
     </p>
-    <div v-if="props.flag && modalStore.isChatting">
+    <div
+      v-if="
+        props.flag &&
+        modalStore.isChatting &&
+        props.timeStamp !== 'NaN ngày trước'
+      "
+    >
       <button class="mr-1 cursor-pointer" @click="Like()">
         <i v-if="!reviewStateLike" class="fa-regular fa-thumbs-up text-md"></i>
         <i
@@ -47,7 +78,7 @@
     </div>
   </span>
   <div
-    v-if="modalStore.showModal"
+    v-show="modalStore.showModal"
     class="z-50 bg-black rounded-lg w-[100%] h-[100%] p-2 bg-opacity-60 flex absolute items-center justify-center top-0 left-0"
   >
     <div class="bg-white rounded-lg p-4">
@@ -81,13 +112,16 @@
           class="p-4 border-2 border-orange-500 text-white bg-orange-500 w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
           v-if="inputValue !== ''"
           @click="
-            messageStore.messageEvaluate(
-              false,
-              inputValue.value,
-              props.chatID,
-              props.userID
-            ),
-              modalStore.toggleModal
+            () => {
+              modalStore.toggleModal();
+              messageStore.messageEvaluate(
+                false,
+                inputValue,
+                props.chatID,
+                props.userID
+              );
+              snackBarStore.showSnackbar();
+            }
           "
         >
           Gửi yêu cầu
@@ -115,7 +149,10 @@ const props = defineProps({
   chatID:String,
   userID:String,
   flag: Boolean,
-
+  videos:[String],
+  images:[String],
+  contents:[String],
+  urls:[String]
 });
 
 
@@ -142,7 +179,7 @@ function Like() {
 function Dislike() {
   reviewStateDislike.value = !reviewStateDislike.value;
   reviewStateLike.value = false;
-  if(!reviewStateDislike.value){
+  if(reviewStateDislike.value){
     modalStore.toggleModal();
   }
 
