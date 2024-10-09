@@ -55,7 +55,9 @@ const messageStore = useMessage()
 const userIDStore = useUserIDStore();
 const scrollStore = useScrollStore();
 
-
+defineOptions({
+  inheritAttrs: false
+});
 
 const handleSendMessage = () => {
   if(messageStore.userInput !== ''){

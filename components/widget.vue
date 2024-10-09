@@ -20,6 +20,10 @@ import useInactivity from '~/composables/useInactiveTimeOut';
 
 const { isInactive } = useInactivity(30000);
 
+defineOptions({
+  inheritAttrs: false
+})
+
 onMounted(()=>{
   userIDStore.getExistedID()
 })

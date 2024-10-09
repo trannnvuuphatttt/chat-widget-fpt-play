@@ -141,18 +141,19 @@ import {useSnackBarStore} from "~/stores/snackbar"
 import { useMessage } from "~/stores/messages";
 import { useFormatDateTime } from "../../../composables/useFormatDateTime";
 
-
+defineOptions({
+  inheritAttrs: false
+});
 
 const props = defineProps({
-  message: [String],
+  message: Array,
   timeStamp:String,
   chatID:String,
   userID:String,
   flag: Boolean,
-  videos:[String],
-  images:[String],
-  contents:[String],
-  urls:[String]
+  videos:Array,
+  images:Array,
+  contents:Array,  urls:Array
 });
 
 

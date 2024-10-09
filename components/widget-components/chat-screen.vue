@@ -45,7 +45,7 @@ const {timeAgo} = useFormatDateTime()
 
 
 const fetchHistory = () => {
-messageStore.getChatHistory(UserIDStore.userID);
+
 }
 
 const chatScreen = ref(null);
@@ -71,9 +71,10 @@ watch(
     }
   }
 );
-onMounted(async () => {
-  await fetchHistory();
-  await nextTick();
+onMounted(() => {
+  UserIDStore.getExistedID();
+  console.log(UserIDStore.userID)
+  messageStore.getChatHistory(UserIDStore.userID);
   window.addEventListener('scroll-to-bottom', scrollToBottom);
 });
 const isLastElement = (currentKey) => {

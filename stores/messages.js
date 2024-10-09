@@ -75,12 +75,13 @@ export const useMessage = defineStore("message", {
         videos: [],
         images: [],
         contents: [],
-        link: "",
+        urls: [],
         chatID: "",
       });
       this.userInput = "";
     },
     async getChatHistory(userID) {
+      console.log(userID);
       if (this.historyData.length === 0) {
         try {
           const chatHistory = await axios.put(
