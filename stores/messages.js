@@ -18,7 +18,7 @@ export const useMessage = defineStore("message", {
           "Vậy tôi có thể giúp gì cho bạn?",
         ],
 
-        timeStamp: null,
+        timeStamp: Date.now() * 1000,
         videos: [],
         images: [],
         contents: [],
@@ -26,9 +26,12 @@ export const useMessage = defineStore("message", {
       },
     ],
     botMessageID: "",
+    isLoading: false,
   }),
   actions: {
     async sendRequest(inputData, userID) {
+      this.isLoading = true;
+      this.sendMessage(inputData, "");
       try {
         const response = await axios.post(
           "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/add",
@@ -50,7 +53,7 @@ export const useMessage = defineStore("message", {
 
         //this.messagesArray.push(this.responseData);
 
-        this.newMessageArray.push({
+        this.newMessageArray[this.newMessageArray.length - 1] = {
           userMessage: inputData,
           botMessage: [this.responseData.answer.text],
           timestamp: this.responseData.timestamp,
@@ -59,17 +62,19 @@ export const useMessage = defineStore("message", {
           contents: this.responseData.answer.contents,
           urls: this.responseData.answer.urls,
           chatID: this.responseData.message_uuid,
-        });
+        };
 
         this.userInput = "";
       } catch (error) {
         console.error("Lỗi khi gọi API:", error);
+      } finally {
+        this.isLoading = false;
       }
     },
     sendMessage(userChat, botChat) {
       this.newMessageArray.push({
         userMessage: userChat,
-        botMessage: botChat,
+        botMessage: [botChat],
         timeStamp: Date.now() / 1000,
         videos: [],
         images: [],

@@ -5,6 +5,7 @@ export const useModalStore = defineStore("modal", {
     showModal: false,
     showWidget: false,
     isChatting: true,
+    isSuggestion: true,
   }),
   actions: {
     toggleWidget() {
@@ -19,6 +20,9 @@ export const useModalStore = defineStore("modal", {
 
     toggleModal() {
       this.showModal = !this.showModal;
+    },
+    toggleSuggestion() {
+      this.isSuggestion = false;
     },
   },
 });
