@@ -16,7 +16,6 @@ export default function useInactivity(timeoutDuration = 30000) {
   };
 
   const onUserInactive = () => {
-    console.log("User is inactive. Do something here.");
     modalStore.closeWidget();
   };
 

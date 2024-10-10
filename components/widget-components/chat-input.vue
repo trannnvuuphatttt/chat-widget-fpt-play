@@ -69,8 +69,6 @@ const handleSendMessage = () => {
     })
   }
 }
-
-//console.log(messageStore.userInput)
 </script>
 
 <style></style>

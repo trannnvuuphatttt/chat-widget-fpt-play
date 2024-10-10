@@ -8,7 +8,6 @@ export const useUserIDStore = defineStore("userID", {
   actions: {
     getExistedID() {
       this.userID = localStorage.getItem("chatSession");
-      console.log(this.userID);
     },
     createNewID() {
       this.userID = uuidv4();

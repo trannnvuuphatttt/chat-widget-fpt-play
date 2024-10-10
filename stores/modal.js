@@ -19,7 +19,6 @@ export const useModalStore = defineStore("modal", {
 
     toggleModal() {
       this.showModal = !this.showModal;
-      console.log(this.showModal);
     },
   },
 });

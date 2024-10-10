@@ -48,7 +48,6 @@ export const useMessage = defineStore("message", {
         );
         this.responseData = response.data.data;
 
-        //console.log(response.data.data.answer.text);
         //this.messagesArray.push(this.responseData);
 
         this.newMessageArray.push({
@@ -61,10 +60,10 @@ export const useMessage = defineStore("message", {
           urls: this.responseData.answer.urls,
           chatID: this.responseData.message_uuid,
         });
-        console.log(this.newMessageArray);
+
         this.userInput = "";
       } catch (error) {
-        console.log("Lỗi khi gọi API:", error);
+        console.error("Lỗi khi gọi API:", error);
       }
     },
     sendMessage(userChat, botChat) {
@@ -81,7 +80,6 @@ export const useMessage = defineStore("message", {
       this.userInput = "";
     },
     async getChatHistory(userID) {
-      console.log(userID);
       if (this.historyData.length === 0) {
         try {
           const chatHistory = await axios.put(
@@ -103,11 +101,9 @@ export const useMessage = defineStore("message", {
           );
           //this.newMessageArray = chatHistory.data.data.messages;
           this.historyData = chatHistory.data.data.messages;
-          // console.log(this.historyData);
-          // console.log(chatHistory.data.data.messages[0].query);
-          // console.log(chatHistory.data.data.messages.length);
-          // console.log(this.historyData[0].timestamp);
-          for (let i = 0; i < this.historyData.length; i++) {
+          console.log(this.historyData.length, this.historyData);
+
+          for (let i = this.historyData.length - 1; i >= 0; i--) {
             this.newMessageArray.push({
               userMessage: this.historyData[i].query,
               botMessage: [this.historyData[i].answer.text],
@@ -120,12 +116,11 @@ export const useMessage = defineStore("message", {
             });
           }
         } catch (error) {
-          console.log("Lỗi khi gọi API:", error);
+          console.error("Lỗi khi gọi API:", error);
         }
       }
     },
     async messageEvaluate(evaluate, evaMessage, botMessageID, userID) {
-      console.log(evaluate, evaMessage, botMessageID, userID);
       try {
         await axios.put(
           "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/" +
@@ -147,7 +142,7 @@ export const useMessage = defineStore("message", {
           }
         );
       } catch (error) {
-        console.log("Lỗi khi gọi API:", error);
+        console.error("Lỗi khi gọi API:", error);
       }
     },
     setInput(input) {

@@ -132,7 +132,6 @@ onUnmounted(() => {
       class="widget-container bg-white rounded-lg shadow-lg w-[90vw] sm:w-[50vw] md:w-[50vw] lg:w-[400px] h-[400px] z-40 fixed bottom-[25px] right-[25px] flex flex-col justify-between items-center p-4"
       v-if="userIDStore.userID === null && modalStore.showWidget"
     >
-      {{ console.log("user ID:", userIDStore.userID) }}
       <button class="relative self-end" @click="modalStore.toggleWidget">
         <i class="fa-solid fa-x right-3 absolute"></i>
       </button>

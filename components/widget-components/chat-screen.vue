@@ -59,21 +59,21 @@ const scrollToBottom = () => {
         });
       }, 500);
     }
-    console.log("Scrolled")
+
   });
 };
 watch(
   () => modalStore.showWidget,
   (newValue) => {
     if (newValue === true) {
-      console.log("true")
+
       scrollToBottom();
     }
   }
 );
 onMounted(() => {
   UserIDStore.getExistedID();
-  console.log(UserIDStore.userID)
+
   messageStore.getChatHistory(UserIDStore.userID);
   window.addEventListener('scroll-to-bottom', scrollToBottom);
 });
