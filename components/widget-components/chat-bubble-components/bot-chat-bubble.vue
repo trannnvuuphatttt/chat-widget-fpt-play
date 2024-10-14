@@ -15,14 +15,14 @@
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-for="(item, index) in props.message && !flag"
-    v-if="Array.isArray(props.message)"
+    v-for="(item, index) in props.message"
+    v-else-if="Array.isArray(props.message)"
   >
-    <p>{{ item }}</p>
+    {{ marked(item) }}
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-if="Array.isArray(props.urls)"
+    v-else-if="Array.isArray(props.urls)"
     v-for="(item, index) in props.urls"
   >
     <a :href="item" target="_blank" class="underline">{{ item }}</a>
@@ -30,14 +30,14 @@
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
     v-for="(item, index) in props.images"
-    v-if="Array.isArray(props.images)"
+    v-else-if="Array.isArray(props.images)"
   >
     <p>{{ item }}</p>
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
     v-for="(item, index) in props.videos"
-    v-if="Array.isArray(props.videos)"
+    v-else-if="Array.isArray(props.videos)"
   >
     <p>{{ item }}</p>
   </div>
@@ -153,6 +153,8 @@ import { useMessage } from "~/stores/messages";
 import { useFormatDateTime } from "../../../composables/useFormatDateTime";
 import ChatSuggestion from "../chat-suggestion.vue";
 
+import { marked } from 'marked'
+
 defineOptions({
   inheritAttrs: false
 });
@@ -205,7 +207,7 @@ function Dislike() {
 }
 
 .loader {
-  width: 60px;
+  width: 20px;
   aspect-ratio: 2;
   --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
   background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;

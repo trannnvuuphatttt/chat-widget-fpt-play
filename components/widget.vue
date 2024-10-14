@@ -9,7 +9,7 @@
       <ChatScreen class="flex-auto" />
       <chatSuggestion
         class="flex-grow-0 pl-6 pb-2"
-        v-if="modalStore.isSuggestion"
+        v-if="messageStore.getChatHistory.length > 1"
       />
       <ChatInput class="flex-shrink-0 flex-grow-0" />
     </div>
@@ -66,9 +66,11 @@ import Header from "./widget-components/header.vue";
 import { useModalStore } from '~/stores/modal';
 import {useUserIDStore} from '~/stores/userID';
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { useMessage } from "~/stores/messages";
 
 const modalStore = useModalStore();
 const userIDStore = useUserIDStore()
+const messageStore = useMessage();
 
 import useInactivity from '~/composables/useInactiveTimeOut';
 

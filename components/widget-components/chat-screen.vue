@@ -2,11 +2,11 @@
   <div
     ref="chatScreen"
     class="bg-gray-200 overflow-y-auto overflow-x-hidden flex flex-col relative items-center pb-4"
+    @scroll="handleScroll()"
   >
     <div
       v-for="(message, key, index) in messageStore.newMessageArray"
       :key="key"
-      ref="scrollContainer"
       class="w-[338px] mt-6 gap-2"
     >
       <userChatBubble
@@ -30,8 +30,8 @@
     </div>
 
     <div
-      class="bottom-0 absolute w-[40px] h-[40px] bg-[#949494] hover:bg-gray-200 text-white ml-6 mb-4 z-50 rounded-full flex justify-center items-center"
-      v-show="showScrollDownButton"
+      class="bottom-0 sticky w-[50px] h-[50px] bg-[#949494] hover:bg-gray-500 text-white ml-6 mb-6 z-50 rounded-full flex justify-center items-center"
+      v-if="showScrollDownButton"
       @click="scrollToBottom(), toggleScrollButton()"
     >
       <i class="fa-solid fa-arrow-down text-2xl"></i>
@@ -46,7 +46,7 @@ import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "~/stores/userID";
 import { useFormatDateTime } from "~/composables/useFormatDateTime";
 import { useScrollStore } from "~/stores/scroll";
-import { onMounted } from "vue";
+import { nextTick, onMounted } from "vue";
 import { useModalStore } from "~/stores/modal";
 import ChatSuggestion from "./chat-suggestion.vue";
 import { watch } from 'vue';
@@ -63,18 +63,43 @@ const toggleScrollButton= () => {
   showScrollDownButton.value = !showScrollDownButton.value
 }
 const scrollToBottom = () => {
+  const container = chatScreen.value;
   nextTick(() => {
-    if (chatScreen.value) {
-      setTimeout(() => {
-        chatScreen.value.scrollTo({
-          top: chatScreen.value.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 10);
-    }
 
-  });
+    setTimeout(() => {
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: 'smooth'
+    });
+  }, 0);
+  })
 };
+
+
+const handleScroll = () => {
+  const container = chatScreen.value;
+  //console.log(container.scrollTop, container.scrollHeight, container.clientHeight)
+  if(container.scrollTop < container.scrollHeight - container.clientHeight - 61 ){
+    showScrollDownButton.value=true
+  }else{
+    showScrollDownButton.value=false
+  };
+};
+
+
+
+onMounted(() => {
+  showScrollDownButton.value=false;
+  if (chatScreen.value) {
+    chatScreen.value.addEventListener('scroll', handleScroll);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (chatScreen.value) {
+    chatScreen.value.removeEventListener('scroll', handleScroll);
+  }
+});
 watch(
   () => modalStore.showWidget,
   (newValue) => {
@@ -88,6 +113,8 @@ onMounted(() => {
   UserIDStore.getExistedID();
 
   messageStore.getChatHistory(UserIDStore.userID);
+  console.log(messageStore.newMessageArray.length)
+
 
 });
 const isLastElement = (currentKey) => {
@@ -100,8 +127,15 @@ const arrayLength = computed(() => messageStore.newMessageArray.length);
 watch(arrayLength, (newLength, oldLength) => {
   if (newLength > oldLength) {
     scrollToBottom()
-    toggleScrollButton()
+
   }
+});
+
+const loading = computed(() => messageStore.isLoading);
+watch(loading, (newVal, oldVal) => {
+   if (!newVal && oldVal) {
+          scrollToBottom();
+    }
 });
 </script>
 

@@ -28,5 +28,10 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["nuxt-snackbar", "@pinia/nuxt", "@nuxtjs/tailwindcss"],
+  modules: [
+    "nuxt-snackbar",
+    "@pinia/nuxt",
+    "@nuxtjs/tailwindcss",
+    "@nuxt/content",
+  ],
 });

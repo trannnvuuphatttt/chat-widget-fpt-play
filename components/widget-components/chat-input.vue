@@ -14,14 +14,16 @@
       class="flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit"
       @click="handleSendMessage"
     >
-      <i
+      <img
         v-if="messageStore.userInput === ''"
-        class="fa-solid fa-paper-plane text-gray-400 h-6 w-6"
-      ></i>
-      <i
+        src="/assets/images/send_icon_grey.png"
+        alt="Send Icon"
+      />
+      <img
         v-if="messageStore.userInput !== ''"
-        class="fa-solid fa-paper-plane text-orange-500 h-6 w-6"
-      ></i>
+        src="/assets/images/send_icon_orange.png"
+        alt="Send Icon"
+      />
     </button>
   </div>
 
@@ -30,7 +32,7 @@
     v-if="!modalStore.isChatting && userIDStore.userID"
   >
     <button
-      class="flex-auto bg-white border-orange-500 border-2 text-orange-500 hover:bg-orange-500 hover:text-white text-md rounded-lg"
+      class="flex-auto bg-white border-orange-500 border-2 text-orange-500 hover:bg-gradient-to-r hover:from-[#FE592A] hover:to-[#E93013] hover:text-white text-md rounded-lg"
       @click="
         userIDStore.createNewID(),
           (modalStore.isChatting = true),
@@ -78,7 +80,7 @@ const handleSendMessage = () => {
   if(messageStore.userInput !== ''){
 
     messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
-    modalStore.toggleSuggestion
+    modalStore.toggleSuggestion()
   }
 }
 </script>
