@@ -18,6 +18,7 @@
         id="snackbar"
         :class="snackBarStore.snackBarClass"
       >
+        <img src="/assets/images/review_snackbar_icon.png" />
         <p>{{ snackBarStore.message }}</p>
       </div>
     </div>
