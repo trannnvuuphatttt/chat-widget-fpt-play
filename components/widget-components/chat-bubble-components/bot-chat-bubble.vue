@@ -138,10 +138,6 @@ function Dislike() {
 </script>
 
 <style>
-.zIndex {
-  z-index: 1000;
-}
-
 .loader {
   width: 20px;
   aspect-ratio: 2;
@@ -163,10 +159,5 @@ function Dislike() {
   80% {
     background-position: 0% 50%, 50% 50%, 100% 100%;
   }
-}
-.v-snackbar {
-  bottom: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 </style>

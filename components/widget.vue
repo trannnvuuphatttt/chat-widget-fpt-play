@@ -12,18 +12,7 @@
         v-show="modalStore.isSuggestion"
       />
       <ChatInput class="flex-shrink-0 flex-grow-0" />
-      <div
-        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] right-[20%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
-        v-if="snackBarStore.snackBarVisible"
-        id="snackbar"
-        :class="snackBarStore.snackBarClass"
-      >
-        <img
-          class="flex-shrink-0 flex-grow-0"
-          src="/assets/images/review_snackbar_icon.png"
-        />
-        <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
-      </div>
+
       <div
         v-show="modalStore.showModal"
         class="z-50 bg-black rounded-lg w-full h-full p-2 bg-opacity-60 flex absolute items-center justify-center top-0 left-0"
@@ -79,6 +68,18 @@
             </button>
           </div>
         </div>
+      </div>
+      <div
+        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] right-[20%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
+        v-if="snackBarStore.snackBarVisible"
+        id="snackbar"
+        :class="snackBarStore.snackBarClass"
+      >
+        <img
+          class="flex-shrink-0 flex-grow-0"
+          src="/assets/images/review_snackbar_icon.png"
+        />
+        <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
       </div>
     </div>
   </div>
@@ -258,5 +259,8 @@ showBoxAndTypeAgain();
     transform: scale(0);
     transform: translate(100%, 100%);
   }
+}
+.zIndex {
+  z-index: 1000;
 }
 </style>
