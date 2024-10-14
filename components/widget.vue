@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-white">
     <div
       class="z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-[400px] h-[668px] right-[40px] bottom-[40px]"
       v-show="modalStore.showWidget && userIDStore.userID !== null"
