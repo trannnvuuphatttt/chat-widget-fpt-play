@@ -52,7 +52,7 @@ export const useMessage = defineStore("message", {
         this.responseData = response.data.data;
 
         //this.messagesArray.push(this.responseData);
-
+        console.log(this.newMessageArray[this.newMessageArray.length - 1]);
         this.newMessageArray[this.newMessageArray.length - 1] = {
           userMessage: inputData,
           botMessage: [this.responseData.answer.text],
