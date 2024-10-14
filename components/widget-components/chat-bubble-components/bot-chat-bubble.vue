@@ -97,39 +97,6 @@
           v-model="inputValue"
         ></textarea>
       </div>
-      <div class="flex flex-auto justify-between gap-2">
-        <button
-          class="flex-auto p-2 border-orange-500 border-2 text-orange-500 w-[120px] rounded-md hover:text-white hover:bg-orange-500"
-          @click="modalStore.toggleModal"
-        >
-          Đóng
-        </button>
-
-        <button
-          class="flex-auto p-2 border-2 border-[#EFEFEF] text-gray-400 bg-[#EFEFEF] w-[120px] rounded-md"
-          v-if="inputValue === ''"
-        >
-          Gửi yêu cầu
-        </button>
-        <button
-          class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
-          v-if="inputValue !== ''"
-          @click="
-            () => {
-              modalStore.toggleModal();
-              messageStore.messageEvaluate(
-                false,
-                inputValue,
-                props.chatID,
-                props.userID
-              );
-              snackBarStore.showSnackbar();
-            }
-          "
-        >
-          Gửi yêu cầu
-        </button>
-      </div>
     </div>
   </div>
 </template>
