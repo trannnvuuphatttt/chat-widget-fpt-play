@@ -15,7 +15,7 @@
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-for="(item, index) in props.message"
+    v-for="(item, index) in props.message && !flag"
     v-if="Array.isArray(props.message)"
   >
     <p>{{ item }}</p>
