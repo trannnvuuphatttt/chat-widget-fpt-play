@@ -9,7 +9,7 @@
       <ChatScreen class="flex-auto" />
       <chatSuggestion
         class="flex-grow-0 pl-6 pb-2"
-        v-if="messageStore.getChatHistory.length > 1"
+        v-show="modalStore.isSuggestion"
       />
       <ChatInput class="flex-shrink-0 flex-grow-0" />
     </div>
@@ -73,7 +73,18 @@ const userIDStore = useUserIDStore()
 const messageStore = useMessage();
 
 import useInactivity from '~/composables/useInactiveTimeOut';
+const arrayLength = computed(() => messageStore.newMessageArray.length);
 
+watch(arrayLength, (newLength, oldLength) => {
+  if (newLength !== oldLength && newLength >1) {
+    console.log("NEW size:",newLength )
+    modalStore.isSuggestion = false;
+
+  }else{
+    modalStore.isSuggestion = true;
+  }
+
+});
 const { isInactive } = useInactivity(50000);
 
 defineOptions({

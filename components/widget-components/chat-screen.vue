@@ -30,11 +30,11 @@
     </div>
 
     <div
-      class="bottom-0 sticky w-[50px] h-[50px] bg-[#949494] hover:bg-gray-500 text-white ml-6 mb-6 z-50 rounded-full flex justify-center items-center"
+      class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center"
       v-if="showScrollDownButton"
       @click="scrollToBottom(), toggleScrollButton()"
     >
-      <i class="fa-solid fa-arrow-down text-2xl"></i>
+      <img src="/assets/images/chevron_orange.png" />
     </div>
   </div>
 </template>

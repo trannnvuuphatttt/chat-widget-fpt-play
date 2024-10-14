@@ -8,7 +8,7 @@
   </span>
 
   <div
-    class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
+    class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px] w-fit"
     v-if="messageStore.isLoading && flag"
   >
     <div class="loader"></div>
