@@ -76,29 +76,6 @@
       </button>
     </div>
   </span>
-  <div
-    v-show="modalStore.showModal"
-    class="z-50 bg-black rounded-lg w-full h-full p-2 bg-opacity-60 flex absolute items-center justify-center top-0 left-0"
-  >
-    <div
-      class="bg-white rounded-lg p-4 w-[368px] h-fit m-4 flex flex-col gap-2"
-    >
-      <div class="flex-initial flex flex-col gap-2">
-        <h1 class="text-semibold text-lg text-center">
-          Câu trả lời chưa tốt với bạn?
-        </h1>
-
-        <textarea
-          name="message"
-          rows="10"
-          cols="30"
-          class="rounded-lg shadow-dm h-[104px] p-2 border-2 border-gray-200 my-2 focus:outline-none text-lg"
-          placeholder="Bạn hãy cho biết lý do câu trả lời chưa tốt và nên được cải thiện như thế nào?"
-          v-model="inputValue"
-        ></textarea>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script lang="js" setup>

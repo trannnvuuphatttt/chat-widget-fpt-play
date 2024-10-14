@@ -24,38 +24,61 @@
         />
         <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
       </div>
-      <div class="flex flex-auto justify-between gap-2">
-        <button
-          class="flex-auto p-2 border-orange-500 border-2 text-orange-500 w-[120px] rounded-md hover:text-white hover:bg-orange-500"
-          @click="modalStore.toggleModal"
+      <div
+        v-show="modalStore.showModal"
+        class="z-50 bg-black rounded-lg w-full h-full p-2 bg-opacity-60 flex absolute items-center justify-center top-0 left-0"
+      >
+        <div
+          class="bg-white rounded-lg p-4 w-[368px] h-fit m-4 flex flex-col gap-2"
         >
-          Đóng
-        </button>
+          <div class="flex-initial flex flex-col gap-2">
+            <h1 class="text-semibold text-lg text-center">
+              Câu trả lời chưa tốt với bạn?
+            </h1>
 
-        <button
-          class="flex-auto p-2 border-2 border-[#EFEFEF] text-gray-400 bg-[#EFEFEF] w-[120px] rounded-md"
-          v-if="inputValue === ''"
-        >
-          Gửi yêu cầu
-        </button>
-        <button
-          class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
-          v-if="inputValue !== ''"
-          @click="
-            () => {
-              modalStore.toggleModal();
-              messageStore.messageEvaluate(
-                false,
-                inputValue,
-                props.chatID,
-                props.userID
-              );
-              snackBarStore.showSnackbar();
-            }
-          "
-        >
-          Gửi yêu cầu
-        </button>
+            <textarea
+              name="message"
+              rows="10"
+              cols="30"
+              class="rounded-lg shadow-dm h-[104px] p-2 border-2 border-gray-200 my-2 focus:outline-none text-lg"
+              placeholder="Bạn hãy cho biết lý do câu trả lời chưa tốt và nên được cải thiện như thế nào?"
+              v-model="inputValue"
+            ></textarea>
+          </div>
+          <div class="flex flex-auto justify-between gap-2">
+            <button
+              class="flex-auto p-2 border-orange-500 border-2 text-orange-500 w-[120px] rounded-md hover:text-white hover:bg-orange-500"
+              @click="modalStore.toggleModal"
+            >
+              Đóng
+            </button>
+
+            <button
+              class="flex-auto p-2 border-2 border-[#EFEFEF] text-gray-400 bg-[#EFEFEF] w-[120px] rounded-md"
+              v-if="inputValue === ''"
+            >
+              Gửi yêu cầu
+            </button>
+            <button
+              class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
+              v-if="inputValue !== ''"
+              @click="
+                () => {
+                  modalStore.toggleModal();
+                  messageStore.messageEvaluate(
+                    false,
+                    inputValue,
+                    props.chatID,
+                    props.userID
+                  );
+                  snackBarStore.showSnackbar();
+                }
+              "
+            >
+              Gửi yêu cầu
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
