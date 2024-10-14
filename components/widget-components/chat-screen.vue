@@ -79,7 +79,7 @@ const scrollToBottom = () => {
 const handleScroll = () => {
   const container = chatScreen.value;
   //console.log(container.scrollTop, container.scrollHeight, container.clientHeight)
-  if(container.scrollTop < container.scrollHeight - container.clientHeight - 61 ){
+  if(container.scrollTop < container.scrollHeight - container.clientHeight - 81 ){
     showScrollDownButton.value=true
   }else{
     showScrollDownButton.value=false
