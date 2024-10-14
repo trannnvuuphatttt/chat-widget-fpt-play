@@ -18,7 +18,7 @@
     v-for="(item, index) in props.message"
     v-else-if="Array.isArray(props.message)"
   >
-    {{ marked(item) }}
+    <div v-html="marked(item)"></div>
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
