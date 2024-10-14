@@ -13,13 +13,16 @@
       />
       <ChatInput class="flex-shrink-0 flex-grow-0" />
       <div
-        class="absolute bottom-[120px] left-[25%] right-[25%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
+        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] right-[20%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
         v-if="snackBarStore.snackBarVisible"
         id="snackbar"
         :class="snackBarStore.snackBarClass"
       >
-        <img src="/assets/images/review_snackbar_icon.png" />
-        <p>{{ snackBarStore.message }}</p>
+        <img
+          class="flex-shrink-0 flex-grow-0"
+          src="/assets/images/review_snackbar_icon.png"
+        />
+        <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
       </div>
     </div>
   </div>

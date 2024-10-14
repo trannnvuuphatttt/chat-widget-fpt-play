@@ -1,15 +1,19 @@
 <template>
-  <div ref="chatScreen" class="bg-gray-200 overflow-y-scroll overflow-x-hidden">
+  <div
+    ref="chatScreen"
+    class="bg-gray-200 overflow-y-auto overflow-x-hidden flex flex-col relative items-center pb-4"
+    @scroll="handleScroll()"
+  >
     <div
       v-for="(message, key, index) in messageStore.newMessageArray"
       :key="key"
-      ref="scrollContainer"
+      class="w-[338px] mt-6 gap-2"
     >
       <userChatBubble
         :message="message.userMessage"
         v-if="message.userMessage !== ''"
       />
-
+      {{ console.log(timeAgo(String(Date.now() / 1000))) }}
       <botChatBubble
         :message="message.botMessage"
         :timeStamp="timeAgo(String(message.timestamp))"
@@ -20,9 +24,17 @@
         :images="message.images"
         :contents="message.contents"
         :urls="message.urls"
-        v-if="message.botMessage !== ''"
         class="botMessage"
+        v-if="message.botMessage !== ''"
       />
+    </div>
+
+    <div
+      class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center"
+      v-if="showScrollDownButton"
+      @click="scrollToBottom(), toggleScrollButton()"
+    >
+      <img src="/assets/images/chevron_orange.png" />
     </div>
   </div>
 </template>
@@ -34,53 +46,97 @@ import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "~/stores/userID";
 import { useFormatDateTime } from "~/composables/useFormatDateTime";
 import { useScrollStore } from "~/stores/scroll";
-import { onMounted } from "vue";
+import { nextTick, onMounted } from "vue";
 import { useModalStore } from "~/stores/modal";
+import ChatSuggestion from "./chat-suggestion.vue";
+import { watch } from 'vue';
 
 const UserIDStore = useUserIDStore()
 const modalStore = useModalStore()
 
 const messageStore = useMessage();
 const {timeAgo} = useFormatDateTime()
-
-
-const fetchHistory = () => {
-messageStore.getChatHistory(UserIDStore.userID);
-}
+const showScrollDownButton = ref(false)
 
 const chatScreen = ref(null);
+const toggleScrollButton= () => {
+  showScrollDownButton.value = !showScrollDownButton.value
+}
 const scrollToBottom = () => {
+  const container = chatScreen.value;
   nextTick(() => {
-    if (chatScreen.value) {
-      setTimeout(() => {
-        chatScreen.value.scrollTo({
-          top: chatScreen.value.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 500);
-    }
-    console.log("Scrolled")
-  });
+
+    setTimeout(() => {
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: 'smooth'
+    });
+  }, 0);
+  })
 };
+
+
+const handleScroll = () => {
+  const container = chatScreen.value;
+  //console.log(container.scrollTop, container.scrollHeight, container.clientHeight)
+  if(container.scrollTop < container.scrollHeight - container.clientHeight - 81 ){
+    showScrollDownButton.value=true
+  }else{
+    showScrollDownButton.value=false
+  };
+};
+
+
+
+onMounted(() => {
+  showScrollDownButton.value=false;
+  if (chatScreen.value) {
+    chatScreen.value.addEventListener('scroll', handleScroll);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (chatScreen.value) {
+    chatScreen.value.removeEventListener('scroll', handleScroll);
+  }
+});
 watch(
   () => modalStore.showWidget,
   (newValue) => {
     if (newValue === true) {
-      console.log("true")
+
       scrollToBottom();
     }
   }
 );
-onMounted(async () => {
-  await fetchHistory();
-  await nextTick();
-  window.addEventListener('scroll-to-bottom', scrollToBottom);
+onMounted(() => {
+  UserIDStore.getExistedID();
+
+  messageStore.getChatHistory(UserIDStore.userID);
+  console.log(messageStore.newMessageArray.length)
+
+
 });
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.newMessageArray);
 
   return currentKey === keys.length -1;
 };
+const arrayLength = computed(() => messageStore.newMessageArray.length);
+
+watch(arrayLength, (newLength, oldLength) => {
+  if (newLength > oldLength) {
+    scrollToBottom()
+
+  }
+});
+
+const loading = computed(() => messageStore.isLoading);
+watch(loading, (newVal, oldVal) => {
+   if (!newVal && oldVal) {
+          scrollToBottom();
+    }
+});
 </script>
 
 <style></style>

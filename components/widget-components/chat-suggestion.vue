@@ -46,14 +46,14 @@ onMounted(() => {
 const messageStore = useMessage()
 const Lists = [
   {
-    id: 1,
+
     content: "Anime",
   },
   {
     content: "Hoa ngữ",
   },
   {
-    id: 1,
+
     content: "Âu Mỹ",
   },
   {
@@ -70,14 +70,14 @@ const Lists = [
 
 <template>
   <div
-    class="container bg-gray-200 flex flex-nowrap justify-start overflow-x-hidden cursor-grab items-center"
+    class="container flex flex-nowrap justify-start overflow-x-hidden cursor-grab items-center bg-gray-200"
   >
     <div
-      class="text-orange-500 font-md bg-white border-2 border-orange-500 rounded-xl w-fit px-2 mr-2 cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500"
+      class="text-orange-500 font-md bg-white border-2 border-orange-500 rounded-xl w-fit px-2 cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500 mr-2"
       v-for="item in Lists"
       :key="item.content"
     >
-      <button @click="messageStore.setInput(item.content)">
+      <button class="" @click="messageStore.setInput(item.content)">
         {{ item.content }}
       </button>
     </div>

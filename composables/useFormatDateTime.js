@@ -20,7 +20,6 @@ export const useFormatDateTime = () => {
   function timeAgo(timestamp) {
     const messageTime = parseFloat(timestamp);
     const differenceInSeconds = currentTime.value - messageTime;
-    // console.log(currentTime.value, messageTime, differenceInSeconds);
 
     if (differenceInSeconds < 60) {
       return "Vừa xong";

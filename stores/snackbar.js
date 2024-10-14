@@ -8,7 +8,6 @@ export const useSnackBarStore = defineStore("snackbar", {
   }),
   actions: {
     showSnackbar() {
-      console.log("Snackbar actived");
       this.message = "Cảm ơn đánh giá của bạn!";
       this.snackBarVisible = true;
       this.snackBarClass = "animate__animated animate__fadeInUp";

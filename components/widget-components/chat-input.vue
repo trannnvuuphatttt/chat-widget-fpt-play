@@ -1,29 +1,38 @@
 <template>
-  <div class="grid-cols-10 grid shadow-md" v-if="modalStore.isChatting">
+  <div
+    class="flex flex-row shadow-md w-[400px] h-[72px] gap-2 py-4 px-6 items-center"
+    v-if="modalStore.isChatting"
+  >
     <input
       type="text"
-      class="bg-gray-200 col-span-9 rounded-lg m-2 text-md pl-2 focus:outline-none"
+      class="bg-gray-200 flex-auto rounded-lg text-[16px] focus:outline-none h-[40px] p-4"
       placeholder="Nhập tin nhắn"
       v-model="messageStore.userInput"
       @keyup.enter="handleSendMessage"
     />
-    <button class="col-span-1 pr-1 cursor-pointer" @click="handleSendMessage">
-      <i
+    <button
+      class="flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit"
+      @click="handleSendMessage"
+    >
+      <img
         v-if="messageStore.userInput === ''"
-        class="fa-solid fa-paper-plane text-gray-400"
-      ></i>
-      <i
+        src="/assets/images/send_icon_grey.png"
+        alt="Send Icon"
+      />
+      <img
         v-if="messageStore.userInput !== ''"
-        class="fa-solid fa-paper-plane text-orange-500"
-      ></i>
+        src="/assets/images/send_icon_orange.png"
+        alt="Send Icon"
+      />
     </button>
   </div>
+
   <div
-    class="shadow-md grid-cols-2 grid p-2 gap-2"
+    class="shadow-md flex flex-row p-4 gap-2 w-[400px] h-[72px] justify-between"
     v-if="!modalStore.isChatting && userIDStore.userID"
   >
     <button
-      class="bg-white border-orange-500 border-2 text-orange-500 hover:bg-orange-500 hover:text-white text-md rounded-lg"
+      class="flex-auto bg-white border-orange-500 border-2 text-orange-500 hover:bg-gradient-to-r hover:from-[#FE592A] hover:to-[#E93013] hover:text-white text-md rounded-lg"
       @click="
         userIDStore.createNewID(),
           (modalStore.isChatting = true),
@@ -33,8 +42,12 @@
       Đoạn chat mới
     </button>
     <button
-      class="bg-orange-500 border-orange-500 border-2 text-white hover:bg-white hover:text-orange-500 text-md rounded-lg"
-      @click="modalStore.isChatting = true"
+      class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-md rounded-lg"
+      @click="
+        (modalStore.isChatting = true),
+          console.log(messageStore.newMessageArray),
+          modalStore.toggleSuggestion()
+      "
     >
       Tiếp tục chat
     </button>
@@ -53,22 +66,19 @@ import { nextTick } from 'vue';
 const modalStore = useModalStore();
 const messageStore = useMessage()
 const userIDStore = useUserIDStore();
-const scrollStore = useScrollStore();
 
 
+defineOptions({
+  inheritAttrs: false
+});
 
 const handleSendMessage = () => {
   if(messageStore.userInput !== ''){
 
     messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
-    nextTick(() => {
-      const event = new Event('scroll-to-bottom');
-      window.dispatchEvent(event);
-    })
+    modalStore.toggleSuggestion()
   }
 }
-
-//console.log(messageStore.userInput)
 </script>
 
 <style></style>

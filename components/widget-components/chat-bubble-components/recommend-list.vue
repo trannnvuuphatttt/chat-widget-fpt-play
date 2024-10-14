@@ -46,43 +46,42 @@ onMounted(() => {
 <template>
   <div class="flex movieList cursor-grab overflow-x-scroll mb-2">
     <div
-      class="inline-block bg-white shadow-md rounded-lg m-1 flex-shrink-0 select-none"
+      class="inline-block bg-white shadow-md rounded-lg m-1 flex-shrink-0 select-none h-[188px] w-[256px]"
     >
       <img
         src="/assets/images/movie_poster.png"
-        class="h-[136px] w-[206px] rounded-t-lg"
+        class="h-[136px] w-fit rounded-t-lg"
       />
       <h1 class="text-md font-extrabold m-2">Nier:Automata</h1>
       <div class="text-[12px] text-gray-500 m-2 flex items-center gap-1">
         <span>2024</span>
-        <i class="fa-regular fa-circle text-[4px] text-gray-300"></i>
+        <i class="fa-regular fa-circle text-[4px] text-[#EFEFEF]"></i>
         <span>T16</span>
-        <i class="fa-regular fa-circle text-[4px] text-gray-300"></i>
+        <i class="fa-regular fa-circle text-[4px] text-[#EFEFEF]"></i>
         <span>12/12</span>
-        <i class="fa-regular fa-circle text-[4px] text-gray-300"></i>
+        <i class="fa-regular fa-circle text-[4px] text-[#EFEFEF]"></i>
         <span>Nhật Bản</span>
       </div>
     </div>
 
     <div
-      class="inline-block bg-white shadow-md rounded-lg m-1 flex-shrink-0 select-none"
+      class="inline-block bg-white shadow-md rounded-lg m-1 flex-shrink-0 select-none h-[188px] w-[256px]"
     >
       <img
         src="/assets/images/movie_poster.png"
-        class="h-[136px] w-[206px] rounded-t-lg"
+        class="h-[136px] w-fit rounded-t-lg"
       />
       <h1 class="text-md font-extrabold m-2">Nier:Automata</h1>
       <div class="text-[12px] text-gray-500 m-2 flex items-center gap-1">
         <span>2024</span>
-        <i class="fa-regular fa-circle text-[4px] text-gray-300"></i>
+        <i class="fa-regular fa-circle text-[4px] text-[#EFEFEF]"></i>
         <span>T16</span>
-        <i class="fa-regular fa-circle text-[4px] text-gray-300"></i>
+        <i class="fa-regular fa-circle text-[4px] text-[#EFEFEF]"></i>
         <span>12/12</span>
-        <i class="fa-regular fa-circle text-[4px] text-gray-300"></i>
+        <i class="fa-regular fa-circle text-[4px] text-[#EFEFEF]"></i>
         <span>Nhật Bản</span>
       </div>
     </div>
-    <!-- Thêm nhiều phần tử hơn để đảm bảo có thể cuộn -->
   </div>
 </template>
 

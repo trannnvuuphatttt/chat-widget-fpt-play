@@ -18,7 +18,7 @@ export const useMessage = defineStore("message", {
           "Vậy tôi có thể giúp gì cho bạn?",
         ],
 
-        timeStamp: null,
+        timeStamp: Date.now() * 1000,
         videos: [],
         images: [],
         contents: [],
@@ -26,9 +26,13 @@ export const useMessage = defineStore("message", {
       },
     ],
     botMessageID: "",
+    isLoading: false,
   }),
   actions: {
     async sendRequest(inputData, userID) {
+      this.isLoading = true;
+      this.sendMessage(inputData, "");
+      this.userInput = "";
       try {
         const response = await axios.post(
           "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/add",
@@ -48,10 +52,9 @@ export const useMessage = defineStore("message", {
         );
         this.responseData = response.data.data;
 
-        //console.log(response.data.data.answer.text);
         //this.messagesArray.push(this.responseData);
-
-        this.newMessageArray.push({
+        //console.log(this.newMessageArray[this.newMessageArray.length - 1]);
+        this.newMessageArray[this.newMessageArray.length - 1] = {
           userMessage: inputData,
           botMessage: [this.responseData.answer.text],
           timestamp: this.responseData.timestamp,
@@ -60,22 +63,25 @@ export const useMessage = defineStore("message", {
           contents: this.responseData.answer.contents,
           urls: this.responseData.answer.urls,
           chatID: this.responseData.message_uuid,
-        });
-        console.log(this.newMessageArray);
+        };
+
         this.userInput = "";
       } catch (error) {
-        console.log("Lỗi khi gọi API:", error);
+        console.error("Lỗi khi gọi API:", error);
+      } finally {
+        console.log("Dữ liệu trả về:", this.responseData);
+        this.isLoading = false;
       }
     },
     sendMessage(userChat, botChat) {
       this.newMessageArray.push({
         userMessage: userChat,
-        botMessage: botChat,
+        botMessage: [botChat],
         timeStamp: Date.now() / 1000,
         videos: [],
         images: [],
         contents: [],
-        link: "",
+        urls: [],
         chatID: "",
       });
       this.userInput = "";
@@ -102,11 +108,9 @@ export const useMessage = defineStore("message", {
           );
           //this.newMessageArray = chatHistory.data.data.messages;
           this.historyData = chatHistory.data.data.messages;
-          // console.log(this.historyData);
-          // console.log(chatHistory.data.data.messages[0].query);
-          // console.log(chatHistory.data.data.messages.length);
-          // console.log(this.historyData[0].timestamp);
-          for (let i = 0; i < this.historyData.length; i++) {
+          console.log(this.historyData.length, this.historyData);
+
+          for (let i = this.historyData.length - 1; i >= 0; i--) {
             this.newMessageArray.push({
               userMessage: this.historyData[i].query,
               botMessage: [this.historyData[i].answer.text],
@@ -119,12 +123,11 @@ export const useMessage = defineStore("message", {
             });
           }
         } catch (error) {
-          console.log("Lỗi khi gọi API:", error);
+          console.error("Lỗi khi gọi API:", error);
         }
       }
     },
     async messageEvaluate(evaluate, evaMessage, botMessageID, userID) {
-      console.log(evaluate, evaMessage, botMessageID, userID);
       try {
         await axios.put(
           "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/" +
@@ -146,7 +149,7 @@ export const useMessage = defineStore("message", {
           }
         );
       } catch (error) {
-        console.log("Lỗi khi gọi API:", error);
+        console.error("Lỗi khi gọi API:", error);
       }
     },
     setInput(input) {
