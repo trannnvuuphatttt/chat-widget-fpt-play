@@ -88,8 +88,10 @@ import {useSnackBarStore} from "~/stores/snackbar"
 import { useMessage } from "~/stores/messages";
 import { useFormatDateTime } from "../../../composables/useFormatDateTime";
 import ChatSuggestion from "../chat-suggestion.vue";
+import {useReview} from '~/stores/review';
 
 import { marked } from 'marked'
+const reviewStore = useReview()
 
 defineOptions({
   inheritAttrs: false
@@ -133,6 +135,7 @@ function Dislike() {
   if(reviewStateDislike.value){
     modalStore.toggleModal();
   }
+  reviewStore.saveID(props.chatID,props.userID)
 
 }
 </script>

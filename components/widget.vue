@@ -57,8 +57,8 @@
                   messageStore.messageEvaluate(
                     false,
                     inputValue,
-                    props.chatID,
-                    props.userID
+                    reviewStore.chatID,
+                    reviewStore.userID
                   );
                   snackBarStore.showSnackbar();
                 }
@@ -137,11 +137,13 @@ import {useUserIDStore} from '~/stores/userID';
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useMessage } from "~/stores/messages";
 import { useSnackBarStore } from "~/stores/snackbar";
+import {useReview} from '~/stores/review';
 
 const modalStore = useModalStore();
 const userIDStore = useUserIDStore()
 const messageStore = useMessage();
 const snackBarStore = useSnackBarStore()
+const reviewStore = useReview() 
 
 import useInactivity from '~/composables/useInactiveTimeOut';
 const arrayLength = computed(() => messageStore.newMessageArray.length);
