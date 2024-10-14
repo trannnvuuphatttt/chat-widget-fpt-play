@@ -74,18 +74,6 @@
           class="fa-solid fa-thumbs-down text-md fa-flip-horizontal text-orange-500"
         ></i>
       </button>
-      <!-- <div
-        class="absolute bottom-[40px] left-[25%] right-[25%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
-        v-if="snackBarStore.snackBarVisible"
-        id="snackbar"
-        :class="snackBarStore.snackBarClass"
-      >
-        <p>{{ snackBarStore.message }}</p>
-      </div> -->
-
-      <v-snackbar v-if="snackBarStore.snackBarVisible" :timeout="3000" absolute>
-        Đây là thông báo Snackbar!
-      </v-snackbar>
     </div>
   </span>
   <div

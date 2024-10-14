@@ -12,47 +12,55 @@
         v-show="modalStore.isSuggestion"
       />
       <ChatInput class="flex-shrink-0 flex-grow-0" />
-    </div>
-    <div
-      v-show="!modalStore.showWidget"
-      class="z-40 fixed bottom-[40px] right-[40px] flex flex-col items-end w-[280px] h-fit gap-4"
-    >
       <div
-        id="box"
-        class="hidden break-words bg-white leading-5 rounded-t-lg p-4 z-50 shadow-lg animate__animated w-[100%] rounded-tr-sm rounded-l-lg rounded-b-lg"
+        class="absolute bottom-[120px] left-[25%] right-[25%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
+        v-if="snackBarStore.snackBarVisible"
+        id="snackbar"
+        :class="snackBarStore.snackBarClass"
       >
-        <p id="typing-text" class="text-[16px]"></p>
+        <p>{{ snackBarStore.message }}</p>
       </div>
-      <button @click="modalStore.toggleWidget" class="z-40">
-        <img src="/assets/images/avatar.png" class="w-20 h-20" />
-      </button>
     </div>
+  </div>
+  <div
+    v-show="!modalStore.showWidget"
+    class="z-40 fixed bottom-[40px] right-[40px] flex flex-col items-end w-[280px] h-fit gap-4"
+  >
     <div
-      class="widget-container bg-white rounded-lg shadow-lg w-[400px] h-[354x] z-40 fixed bottom-[40px] right-[40px] flex flex-col justify-between items-center p-6 gap-11"
-      v-if="userIDStore.userID === null && modalStore.showWidget"
+      id="box"
+      class="hidden break-words bg-white leading-5 rounded-t-lg p-4 z-50 shadow-lg animate__animated w-[100%] rounded-tr-sm rounded-l-lg rounded-b-lg"
     >
-      <button
-        class="relative self-end flex-none"
-        @click="modalStore.toggleWidget"
-      >
-        <i class="fa-solid fa-x right-3 w-6 h-6 absolute"></i>
-      </button>
-      <div class="flex-none gap-6 flex flex-col items-center">
-        <img
-          src="/assets/images/avatar.png"
-          class="w-[104px] h-[104px] text-center flex-none"
-        />
-        <p class="text-[16px] text-center flex-auto">
-          Xin chào! chúng tôi sẵn sàng hỗ trợ bạn
-        </p>
-      </div>
-      <button
-        class="rounded-lg border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] shadow-md bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-white hover:border-2 hover:border-orange-500 hover:text-orange-500 h-fit w-[352px] px-6 py-3 flex-auto"
-        @click="userIDStore.createNewID()"
-      >
-        <p class="text-[16px]">Bắt đầu Chat</p>
-      </button>
+      <p id="typing-text" class="text-[16px]"></p>
     </div>
+    <button @click="modalStore.toggleWidget" class="z-40">
+      <img src="/assets/images/avatar.png" class="w-20 h-20" />
+    </button>
+  </div>
+  <div
+    class="widget-container bg-white rounded-lg shadow-lg w-[400px] h-[354x] z-40 fixed bottom-[40px] right-[40px] flex flex-col justify-between items-center p-6 gap-11"
+    v-if="userIDStore.userID === null && modalStore.showWidget"
+  >
+    <button
+      class="relative self-end flex-none"
+      @click="modalStore.toggleWidget"
+    >
+      <i class="fa-solid fa-x right-3 w-6 h-6 absolute"></i>
+    </button>
+    <div class="flex-none gap-6 flex flex-col items-center">
+      <img
+        src="/assets/images/avatar.png"
+        class="w-[104px] h-[104px] text-center flex-none"
+      />
+      <p class="text-[16px] text-center flex-auto">
+        Xin chào! chúng tôi sẵn sàng hỗ trợ bạn
+      </p>
+    </div>
+    <button
+      class="rounded-lg border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] shadow-md bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-white hover:border-2 hover:border-orange-500 hover:text-orange-500 h-fit w-[352px] px-6 py-3 flex-auto"
+      @click="userIDStore.createNewID()"
+    >
+      <p class="text-[16px]">Bắt đầu Chat</p>
+    </button>
   </div>
 </template>
 
@@ -67,10 +75,12 @@ import { useModalStore } from '~/stores/modal';
 import {useUserIDStore} from '~/stores/userID';
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useMessage } from "~/stores/messages";
+import { useSnackBarStore } from "~/stores/snackbar";
 
 const modalStore = useModalStore();
 const userIDStore = useUserIDStore()
 const messageStore = useMessage();
+const snackBarStore = useSnackBarStore()
 
 import useInactivity from '~/composables/useInactiveTimeOut';
 const arrayLength = computed(() => messageStore.newMessageArray.length);
