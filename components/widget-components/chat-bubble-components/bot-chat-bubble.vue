@@ -74,14 +74,18 @@
           class="fa-solid fa-thumbs-down text-md fa-flip-horizontal text-orange-500"
         ></i>
       </button>
-      <div
+      <!-- <div
         class="absolute bottom-[40px] left-[25%] right-[25%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
         v-if="snackBarStore.snackBarVisible"
         id="snackbar"
         :class="snackBarStore.snackBarClass"
       >
         <p>{{ snackBarStore.message }}</p>
-      </div>
+      </div> -->
+
+      <v-snackbar v-if="snackBarStore.snackBarVisible" :timeout="3000" absolute>
+        Đây là thông báo Snackbar!
+      </v-snackbar>
     </div>
   </span>
   <div
@@ -227,5 +231,10 @@ function Dislike() {
   80% {
     background-position: 0% 50%, 50% 50%, 100% 100%;
   }
+}
+.v-snackbar {
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
