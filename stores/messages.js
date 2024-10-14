@@ -32,6 +32,7 @@ export const useMessage = defineStore("message", {
     async sendRequest(inputData, userID) {
       this.isLoading = true;
       this.sendMessage(inputData, "");
+      this.userInput = "";
       try {
         const response = await axios.post(
           "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/add",

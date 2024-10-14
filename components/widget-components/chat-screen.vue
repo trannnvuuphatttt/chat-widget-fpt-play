@@ -11,10 +11,9 @@
     >
       <userChatBubble
         :message="message.userMessage"
-        :timeStamp="timeAgo(String(Date.now() / 1000))"
         v-if="message.userMessage !== ''"
       />
-
+      {{ console.log(timeAgo(String(Date.now() / 1000))) }}
       <botChatBubble
         :message="message.botMessage"
         :timeStamp="timeAgo(String(message.timestamp))"
@@ -100,6 +99,7 @@ const arrayLength = computed(() => messageStore.newMessageArray.length);
 
 watch(arrayLength, (newLength, oldLength) => {
   if (newLength > oldLength) {
+    scrollToBottom()
     toggleScrollButton()
   }
 });

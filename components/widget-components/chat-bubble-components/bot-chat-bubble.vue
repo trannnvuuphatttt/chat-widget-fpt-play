@@ -9,20 +9,20 @@
 
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-if="messageStore.isLoading"
+    v-if="messageStore.isLoading && flag"
   >
     <div class="loader"></div>
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
     v-for="(item, index) in props.message"
-    v-if="Array.isArray(props.message) && !messageStore.isLoading"
+    v-if="Array.isArray(props.message)"
   >
     <p>{{ item }}</p>
   </div>
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-if="Array.isArray(props.message) && !messageStore.isLoading"
+    v-if="Array.isArray(props.urls)"
     v-for="(item, index) in props.urls"
   >
     <a :href="item" target="_blank" class="underline">{{ item }}</a>
@@ -30,7 +30,7 @@
   <div
     class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
     v-for="(item, index) in props.images"
-    v-if="Array.isArray(props.images) && !messageStore.isLoading"
+    v-if="Array.isArray(props.images)"
   >
     <p>{{ item }}</p>
   </div>
