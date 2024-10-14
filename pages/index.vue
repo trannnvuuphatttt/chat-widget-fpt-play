@@ -1,6 +1,6 @@
 <template>
-  <div class="font-sans bg-white">
-    <Widget class="rounded-lg bg-white" />
+  <div class="font-sans">
+    <Widget class="rounded-lg" />
   </div>
 </template>
 
