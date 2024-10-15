@@ -13,33 +13,36 @@
   >
     <div class="loader"></div>
   </div>
-  <div
-    class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-for="(item, index) in props.message"
-    v-else-if="Array.isArray(props.message)"
-  >
-    <div v-html="marked(item)"></div>
-  </div>
-  <div
-    class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-else-if="Array.isArray(props.urls)"
-    v-for="(item, index) in props.urls"
-  >
-    <a :href="item" target="_blank" class="underline">{{ item }}</a>
-  </div>
-  <div
-    class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-for="(item, index) in props.images"
-    v-else-if="Array.isArray(props.images)"
-  >
-    <p>{{ item }}</p>
-  </div>
-  <div
-    class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-    v-for="(item, index) in props.videos"
-    v-else-if="Array.isArray(props.videos)"
-  >
-    <p>{{ item }}</p>
+  <div v-else>
+    <div
+      class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
+      v-for="(item, index) in props.message"
+      v-if="Array.isArray(props.message)"
+    >
+      <div v-html="marked(item)"></div>
+    </div>
+    <div
+      class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
+      v-if="Array.isArray(props.urls)"
+      v-for="(item, index) in props.urls"
+    >
+      {{ console.log(item) }}
+      <a :href="item" target="_blank" class="underline">{{ item }}</a>
+    </div>
+    <div
+      class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
+      v-for="(item, index) in props.images"
+      v-if="Array.isArray(props.images)"
+    >
+      <p>{{ item }}</p>
+    </div>
+    <div
+      class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
+      v-for="(item, index) in props.videos"
+      v-if="Array.isArray(props.videos)"
+    >
+      <p>{{ item }}</p>
+    </div>
   </div>
 
   <span class="flex flex-row justify-between flex-wrap h-fit">
@@ -108,12 +111,14 @@ const props = defineProps({
   contents:Array,  urls:Array
 });
 
+console.log(Array.isArray(props.urls))
+
 
 const {timeAgo} = useFormatDateTime()
 const modalStore = useModalStore();
 const snackBarStore = useSnackBarStore();
 const messageStore = useMessage();
-const inputValue = ref("")
+
 
 
 let reviewStateLike = ref(false);
@@ -125,7 +130,7 @@ function Like() {
   reviewStateDislike.value = false;
   if(reviewStateLike.value){
     snackBarStore.showSnackbar()
-    messageStore.messageEvaluate(true, "", props.chatID,props.userID )
+    messageStore.messageEvaluate(true,  props.chatID,props.userID )
   }
 
 }

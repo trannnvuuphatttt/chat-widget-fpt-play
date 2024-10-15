@@ -13,7 +13,7 @@
         :message="message.userMessage"
         v-if="message.userMessage !== ''"
       />
-      {{ console.log(timeAgo(String(Date.now() / 1000))) }}
+
       <botChatBubble
         :message="message.botMessage"
         :timeStamp="timeAgo(String(message.timestamp))"

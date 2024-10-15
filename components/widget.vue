@@ -31,7 +31,7 @@
               cols="30"
               class="rounded-lg shadow-dm h-[104px] p-2 border-2 border-gray-200 my-2 focus:outline-none text-lg"
               placeholder="Bạn hãy cho biết lý do câu trả lời chưa tốt và nên được cải thiện như thế nào?"
-              v-model="inputValue"
+              v-model="messageStore.userComment"
             ></textarea>
           </div>
           <div class="flex flex-auto justify-between gap-2">
@@ -44,19 +44,19 @@
 
             <button
               class="flex-auto p-2 border-2 border-[#EFEFEF] text-gray-400 bg-[#EFEFEF] w-[120px] rounded-md"
-              v-if="inputValue === ''"
+              v-if="messageStore.userComment === ''"
             >
               Gửi yêu cầu
             </button>
             <button
               class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
-              v-if="inputValue !== ''"
+              v-if="messageStore.userComment !== ''"
               @click="
                 () => {
                   modalStore.toggleModal();
                   messageStore.messageEvaluate(
                     false,
-                    inputValue,
+
                     reviewStore.chatID,
                     reviewStore.userID
                   );
@@ -143,7 +143,7 @@ const modalStore = useModalStore();
 const userIDStore = useUserIDStore()
 const messageStore = useMessage();
 const snackBarStore = useSnackBarStore()
-const reviewStore = useReview() 
+const reviewStore = useReview()
 
 import useInactivity from '~/composables/useInactiveTimeOut';
 const arrayLength = computed(() => messageStore.newMessageArray.length);

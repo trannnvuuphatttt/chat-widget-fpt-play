@@ -28,15 +28,19 @@
   </div>
 
   <div
-    class="shadow-md flex flex-row p-4 gap-2 w-[400px] h-[72px] justify-between"
+    class="shadow-md flex flex-row p-4 gap-2 w-[400px] h-[72px] justify-between min-h-[72px]"
     v-if="!modalStore.isChatting && userIDStore.userID"
   >
     <button
       class="flex-auto bg-white border-orange-500 border-2 text-orange-500 hover:bg-gradient-to-r hover:from-[#FE592A] hover:to-[#E93013] hover:text-white text-md rounded-lg"
       @click="
-        userIDStore.createNewID(),
-          (modalStore.isChatting = true),
-          messageStore.emptyArray()
+        (modalStore.isChatting = true),
+          messageStore.sendMessage(
+            '',
+            'Mừng bạn đã quay trở lại, tôi chờ bạn mãi! 🥰'
+          ),
+          console.log(messageStore.newMessageArray),
+          modalStore.toggleSuggestion()
       "
     >
       Đoạn chat mới

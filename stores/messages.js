@@ -5,6 +5,7 @@ import axios from "axios";
 export const useMessage = defineStore("message", {
   state: () => ({
     userInput: "",
+    userComment: "",
     //messagesArray: [],
     sessionID: "",
     responseData: [],
@@ -127,7 +128,7 @@ export const useMessage = defineStore("message", {
         }
       }
     },
-    async messageEvaluate(evaluate, evaMessage, botMessageID, userID) {
+    async messageEvaluate(evaluate, botMessageID, userID) {
       try {
         await axios.put(
           "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/" +
@@ -135,7 +136,7 @@ export const useMessage = defineStore("message", {
             "/evaluate",
           {
             is_liked: evaluate,
-            comment: evaMessage,
+            comment: this.userComment,
             profile_id: userID,
             session_uuid: userID,
           },
