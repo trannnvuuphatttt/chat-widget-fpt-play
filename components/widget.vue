@@ -159,7 +159,7 @@ watch(arrayLength, (newLength, oldLength) => {
 });
 import useInactivity from '~/composables/useInactiveTimeOut';
 
-const { isInactive } = useInactivity(10000);
+const { isInactive } = useInactivity(60000);
 
 
 defineOptions({
