@@ -4,7 +4,7 @@
       src="assets/images/avatar.png"
       class="h-6 w-6 inline-block mb-2 mr-1"
     />
-    <p class="text-sm inline-block mb-2 ml-1">Chatbot</p>
+    <p class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</p>
   </span>
 
   <div

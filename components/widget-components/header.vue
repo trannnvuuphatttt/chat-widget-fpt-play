@@ -15,7 +15,9 @@
         ></div>
       </div>
       <div id="status" class="flex-initial w-fit h-fit">
-        <h3 class="font-semibold text-[20px] w-fit h-fit">ChatBot</h3>
+        <h3 class="font-semibold text-[20px] w-fit h-fit">
+          FPT Play AI Support
+        </h3>
         <span class="text-sm text-gray-500 w-fit h-fit">Đang hoạt động</span>
       </div>
     </div>
