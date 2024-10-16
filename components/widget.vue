@@ -148,7 +148,7 @@ const arrayLength = computed(() => messageStore.newMessageArray.length);
 
 watch(arrayLength, (newLength, oldLength) => {
   if (newLength !== oldLength && newLength >1) {
-    console.log("NEW size:",newLength )
+
     modalStore.isSuggestion = false;
 
   }else{

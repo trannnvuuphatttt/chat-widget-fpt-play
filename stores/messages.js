@@ -93,7 +93,7 @@ export const useMessage = defineStore("message", {
           const chatHistory = await axios.put(
             "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/get",
             {
-              limit: 3,
+              limit: 10,
               offset: 0,
               profile_id: userID,
               session_uuid: userID,
@@ -107,9 +107,9 @@ export const useMessage = defineStore("message", {
               },
             }
           );
-          //this.newMessageArray = chatHistory.data.data.messages;
+
           this.historyData = chatHistory.data.data.messages;
-          console.log(this.historyData.length, this.historyData);
+          console.log(this.historyData);
 
           for (let i = this.historyData.length - 1; i >= 0; i--) {
             this.newMessageArray.push({
@@ -123,6 +123,7 @@ export const useMessage = defineStore("message", {
               chatID: this.historyData[i].message_uuid,
             });
           }
+          console.log(this.historyData);
         } catch (error) {
           console.error("Lỗi khi gọi API:", error);
         }

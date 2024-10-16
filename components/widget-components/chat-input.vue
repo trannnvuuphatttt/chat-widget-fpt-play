@@ -65,7 +65,7 @@ defineOptions({
 });
 
 const handleContinueChatting = () => {
-  console.log("Tiếp tục chat", messageStore.newMessageArray.length)
+
   modalStore.isChatting = true
   if(messageStore.newMessageArray.length > 1){
      messageStore.sendMessage('',

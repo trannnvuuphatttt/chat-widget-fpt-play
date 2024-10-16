@@ -21,26 +21,32 @@
     >
       <div v-html="marked(item)"></div>
     </div>
-    <div
+    <!-- <div
       class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
       v-if="Array.isArray(props.urls)"
       v-for="(item, index) in props.urls"
     >
       <a :href="item" target="_blank" class="underline">{{ item }}</a>
-    </div>
+    </div> -->
     <div
       class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit text-[16px]"
       v-if="Array.isArray(props.urls)"
       v-for="(item, index) in props.urls"
     >
-      <a :href="item" target="_blank" class="gap-2">
-        <img :src="metadataStore.metadataList.image" class="rounded-lg mb-1" />
+      <a
+        :href="item.link"
+        target="_blank"
+        class="block p-2 underline whitespace-nowrap text-ellipsis overflow-hidden"
+        >{{ item.link }}</a
+      >
+      <a :href="item.link" target="_blank" class="gap-2">
+        <img :src="item.icon" class="rounded-lg mb-1" />
         <div class="p-4">
           <h1 class="font-bold mb-1">
-            {{ metadataStore.metadataList.title }}
+            {{ item.title }}
           </h1>
           <p class="mb-1">
-            {{ metadataStore.metadataList.description }}
+            {{ item.description }}
           </p>
         </div>
       </a>
@@ -51,7 +57,7 @@
       v-for="(item, index) in props.images"
       v-if="Array.isArray(props.images)"
     >
-      <p>{{ item }}</p>
+      <a :href="item"><img :src="item" /></a>
     </div>
     <div
       class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
@@ -150,20 +156,6 @@ function Dislike() {
   reviewStore.saveID(props.chatID,props.userID)
 
 }
-
-
-import {useMetadataStore} from '~/stores/metadata'
-
-const metadataList = ref([]);
-const metadataStore = useMetadataStore()
-  const fetchMetadata = async () => {await metadataStore.fetchMetadata("https://fptplay.vn/xem-video/rezero-bat-dau-lai-o-the-gioi-khac-phan-3-66fcf00155ef684c970caf98");
-  metadataList.value = metadataStore.metadataList
-  console.log(metadataList)
-};
-
-onMounted(() => {
-  fetchMetadata();
-})
 </script>
 
 <style>

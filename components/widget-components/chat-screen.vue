@@ -75,10 +75,38 @@ const scrollToBottom = () => {
   })
 };
 
+const scrollToBottomWhenImagesLoaded = () => {
+  const container = chatScreen.value;
+  const images = container.querySelectorAll('img');
+
+  if (images.length === 0) {
+    scrollToBottom();
+    return;
+  }
+
+  let loadedImages = 0;
+  images.forEach((img) => {
+    if (img.complete) {
+      loadedImages++;
+    } else {
+      img.addEventListener('load', () => {
+        loadedImages++;
+        if (loadedImages === images.length) {
+          scrollToBottom();
+        }
+      });
+    }
+  });
+
+
+  if (loadedImages === images.length) {
+    scrollToBottom();
+  }
+};
 
 const handleScroll = () => {
   const container = chatScreen.value;
-  //console.log(container.scrollTop, container.scrollHeight, container.clientHeight)
+
   if(container.scrollTop < container.scrollHeight - container.clientHeight -81 ){
     showScrollDownButton.value=true
   }else{
@@ -113,8 +141,6 @@ onMounted(() => {
   UserIDStore.getExistedID();
 
   messageStore.getChatHistory(UserIDStore.userID);
-  console.log(messageStore.newMessageArray.length)
-
 
 });
 const isLastElement = (currentKey) => {
@@ -126,7 +152,7 @@ const arrayLength = computed(() => messageStore.newMessageArray.length);
 
 watch(arrayLength, (newLength, oldLength) => {
   if (newLength > oldLength) {
-    scrollToBottom()
+    scrollToBottomWhenImagesLoaded()
 
   }
 });
@@ -134,7 +160,7 @@ watch(arrayLength, (newLength, oldLength) => {
 const loading = computed(() => messageStore.isLoading);
 watch(loading, (newVal, oldVal) => {
    if (!newVal && oldVal) {
-          scrollToBottom();
+    scrollToBottomWhenImagesLoaded();
     }
 });
 </script>

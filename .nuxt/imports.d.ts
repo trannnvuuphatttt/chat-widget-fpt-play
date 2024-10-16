@@ -29,7 +29,9 @@ export { withCtx, withDirectives, withKeys, withMemo, withModifiers, withScopeId
 export { injectHead, useHead, useSeoMeta, useHeadSafe, useServerHead, useServerSeoMeta, useServerHeadSafe } from '@unhead/vue';
 export { useFormatDateTime } from '../composables/useFormatDateTime';
 export { default as useInactiveTimeOut } from '../composables/useInactiveTimeOut';
+export { useMetadata } from '../composables/useMetadata';
 export { useMessage } from '../stores/messages';
+export { useMetadataStore } from '../stores/metadata';
 export { useModalStore } from '../stores/modal';
 export { useReview } from '../stores/review';
 export { useScrollStore } from '../stores/scroll';
