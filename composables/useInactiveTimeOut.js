@@ -28,12 +28,18 @@ export default function useInactivityHandler() {
   onMounted(() => {
     document.addEventListener("mousemove", handleUserActivity);
     document.addEventListener("keydown", handleUserActivity);
+    document.addEventListener("click", handleUserActivity);
+    document.addEventListener("scroll", handleUserActivity);
+
     resetTimers();
   });
 
   onBeforeUnmount(() => {
     document.removeEventListener("mousemove", handleUserActivity);
     document.removeEventListener("keydown", handleUserActivity);
+    document.removeEventListener("click", handleUserActivity);
+    document.removeEventListener("scroll", handleUserActivity);
+
     if (inactivityTimeout) clearTimeout(inactivityTimeout);
     if (buttonTimeout) clearTimeout(buttonTimeout);
   });

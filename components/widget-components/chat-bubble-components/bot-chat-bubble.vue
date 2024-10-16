@@ -57,7 +57,7 @@
       v-for="(item, index) in props.images"
       v-if="Array.isArray(props.images)"
     >
-      <a :href="item"><img :src="item" /></a>
+      <a target="_blank" :href="item"><img :src="item" /></a>
     </div>
     <div
       class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
