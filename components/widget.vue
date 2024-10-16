@@ -3,6 +3,7 @@
     <div
       class="bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-[400px] h-[668px] right-[40px] bottom-[40px]"
       v-show="modalStore.showWidget && userIDStore.userID !== null"
+      v-if="!isInactive"
     >
       <Header class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto" />
@@ -156,9 +157,10 @@ watch(arrayLength, (newLength, oldLength) => {
   }
 
 });
-import useInactivityHandler from '~/composables/useInactiveTimeOut'
+import useInactivity from '~/composables/useInactiveTimeOut';
 
-useInactivityHandler()
+const { isInactive } = useInactivity(10000);
+
 
 defineOptions({
   inheritAttrs: false

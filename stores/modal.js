@@ -15,6 +15,7 @@ export const useModalStore = defineStore("modal", {
 
     closeWidget() {
       this.showWidget = false;
+      this.isChatting = false;
     },
 
     toggleModal() {

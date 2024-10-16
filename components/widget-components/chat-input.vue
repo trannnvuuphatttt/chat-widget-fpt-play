@@ -67,11 +67,7 @@ defineOptions({
 const handleContinueChatting = () => {
 
   modalStore.isChatting = true
-  if(messageStore.newMessageArray.length > 1){
-     messageStore.sendMessage('',
-              'Mừng bạn đã quay trở lại, tôi chờ bạn mãi! 🥰',
-            )
-  }
+
 
 }
 
