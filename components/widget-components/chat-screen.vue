@@ -30,7 +30,7 @@
     </div>
 
     <div
-      class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center"
+      class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center bg-white cursor-pointer"
       v-if="showScrollDownButton"
       @click="scrollToBottom(), toggleScrollButton()"
     >
@@ -79,7 +79,7 @@ const scrollToBottom = () => {
 const handleScroll = () => {
   const container = chatScreen.value;
   //console.log(container.scrollTop, container.scrollHeight, container.clientHeight)
-  if(container.scrollTop < container.scrollHeight - container.clientHeight - 81 ){
+  if(container.scrollTop < container.scrollHeight - container.clientHeight -81 ){
     showScrollDownButton.value=true
   }else{
     showScrollDownButton.value=false

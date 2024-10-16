@@ -26,9 +26,26 @@
       v-if="Array.isArray(props.urls)"
       v-for="(item, index) in props.urls"
     >
-      {{ console.log(item) }}
       <a :href="item" target="_blank" class="underline">{{ item }}</a>
     </div>
+    <div
+      class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit text-[16px]"
+      v-if="Array.isArray(props.urls)"
+      v-for="(item, index) in props.urls"
+    >
+      <a :href="item" target="_blank" class="gap-2">
+        <img :src="metadataStore.metadataList.image" class="rounded-lg mb-1" />
+        <div class="p-4">
+          <h1 class="font-bold mb-1">
+            {{ metadataStore.metadataList.title }}
+          </h1>
+          <p class="mb-1">
+            {{ metadataStore.metadataList.description }}
+          </p>
+        </div>
+      </a>
+    </div>
+
     <div
       class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
       v-for="(item, index) in props.images"
@@ -82,7 +99,7 @@
 </template>
 
 <script lang="js" setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import MovieList from "./movie-list.vue";
 import RecommendList from "./recommend-list.vue";
@@ -95,11 +112,9 @@ import {useReview} from '~/stores/review';
 
 import { marked } from 'marked'
 const reviewStore = useReview()
-
 defineOptions({
   inheritAttrs: false
 });
-
 const props = defineProps({
   message: Array,
   timeStamp:String,
@@ -110,20 +125,12 @@ const props = defineProps({
   images:Array,
   contents:Array,  urls:Array
 });
-
-console.log(Array.isArray(props.urls))
-
-
-const {timeAgo} = useFormatDateTime()
 const modalStore = useModalStore();
 const snackBarStore = useSnackBarStore();
 const messageStore = useMessage();
 
-
-
 let reviewStateLike = ref(false);
 let reviewStateDislike = ref(false);
-
 
 function Like() {
   reviewStateLike.value = !reviewStateLike.value;
@@ -143,6 +150,20 @@ function Dislike() {
   reviewStore.saveID(props.chatID,props.userID)
 
 }
+
+
+import {useMetadataStore} from '~/stores/metadata'
+
+const metadataList = ref([]);
+const metadataStore = useMetadataStore()
+  const fetchMetadata = async () => {await metadataStore.fetchMetadata("https://fptplay.vn/xem-video/rezero-bat-dau-lai-o-the-gioi-khac-phan-3-66fcf00155ef684c970caf98");
+  metadataList.value = metadataStore.metadataList
+  console.log(metadataList)
+};
+
+onMounted(() => {
+  fetchMetadata();
+})
 </script>
 
 <style>

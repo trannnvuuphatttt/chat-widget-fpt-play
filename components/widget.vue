@@ -3,7 +3,6 @@
     <div
       class="bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-[400px] h-[668px] right-[40px] bottom-[40px]"
       v-show="modalStore.showWidget && userIDStore.userID !== null"
-      v-if="!isInactive"
     >
       <Header class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto" />
@@ -145,7 +144,6 @@ const messageStore = useMessage();
 const snackBarStore = useSnackBarStore()
 const reviewStore = useReview()
 
-import useInactivity from '~/composables/useInactiveTimeOut';
 const arrayLength = computed(() => messageStore.newMessageArray.length);
 
 watch(arrayLength, (newLength, oldLength) => {
@@ -158,7 +156,9 @@ watch(arrayLength, (newLength, oldLength) => {
   }
 
 });
-const { isInactive } = useInactivity(50000);
+import useInactivityHandler from '~/composables/useInactiveTimeOut'
+
+useInactivityHandler()
 
 defineOptions({
   inheritAttrs: false

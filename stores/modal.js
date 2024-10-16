@@ -15,7 +15,6 @@ export const useModalStore = defineStore("modal", {
 
     closeWidget() {
       this.showWidget = false;
-      this.isChatting = false;
     },
 
     toggleModal() {
@@ -23,6 +22,9 @@ export const useModalStore = defineStore("modal", {
     },
     toggleSuggestion() {
       this.isSuggestion = false;
+    },
+    closeChatting() {
+      this.isChatting = false;
     },
   },
 });

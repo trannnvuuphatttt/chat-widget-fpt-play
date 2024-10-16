@@ -127,6 +127,8 @@ declare global {
   const useLink: typeof import('../../node_modules/vue-router')['useLink']
   const useLoadingIndicator: typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator')['useLoadingIndicator']
   const useMessage: typeof import('../../stores/messages')['useMessage']
+  const useMetadata: typeof import('../../composables/useMetadata')['useMetadata']
+  const useMetadataStore: typeof import('../../stores/metadata')['useMetadataStore']
   const useModalStore: typeof import('../../stores/modal')['useModalStore']
   const useModel: typeof import('../../node_modules/vue')['useModel']
   const useNuxtApp: typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']
@@ -329,6 +331,8 @@ declare module 'vue' {
     readonly useLink: UnwrapRef<typeof import('../../node_modules/vue-router')['useLink']>
     readonly useLoadingIndicator: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator')['useLoadingIndicator']>
     readonly useMessage: UnwrapRef<typeof import('../../stores/messages')['useMessage']>
+    readonly useMetadata: UnwrapRef<typeof import('../../composables/useMetadata')['useMetadata']>
+    readonly useMetadataStore: UnwrapRef<typeof import('../../stores/metadata')['useMetadataStore']>
     readonly useModalStore: UnwrapRef<typeof import('../../stores/modal')['useModalStore']>
     readonly useModel: UnwrapRef<typeof import('../../node_modules/vue')['useModel']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>

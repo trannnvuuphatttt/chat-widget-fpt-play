@@ -32,26 +32,14 @@
     v-if="!modalStore.isChatting && userIDStore.userID"
   >
     <button
-      class="flex-auto bg-white border-orange-500 border-2 text-orange-500 hover:bg-gradient-to-r hover:from-[#FE592A] hover:to-[#E93013] hover:text-white text-md rounded-lg"
-      @click="
-        (modalStore.isChatting = true),
-          messageStore.sendMessage(
-            '',
-            'Mừng bạn đã quay trở lại, tôi chờ bạn mãi! 🥰'
-          ),
-          console.log(messageStore.newMessageArray),
-          modalStore.toggleSuggestion()
-      "
+      class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-md rounded-lg"
+      @click="messageStore.emptyArray(), (modalStore.isChatting = true)"
     >
       Đoạn chat mới
     </button>
     <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-md rounded-lg"
-      @click="
-        (modalStore.isChatting = true),
-          console.log(messageStore.newMessageArray),
-          modalStore.toggleSuggestion()
-      "
+      @click="handleContinueChatting"
     >
       Tiếp tục chat
     </button>
@@ -75,6 +63,17 @@ const userIDStore = useUserIDStore();
 defineOptions({
   inheritAttrs: false
 });
+
+const handleContinueChatting = () => {
+  console.log("Tiếp tục chat", messageStore.newMessageArray.length)
+  modalStore.isChatting = true
+  if(messageStore.newMessageArray.length > 1){
+     messageStore.sendMessage('',
+              'Mừng bạn đã quay trở lại, tôi chờ bạn mãi! 🥰',
+            )
+  }
+
+}
 
 const handleSendMessage = () => {
   if(messageStore.userInput !== ''){

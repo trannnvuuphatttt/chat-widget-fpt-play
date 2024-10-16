@@ -1,49 +1,40 @@
-import { ref, onMounted, onUnmounted } from "vue";
+// composables/useInactivityHandler.js
+import { onMounted, onBeforeUnmount } from "vue";
 import { useModalStore } from "~/stores/modal";
 
-export default function useInactivity(timeoutDuration) {
+export default function useInactivityHandler() {
   const modalStore = useModalStore();
-  const isInactive = ref(false);
-  let timeoutId = null;
 
-  const resetTimeout = () => {
-    clearTimeout(timeoutId);
-    isInactive.value = false;
-    timeoutId = setTimeout(() => {
-      isInactive.value = true;
-      onUserInactive();
-    }, timeoutDuration);
+  let inactivityTimeout = null;
+  let buttonTimeout = null;
+
+  const resetTimers = () => {
+    if (inactivityTimeout) clearTimeout(inactivityTimeout);
+    if (buttonTimeout) clearTimeout(buttonTimeout);
+
+    inactivityTimeout = setTimeout(() => {
+      modalStore.closeWidget();
+    }, 60000);
+
+    buttonTimeout = setTimeout(() => {
+      modalStore.closeChatting(true);
+    }, 7200000);
   };
 
-  const onUserInactive = () => {
-    modalStore.closeWidget();
-  };
-
-  const setupInactivityListener = () => {
-    window.addEventListener("mousemove", resetTimeout);
-    window.addEventListener("keydown", resetTimeout);
-    window.addEventListener("click", resetTimeout);
-    window.addEventListener("scroll", resetTimeout);
-  };
-
-  const removeInactivityListener = () => {
-    window.removeEventListener("mousemove", resetTimeout);
-    window.removeEventListener("keydown", resetTimeout);
-    window.removeEventListener("click", resetTimeout);
-    window.removeEventListener("scroll", resetTimeout);
+  const handleUserActivity = () => {
+    resetTimers();
   };
 
   onMounted(() => {
-    resetTimeout();
-    setupInactivityListener();
+    document.addEventListener("mousemove", handleUserActivity);
+    document.addEventListener("keydown", handleUserActivity);
+    resetTimers();
   });
 
-  onUnmounted(() => {
-    clearTimeout(timeoutId);
-    removeInactivityListener();
+  onBeforeUnmount(() => {
+    document.removeEventListener("mousemove", handleUserActivity);
+    document.removeEventListener("keydown", handleUserActivity);
+    if (inactivityTimeout) clearTimeout(inactivityTimeout);
+    if (buttonTimeout) clearTimeout(buttonTimeout);
   });
-
-  return {
-    isInactive,
-  };
 }
