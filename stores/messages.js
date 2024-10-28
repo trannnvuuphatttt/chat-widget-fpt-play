@@ -1,12 +1,15 @@
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { data } from "autoprefixer";
 
 export const useMessage = defineStore("message", {
   state: () => ({
+    isError: false,
     userInput: "",
     userComment: "",
     //messagesArray: [],
+    sampleChatTimeStamp: null,
     sessionID: "",
     responseData: [],
     historyData: [],
@@ -19,7 +22,7 @@ export const useMessage = defineStore("message", {
           "Vậy tôi có thể giúp gì cho bạn?",
         ],
 
-        timeStamp: Date.now() * 1000,
+        timestamp: this.sampleChatTimeStamp,
         videos: [],
         images: [],
         contents: [],
@@ -31,12 +34,13 @@ export const useMessage = defineStore("message", {
   }),
   actions: {
     async sendRequest(inputData, userID) {
+      this.isError = false;
       this.isLoading = true;
       this.sendMessage(inputData, "");
       this.userInput = "";
       try {
         const response = await axios.post(
-          "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/add",
+          "https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/add",
           {
             query: inputData,
             profile_id: userID,
@@ -45,7 +49,7 @@ export const useMessage = defineStore("message", {
           {
             headers: {
               accept: "application/jsonL",
-              "Client-Id": userID,
+              //"Client-Id": userID,
 
               "Content-Type": "application/json",
             },
@@ -68,7 +72,9 @@ export const useMessage = defineStore("message", {
 
         this.userInput = "";
       } catch (error) {
+        
         console.error("Lỗi khi gọi API:", error);
+        this.isError = true;
       } finally {
         console.log("Dữ liệu trả về:", this.responseData);
         this.isLoading = false;
@@ -78,7 +84,7 @@ export const useMessage = defineStore("message", {
       this.newMessageArray.push({
         userMessage: userChat,
         botMessage: [botChat],
-        timeStamp: Date.now() / 1000,
+        timestamp:this.sampleChatTimeStamp,
         videos: [],
         images: [],
         contents: [],
@@ -91,7 +97,7 @@ export const useMessage = defineStore("message", {
       if (this.historyData.length === 0) {
         try {
           const chatHistory = await axios.put(
-            "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/get",
+            "https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/get",
             {
               limit: 10,
               offset: 0,
@@ -132,7 +138,7 @@ export const useMessage = defineStore("message", {
     async messageEvaluate(evaluate, botMessageID, userID) {
       try {
         await axios.put(
-          "https://bigdata-local-staging.fptplay.net/hermes/v1/bot/messages/" +
+          "https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/" +
             botMessageID +
             "/evaluate",
           {
@@ -157,7 +163,13 @@ export const useMessage = defineStore("message", {
     setInput(input) {
       this.userInput = input;
     },
+    setSampleChatTime(){
+      this.sampleChatTimeStamp = Date.now();
+      console.log("Created", this.sampleChatTimeStamp)
+      this.newMessageArray[0].timestamp = this.sampleChatTimeStamp;
+    },
     emptyArray() {
+      this.setSampleChatTime()
       this.newMessageArray = [
         {
           userMessage: "",
@@ -167,7 +179,7 @@ export const useMessage = defineStore("message", {
             "Vậy tôi có thể giúp gì cho bạn?",
           ],
 
-          timeStamp: null,
+          timestamp: this.sampleChatTimeStamp,
           videos: [],
           images: [],
           contents: [],
@@ -175,5 +187,12 @@ export const useMessage = defineStore("message", {
         },
       ];
     },
+    loaderController(){
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false; 
+        
+    }, 2000);
+    }
   },
 });

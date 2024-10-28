@@ -8,19 +8,19 @@ export default {
     "./app.vue",
     "./error.vue",
   ],
-  theme: {
-    extend: {},
-    fontFamily: {
-      sans: ["ui-sans-serif", "system-ui"],
-    },
-    screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      "2xl": "1536px",
-    },
-  },
+}
 
+module.exports = {
+  theme: {
+    extend: {
+      letterSpacing: {
+        'custom': '2%',
+      },
+      fontFamily: {
+        'sf-pro-display': ['"SF Pro Display"', 'sans-serif'],
+      }
+    }
+  },
+  variants: {},
   plugins: [],
-};
+}

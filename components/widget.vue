@@ -85,11 +85,11 @@
   </div>
   <div
     v-show="!modalStore.showWidget"
-    class="z-40 fixed bottom-[40px] right-[40px] flex flex-col items-end w-[280px] h-fit gap-4"
+    class="z-40 fixed bottom-[40px] right-[40px] flex flex-col items-end w-[280px] m-h-[170px] gap-[16px]"
   >
     <div
       id="box"
-      class="hidden break-words bg-white leading-5 rounded-t-lg p-4 z-50 shadow-lg animate__animated w-[100%] rounded-tr-sm rounded-l-lg rounded-b-lg"
+      class="hidden break-words bg-white leading-5 rounded-t-lg p-4 z-50 shadow-lg animate__animated w-[280px] m-h-[74px] rounded-tr-sm rounded-l-lg rounded-b-lg gap-8px"
     >
       <p id="typing-text" class="text-[16px]"></p>
     </div>
@@ -98,29 +98,32 @@
     </button>
   </div>
   <div
-    class="widget-container bg-white rounded-lg shadow-lg w-[400px] h-[354x] z-40 fixed bottom-[40px] right-[40px] flex flex-col justify-between items-center p-6 gap-11"
+    class="widget-container bg-white rounded-[16px] shadow-lg m-w-[400px] h-[354px] z-40 fixed bottom-[40px] right-[40px] flex flex-col justify-between items-center p-6 gap-[44px]"
     v-if="userIDStore.userID === null && modalStore.showWidget"
   >
     <button
       class="relative self-end flex-none"
       @click="modalStore.toggleWidget"
     >
-      <i class="fa-solid fa-x right-3 w-6 h-6 absolute"></i>
+      <img
+        src="/assets/images/Icon.png"
+        class="w-[12px] h-[12px]"
+      />
     </button>
-    <div class="flex-none gap-6 flex flex-col items-center">
+    <div class="flex-none w-[352px] h-[149px] gap-[24px] flex flex-col items-center">
       <img
         src="/assets/images/avatar.png"
         class="w-[104px] h-[104px] text-center flex-none"
       />
-      <p class="text-[16px] text-center flex-auto">
-        Xin chào! chúng tôi sẵn sàng hỗ trợ bạn
+      <p class="font-sf-pro-display text-[16px] text-center flex-auto leading-[20.8px] tracking-custom font-normal">
+        Xin chào! chúng tôi sẵn sàng hỗ trợ bạn.
       </p>
     </div>
     <button
-      class="rounded-lg border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] shadow-md bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-white hover:border-2 hover:border-orange-500 hover:text-orange-500 h-fit w-[352px] px-6 py-3 flex-auto"
-      @click="userIDStore.createNewID()"
+      class="rounded-lg border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] shadow-md bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-white hover:border-2 hover:border-orange-500 hover:text-orange-500 h-[45px] w-[352px] px-6 py-3 flex-auto"
+      @click="userIDStore.createNewID(), messageStore.setSampleChatTime()"
     >
-      <p class="text-[16px]">Bắt đầu Chat</p>
+      <p class="text-[16px] text-center font-sf-pro-display leading-[20.8px] tracking-custom font-medium  ">Bắt đầu trò chuyện</p>
     </button>
   </div>
 </template>
@@ -267,4 +270,5 @@ showBoxAndTypeAgain();
 .zIndex {
   z-index: 1000;
 }
+
 </style>

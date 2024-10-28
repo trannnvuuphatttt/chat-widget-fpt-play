@@ -1,19 +1,20 @@
 <template>
   <div
     ref="chatScreen"
-    class="bg-gray-200 overflow-y-auto overflow-x-hidden flex flex-col relative items-center pb-4"
+    class="bg-gray-200 overflow-y-auto overflow-x-[12px] flex flex-col relative items-center pb-4 "
     @scroll="handleScroll()"
   >
     <div
       v-for="(message, key, index) in messageStore.newMessageArray"
       :key="key"
-      class="w-[338px] mt-6 gap-2"
+      class="w-[338px] mt-[24px] mr-[12px] gap-[24px] "
     >
       <userChatBubble
         :message="message.userMessage"
+        :timeStamp="timeAgo(String(message.timestamp))"
         v-if="message.userMessage !== ''"
       />
-
+      {{ console.log(      message.botMessage,  message.botMessage.length)}}
       <botChatBubble
         :message="message.botMessage"
         :timeStamp="timeAgo(String(message.timestamp))"
@@ -25,16 +26,16 @@
         :contents="message.contents"
         :urls="message.urls"
         class="botMessage"
-        v-if="message.botMessage !== ''"
+        v-if="message.botMessage[0]!== ''"
       />
     </div>
 
     <div
-      class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center bg-white cursor-pointer"
+      class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center bg-[rgba(148, 148, 148, 0.4)] cursor-pointer"
       v-if="showScrollDownButton"
       @click="scrollToBottom(), toggleScrollButton()"
     >
-      <img src="/assets/images/chevron_orange.png" />
+      <img src="/assets/images/chevron.png" />
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
   >
     <input
       type="text"
-      class="bg-gray-200 flex-auto rounded-lg text-[16px] focus:outline-none h-[40px] p-4"
+      class="bg-gray-200 flex-auto rounded-lg text-[16px] focus:outline-none h-[40px] p-4 caret-[#FF6500]"
       placeholder="Nhập tin nhắn"
       v-model="messageStore.userInput"
       @keyup.enter="handleSendMessage"
@@ -73,7 +73,7 @@ const handleContinueChatting = () => {
 
 const handleSendMessage = () => {
   if(messageStore.userInput !== ''){
-
+    
     messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
     modalStore.toggleSuggestion()
   }

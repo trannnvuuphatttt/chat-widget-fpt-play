@@ -1,0 +1,49 @@
+{
+  "movieHot":[
+    {
+      "name":"Bé Pam Phiêu Lưu Kí",
+      "year": 2024,
+      "age" :3,
+      "practice":"1:30",
+      "country":"Việt Nam",
+      "img":"https://giadinh.mediacdn.vn/thumb_w/640/296230595582509056/2024/3/17/be-pam1-1710661742218349282126.jpg",
+      "link":"https://www.youtube.com/watch?v=cTFKB3kwVzc"
+    },
+    {
+      "name":"Thám Tử Lừng Danh Conan: Phép Màu Trên Sân Koshien - Lời Thách Thức Của Ác Quỷ Bóng Tối",
+      "year":2004 ,
+      "age" :13,
+      "practice":"1:30",
+      "country":"Nhật Bản",
+      "img":"https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/05/anh-conan-ngau-35.jpg",
+      "link":"https://fptplay.vn/xem-video/tham-tu-lung-danh-conan-phep-mau-tren-san-koshien-loi-thach-thuc-cua-ac-quy-bong-toi-668cac48820c6485e4be61ee"
+    },
+      {
+      "name":"Vườn Hoa Kim Ngân",
+      "year": 2003,
+      "age" :23,
+      "practice":"12/12",
+      "country":"Việt Nam",
+      "img":"https://thaiminhnguyen.vn/wp-content/uploads/2021/08/vuon-kim-ngan-hoa5.jpg",
+      "link":""
+    },
+      {
+      "name":"Sword Art Online Ngoại Truyện: Gun Gale Online (Phần 2)",
+      "year": 2014,
+      "age" :13,
+      "practice":"2/24",
+      "country":"Nhật Bản",
+      "img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSel_linPwaB5Xz0p6B5HQXdDle5Zxdvunfxw&s",
+      "link":"https://fptplay.vn/xem-video/sword-art-online-ngoai-truyen-gun-gale-online-phan-2-66ffc83b55210fd9f4e58162"
+    },
+      {
+      "name":"Được Gặp Em Tại Ngục Tối Liệu Có Sai? (Phần 5)",
+      "year": 2024,
+      "age" :18,
+      "practice":"2/15",
+      "country":"Nhật Bản",
+     "img":"https://d19ri4mdy82u9u.cloudfront.net/movies/63171a639412e2413d470fac/GG3GPTkj3OwdndMCiVLX.jpg",
+      "link":"https://fptplay.vn/xem-video/duoc-gap-em-tai-nguc-toi-lieu-co-sai-phan-5-6707c919563347266866c7a0/tap-2"
+    }
+  ]
+}
