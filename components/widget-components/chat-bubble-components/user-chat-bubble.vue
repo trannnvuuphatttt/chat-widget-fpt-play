@@ -10,7 +10,7 @@
         <p class="text-[12px] text-right text-sm text-[#FF0944] mr-2">Thử lại</p>
     </span>
   </div>
-  <div class="text-md mb-2 h-fit w-fit ml-auto p-4 ">
+  <div class="text-md mb-2 h-fit w-fit ml-auto p-4 " v-else="!messaStore.isError">
     <div class="bg-orange-500 rounded-tr-sm rounded-l-lg rounded-b-lg text-md mb-2 h-fit w-fit ml-auto text-[16px] p-4 break-all text-wrap  max-w-[338px] " >
       <p class="text-white text-right ">{{ message }}</p>
     </div>

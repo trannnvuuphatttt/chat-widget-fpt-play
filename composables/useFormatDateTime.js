@@ -21,8 +21,10 @@ export const useFormatDateTime = () => {
     const messageTime = parseFloat(timestamp);
     const differenceInSeconds = currentTime.value - messageTime;
 
-    if (differenceInSeconds < 60) {
+    if (differenceInSeconds < 10) {
       return "Vừa xong";
+    }else if (differenceInSeconds< 60){
+      return "Vài giây trước";
     } else if (differenceInSeconds < 3600) {
       return `${Math.floor(differenceInSeconds / 60)} phút trước`;
     } else if (differenceInSeconds < 86400) {

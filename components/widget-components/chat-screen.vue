@@ -163,7 +163,11 @@ watch(loading, (newVal, oldVal) => {
    if (!newVal && oldVal) {
     scrollToBottomWhenImagesLoaded();
     }
+
+    
 });
+
+
 </script>
 
 <style></style>

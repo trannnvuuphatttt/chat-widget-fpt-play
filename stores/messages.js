@@ -107,7 +107,7 @@ export const useMessage = defineStore("message", {
             {
               headers: {
                 accept: "application/jsonL",
-                "Client-Id": userID,
+                //"Client-Id": userID,
 
                 "Content-Type": "application/json",
               },
@@ -150,7 +150,7 @@ export const useMessage = defineStore("message", {
           {
             headers: {
               accept: "application/jsonL",
-              "Client-Id": userID,
+              //"Client-Id": userID,
 
               "Content-Type": "application/json",
             },
@@ -192,7 +192,7 @@ export const useMessage = defineStore("message", {
       setTimeout(() => {
         this.isLoading = false; 
         
-    }, 2000);
+    }, 2000)
     }
   },
 });
