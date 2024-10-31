@@ -7,12 +7,12 @@
     <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-[56px] p-4 text-[16px] w-[84px]"
       v-if="messageStore.isLoading && flag && Array.isArray(displayMessage) && props.message.length <= 1">
       <div class="ml-[8px] mt-[-2px] flex flex-row gap-3">
-        <div
+        <!-- <div
           class="loader border-t-2 rounded-full border-yellow-500 bg-yellow-300 animate-spin aspect-square w-8 flex justify-center items-center text-yellow-700">
-          $</div>
-        <!-- <div class="w-2 h-2 rounded-full bg-[#949494] animate-pulse"></div>
+          $</div> -->
+        <div class="w-2 h-2 rounded-full bg-[#949494] animate-pulse"></div>
         <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div>
-        <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div> -->
+        <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div>
       </div>
     </div>
     <div v-else>
@@ -26,41 +26,10 @@
         <div v-html="marked(displayMessage[0])"></div>
       </div>
 
-      <!-- <div
-      class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-      v-if="Array.isArray(props.urls)"
-      v-for="(item, index) in props.urls"
->
-      <a :href="item" target="_blank" class="underline">{{ item }}</a>
-    </div> -->
-      <!-- <div v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls"
-        class="flex movieList cursor-pointer overflow-x-scroll mb-2">
-        <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[188px] w-[256px]">
-          <div class="">
-            <a :href="item.link">
-              <img v-for="(item, index) in props.images" v-if="Array.isArray(props.images)" :src="item"
-                class="object-cover h-[136px] w-[256px] rounded-t-lg" />
-            </a>
-          </div>
-          <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1" v-if="Array.isArray(props.urls)"
-            v-for="(item, index) in props.urls">
-            <h1
-              class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
-              {{ item.title }}</h1>
-            <div
-              class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
-              <span>{{ item.year }}</span>
-              <img src="/assets/images/Ellipse_228.png" />
-              <span>{{ item.age }}</span>
-              <img src="/assets/images/Ellipse_228.png" />
-              <span>{{ item.practice }}</span>
-              <img src="/assets/images/Ellipse_228.png" />
-              <span>{{ item.country }}</span>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
+      <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
+        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls">
+        <a :href="item" target="_blank" class="underline">{{ item }}</a>
+      </div>
     </div>
     <span class="flex flex-row justify-between flex-wrap h-fit">
       <p class="text-[12px] text-gray-400" v-if="props.timeStamp !== 'NaN ngày trước'">
@@ -162,7 +131,6 @@ watch(
         setTimeout(() => {
           if (Array.isArray(receiveMessage.value) && receiveMessage.value.length) {
             isTriggerInterval = true
-            displayMessage.value = []
             const firstMsg = receiveMessage.value.shift()
             displayMessage.value.push(firstMsg)
             console.log('process.client before', receiveMessage.value);

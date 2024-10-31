@@ -45,7 +45,6 @@ onMounted(() => {
   }
 });
 </script>
-
 <template>
   <div class="flex movieList cursor-pointer overflow-x-scroll mb-2">
     <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[188px] w-[256px]"
@@ -56,14 +55,17 @@ onMounted(() => {
         </a>
       </div>
       <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
-        <h1 class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">{{ item.name }}</h1>
-        <div class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
+        <h1
+          class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
+          {{ item.name }}</h1>
+        <div
+          class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
           <span>{{ item.year }}</span>
-          <img src="/assets/images/Ellipse_228.png"/>
+          <img src="/assets/images/Ellipse_228.png" />
           <span>{{ item.age }}</span>
-          <img src="/assets/images/Ellipse_228.png"/>
+          <img src="/assets/images/Ellipse_228.png" />
           <span>{{ item.practice }}</span>
-          <img src="/assets/images/Ellipse_228.png"/>
+          <img src="/assets/images/Ellipse_228.png" />
           <span>{{ item.country }}</span>
         </div>
       </div>

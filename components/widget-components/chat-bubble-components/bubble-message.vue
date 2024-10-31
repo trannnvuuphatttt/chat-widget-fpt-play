@@ -1,7 +1,9 @@
 <template>
-    <div v-if="messageLoading"
-        class="loader border-t-2 rounded-full border-yellow-500 bg-yellow-300 animate-spin aspect-square w-8 flex justify-center items-center text-yellow-700">
-        $</div>
+    <div v-if="messageLoading" class="ml-[8px] mt-[-2px] flex flex-row gap-3 w-[86] h-[54]">
+        <div class="w-2 h-2 rounded-full bg-[#949494] animate-pulse"></div>
+        <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div>
+        <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div>
+    </div>
     <div v-else>{{ props.message }}</div>
 </template>
 <script lang="js" setup>
