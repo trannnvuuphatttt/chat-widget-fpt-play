@@ -4,9 +4,9 @@
       <img src="assets/images/avatar.png" class="h-[24px] w-[24px] inline-block mb-2 mr-1" />
       <div class="text-[14px] inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
-    <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-[56px] p-4 text-[16px] w-[84px]"
+    <div class="bg-white text-md mb-2 h-[56px] p-4 text-[16px] w-[84px] rounded-tl rounded-r-2xl rounded-b-2xl"
       v-if="messageStore.isLoading && flag && Array.isArray(displayMessage) && props.message.length <= 1">
-      <div class="ml-[8px] mt-[-2px] flex flex-row gap-3">
+      <div class="ml-[3px] mt-[6px] flex flex-row gap-3">
         <!-- <div
           class="loader border-t-2 rounded-full border-yellow-500 bg-yellow-300 animate-spin aspect-square w-8 flex justify-center items-center text-yellow-700">
           $</div> -->
@@ -17,12 +17,14 @@
     </div>
     <div v-else>
       <div v-if="displayMessage && receiveMessage.length >= 1 || displayMessage?.length > 1">
-        <div class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-[16px]"
+        <div
+          class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-[16px] font-sf-pro-display"
           v-for="(item, index) in displayMessage">
           <BubbleMessage :message="item"></BubbleMessage>
         </div>
       </div>
-      <div v-else class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-[16px]">
+      <div v-else
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-[16px] font-sf-pro-display">
         <div v-html="marked(displayMessage[0])"></div>
       </div>
 
