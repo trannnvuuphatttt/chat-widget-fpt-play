@@ -1,1 +1,1 @@
-export { default } from "file:///D:/chat-widget-fpt-play/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///D:/chat-widget-fpt-play-real/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

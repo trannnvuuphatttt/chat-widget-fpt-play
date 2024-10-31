@@ -89,7 +89,7 @@
   >
     <div
       id="box"
-      class="hidden break-words bg-white leading-5 rounded-t-lg p-4 z-50 shadow-lg animate__animated w-[280px] m-h-[74px] rounded-tr-sm rounded-l-lg rounded-b-lg gap-8px"
+      class="hidden break-words bg-white leading-5 rounded-t-2xl p-4 z-50 shadow-lg animate__animated w-[280px] m-h-[74px] rounded-tr-sm rounded-l-2xl rounded-br gap-8px"
     >
       <p id="typing-text" class="text-[16px]"></p>
     </div>

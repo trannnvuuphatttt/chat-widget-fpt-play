@@ -3,52 +3,52 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { mkdirSync } from 'node:fs';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, isEvent, createEvent, fetchWithEvent, getRequestHeader, eventHandler, setHeaders, sendRedirect, proxyRequest, createError, setResponseHeader, send, getResponseStatus, setResponseStatus, setResponseHeaders, getQuery as getQuery$1, getCookie, getRequestHeaders, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, readBody, getResponseStatusText } from 'file://D:/chat-widget-fpt-play/node_modules/h3/dist/index.mjs';
-import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file://D:/chat-widget-fpt-play/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { stringify, uneval } from 'file://D:/chat-widget-fpt-play/node_modules/devalue/index.js';
-import destr, { destr as destr$1 } from 'file://D:/chat-widget-fpt-play/node_modules/destr/dist/index.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, withLeadingSlash, withoutTrailingSlash, isRelative, joinRelativeURL } from 'file://D:/chat-widget-fpt-play/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://D:/chat-widget-fpt-play/node_modules/vue/server-renderer/index.mjs';
-import { propsToString, renderSSRHead } from 'file://D:/chat-widget-fpt-play/node_modules/@unhead/ssr/dist/index.mjs';
-import { createFetch as createFetch$1, Headers as Headers$1 } from 'file://D:/chat-widget-fpt-play/node_modules/ofetch/dist/node.mjs';
-import { createCall, createFetch } from 'file://D:/chat-widget-fpt-play/node_modules/unenv/runtime/fetch/index.mjs';
-import { createHooks } from 'file://D:/chat-widget-fpt-play/node_modules/hookable/dist/index.mjs';
-import { klona } from 'file://D:/chat-widget-fpt-play/node_modules/klona/dist/index.mjs';
-import { snakeCase, kebabCase, pascalCase, camelCase } from 'file://D:/chat-widget-fpt-play/node_modules/scule/dist/index.mjs';
-import defu, { defuFn, defu as defu$1 } from 'file://D:/chat-widget-fpt-play/node_modules/defu/dist/defu.mjs';
-import { hash } from 'file://D:/chat-widget-fpt-play/node_modules/ohash/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://D:/chat-widget-fpt-play/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://D:/chat-widget-fpt-play/node_modules/unstorage/drivers/fs.mjs';
-import { toRouteMatcher, createRouter } from 'file://D:/chat-widget-fpt-play/node_modules/radix3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, isEvent, createEvent, fetchWithEvent, getRequestHeader, eventHandler, setHeaders, sendRedirect, proxyRequest, createError, setResponseHeader, send, getResponseStatus, setResponseStatus, setResponseHeaders, getQuery as getQuery$1, getCookie, getRequestHeaders, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, readBody, getResponseStatusText } from 'file://D:/chat-widget-fpt-play-real/node_modules/h3/dist/index.mjs';
+import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file://D:/chat-widget-fpt-play-real/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { stringify, uneval } from 'file://D:/chat-widget-fpt-play-real/node_modules/devalue/index.js';
+import destr, { destr as destr$1 } from 'file://D:/chat-widget-fpt-play-real/node_modules/destr/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, withLeadingSlash, withoutTrailingSlash, isRelative, joinRelativeURL } from 'file://D:/chat-widget-fpt-play-real/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file://D:/chat-widget-fpt-play-real/node_modules/vue/server-renderer/index.mjs';
+import { propsToString, renderSSRHead } from 'file://D:/chat-widget-fpt-play-real/node_modules/@unhead/ssr/dist/index.mjs';
+import { createFetch as createFetch$1, Headers as Headers$1 } from 'file://D:/chat-widget-fpt-play-real/node_modules/ofetch/dist/node.mjs';
+import { createCall, createFetch } from 'file://D:/chat-widget-fpt-play-real/node_modules/unenv/runtime/fetch/index.mjs';
+import { createHooks } from 'file://D:/chat-widget-fpt-play-real/node_modules/hookable/dist/index.mjs';
+import { klona } from 'file://D:/chat-widget-fpt-play-real/node_modules/klona/dist/index.mjs';
+import { snakeCase, kebabCase, pascalCase, camelCase } from 'file://D:/chat-widget-fpt-play-real/node_modules/scule/dist/index.mjs';
+import defu, { defuFn, defu as defu$1 } from 'file://D:/chat-widget-fpt-play-real/node_modules/defu/dist/defu.mjs';
+import { hash } from 'file://D:/chat-widget-fpt-play-real/node_modules/ohash/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://D:/chat-widget-fpt-play-real/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://D:/chat-widget-fpt-play-real/node_modules/unstorage/drivers/fs.mjs';
+import { toRouteMatcher, createRouter } from 'file://D:/chat-widget-fpt-play-real/node_modules/radix3/dist/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { consola } from 'file://D:/chat-widget-fpt-play/node_modules/consola/dist/index.mjs';
-import { getContext } from 'file://D:/chat-widget-fpt-play/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/chat-widget-fpt-play/node_modules/errx/dist/index.js';
-import { isVNode, version, unref } from 'file://D:/chat-widget-fpt-play/node_modules/vue/index.mjs';
-import { extname } from 'file://D:/chat-widget-fpt-play/node_modules/pathe/dist/index.mjs';
-import { unified } from 'file://D:/chat-widget-fpt-play/node_modules/unified/index.js';
-import { toString } from 'file://D:/chat-widget-fpt-play/node_modules/mdast-util-to-string/index.js';
-import { postprocess, preprocess } from 'file://D:/chat-widget-fpt-play/node_modules/micromark/dev/index.js';
-import { stringifyPosition } from 'file://D:/chat-widget-fpt-play/node_modules/unist-util-stringify-position/index.js';
-import { markdownLineEnding, markdownSpace } from 'file://D:/chat-widget-fpt-play/node_modules/micromark-util-character/dev/index.js';
-import { push, splice } from 'file://D:/chat-widget-fpt-play/node_modules/micromark-util-chunked/dev/index.js';
-import { resolveAll } from 'file://D:/chat-widget-fpt-play/node_modules/micromark-util-resolve-all/index.js';
-import { normalizeUri } from 'file://D:/chat-widget-fpt-play/node_modules/micromark-util-sanitize-uri/dev/index.js';
-import slugify from 'file://D:/chat-widget-fpt-play/node_modules/slugify/slugify.js';
-import remarkParse from 'file://D:/chat-widget-fpt-play/node_modules/remark-parse/index.js';
-import remark2rehype from 'file://D:/chat-widget-fpt-play/node_modules/remark-rehype/index.js';
-import remarkMDC, { parseFrontMatter } from 'file://D:/chat-widget-fpt-play/node_modules/remark-mdc/dist/index.mjs';
-import remarkEmoji from 'file://D:/chat-widget-fpt-play/node_modules/remark-emoji/index.js';
-import remarkGFM from 'file://D:/chat-widget-fpt-play/node_modules/remark-gfm/index.js';
-import rehypeExternalLinks from 'file://D:/chat-widget-fpt-play/node_modules/rehype-external-links/index.js';
-import rehypeSortAttributeValues from 'file://D:/chat-widget-fpt-play/node_modules/rehype-sort-attribute-values/index.js';
-import rehypeSortAttributes from 'file://D:/chat-widget-fpt-play/node_modules/rehype-sort-attributes/index.js';
-import rehypeRaw from 'file://D:/chat-widget-fpt-play/node_modules/rehype-raw/index.js';
-import { detab } from 'file://D:/chat-widget-fpt-play/node_modules/detab/index.js';
-import { toString as toString$1 } from 'file://D:/chat-widget-fpt-play/node_modules/hast-util-to-string/index.js';
-import Slugger from 'file://D:/chat-widget-fpt-play/node_modules/github-slugger/index.js';
-import { createServerHead as createServerHead$1, CapoPlugin } from 'file://D:/chat-widget-fpt-play/node_modules/unhead/dist/index.mjs';
-import { defineHeadPlugin } from 'file://D:/chat-widget-fpt-play/node_modules/@unhead/shared/dist/index.mjs';
+import { consola } from 'file://D:/chat-widget-fpt-play-real/node_modules/consola/dist/index.mjs';
+import { getContext } from 'file://D:/chat-widget-fpt-play-real/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/chat-widget-fpt-play-real/node_modules/errx/dist/index.js';
+import { isVNode, version, unref } from 'file://D:/chat-widget-fpt-play-real/node_modules/vue/index.mjs';
+import { extname } from 'file://D:/chat-widget-fpt-play-real/node_modules/pathe/dist/index.mjs';
+import { unified } from 'file://D:/chat-widget-fpt-play-real/node_modules/unified/index.js';
+import { toString } from 'file://D:/chat-widget-fpt-play-real/node_modules/mdast-util-to-string/index.js';
+import { postprocess, preprocess } from 'file://D:/chat-widget-fpt-play-real/node_modules/micromark/dev/index.js';
+import { stringifyPosition } from 'file://D:/chat-widget-fpt-play-real/node_modules/unist-util-stringify-position/index.js';
+import { markdownLineEnding, markdownSpace } from 'file://D:/chat-widget-fpt-play-real/node_modules/micromark-util-character/dev/index.js';
+import { push, splice } from 'file://D:/chat-widget-fpt-play-real/node_modules/micromark-util-chunked/dev/index.js';
+import { resolveAll } from 'file://D:/chat-widget-fpt-play-real/node_modules/micromark-util-resolve-all/index.js';
+import { normalizeUri } from 'file://D:/chat-widget-fpt-play-real/node_modules/micromark-util-sanitize-uri/dev/index.js';
+import slugify from 'file://D:/chat-widget-fpt-play-real/node_modules/slugify/slugify.js';
+import remarkParse from 'file://D:/chat-widget-fpt-play-real/node_modules/remark-parse/index.js';
+import remark2rehype from 'file://D:/chat-widget-fpt-play-real/node_modules/remark-rehype/index.js';
+import remarkMDC, { parseFrontMatter } from 'file://D:/chat-widget-fpt-play-real/node_modules/remark-mdc/dist/index.mjs';
+import remarkEmoji from 'file://D:/chat-widget-fpt-play-real/node_modules/remark-emoji/index.js';
+import remarkGFM from 'file://D:/chat-widget-fpt-play-real/node_modules/remark-gfm/index.js';
+import rehypeExternalLinks from 'file://D:/chat-widget-fpt-play-real/node_modules/rehype-external-links/index.js';
+import rehypeSortAttributeValues from 'file://D:/chat-widget-fpt-play-real/node_modules/rehype-sort-attribute-values/index.js';
+import rehypeSortAttributes from 'file://D:/chat-widget-fpt-play-real/node_modules/rehype-sort-attributes/index.js';
+import rehypeRaw from 'file://D:/chat-widget-fpt-play-real/node_modules/rehype-raw/index.js';
+import { detab } from 'file://D:/chat-widget-fpt-play-real/node_modules/detab/index.js';
+import { toString as toString$1 } from 'file://D:/chat-widget-fpt-play-real/node_modules/hast-util-to-string/index.js';
+import Slugger from 'file://D:/chat-widget-fpt-play-real/node_modules/github-slugger/index.js';
+import { createServerHead as createServerHead$1, CapoPlugin } from 'file://D:/chat-widget-fpt-play-real/node_modules/unhead/dist/index.mjs';
+import { defineHeadPlugin } from 'file://D:/chat-widget-fpt-play-real/node_modules/@unhead/shared/dist/index.mjs';
 
 const r=Object.create(null),E=e=>globalThis.process?.env||globalThis._importMeta_.env||globalThis.Deno?.env.toObject()||globalThis.__env__||(e?r:globalThis),s=new Proxy(r,{get(e,o){return E()[o]??r[o]},has(e,o){const i=E();return o in i||o in r},set(e,o,i){const g=E(!0);return g[o]=i,!0},deleteProperty(e,o){if(!o)return !1;const i=E(!0);return delete i[o],!0},ownKeys(){const e=E(!0);return Object.keys(e)}}),t=typeof process<"u"&&process.env&&"development"||"",p=[["APPVEYOR"],["AWS_AMPLIFY","AWS_APP_ID",{ci:!0}],["AZURE_PIPELINES","SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"],["AZURE_STATIC","INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN"],["APPCIRCLE","AC_APPCIRCLE"],["BAMBOO","bamboo_planKey"],["BITBUCKET","BITBUCKET_COMMIT"],["BITRISE","BITRISE_IO"],["BUDDY","BUDDY_WORKSPACE_ID"],["BUILDKITE"],["CIRCLE","CIRCLECI"],["CIRRUS","CIRRUS_CI"],["CLOUDFLARE_PAGES","CF_PAGES",{ci:!0}],["CODEBUILD","CODEBUILD_BUILD_ARN"],["CODEFRESH","CF_BUILD_ID"],["DRONE"],["DRONE","DRONE_BUILD_EVENT"],["DSARI"],["GITHUB_ACTIONS"],["GITLAB","GITLAB_CI"],["GITLAB","CI_MERGE_REQUEST_ID"],["GOCD","GO_PIPELINE_LABEL"],["LAYERCI"],["HUDSON","HUDSON_URL"],["JENKINS","JENKINS_URL"],["MAGNUM"],["NETLIFY"],["NETLIFY","NETLIFY_LOCAL",{ci:!1}],["NEVERCODE"],["RENDER"],["SAIL","SAILCI"],["SEMAPHORE"],["SCREWDRIVER"],["SHIPPABLE"],["SOLANO","TDDIUM"],["STRIDER"],["TEAMCITY","TEAMCITY_VERSION"],["TRAVIS"],["VERCEL","NOW_BUILDER"],["VERCEL","VERCEL",{ci:!1}],["VERCEL","VERCEL_ENV",{ci:!1}],["APPCENTER","APPCENTER_BUILD_ID"],["CODESANDBOX","CODESANDBOX_SSE",{ci:!1}],["STACKBLITZ"],["STORMKIT"],["CLEAVR"],["ZEABUR"],["CODESPHERE","CODESPHERE_APP_ID",{ci:!0}],["RAILWAY","RAILWAY_PROJECT_ID"],["RAILWAY","RAILWAY_SERVICE_ID"]];function B(){if(globalThis.process?.env)for(const e of p){const o=e[1]||e[0];if(globalThis.process?.env[o])return {name:e[0].toLowerCase(),...e[2]}}return globalThis.process?.env?.SHELL==="/bin/jsh"&&globalThis.process?.versions?.webcontainer?{name:"stackblitz",ci:!1}:{name:"",ci:!1}}const l=B(),d=l.name;function n(e){return e?e!=="false":!1}const I=globalThis.process?.platform||"",T=n(s.CI)||l.ci!==!1,R=n(globalThis.process?.stdout&&globalThis.process?.stdout.isTTY);n(s.DEBUG);const C=t==="test"||n(s.TEST);n(s.MINIMAL)||T||C||!R;const a=/^win/i.test(I);!n(s.NO_COLOR)&&(n(s.FORCE_COLOR)||(R||a)&&s.TERM!=="dumb"||T);const _=(globalThis.process?.versions?.node||"").replace(/^v/,"")||null;Number(_?.split(".")[0])||null;const W=globalThis.process||Object.create(null),c={versions:{}};new Proxy(W,{get(e,o){if(o==="env")return s;if(o in e)return e[o];if(o in c)return c[o]}});const A=globalThis.process?.release?.name==="node",L=!!globalThis.Bun||!!globalThis.process?.versions?.bun,D=!!globalThis.Deno,O=!!globalThis.fastly,S=!!globalThis.Netlify,N=!!globalThis.EdgeRuntime,u=globalThis.navigator?.userAgent==="Cloudflare-Workers",b=!!globalThis.__lagon__,F=[[S,"netlify"],[N,"edge-light"],[u,"workerd"],[O,"fastly"],[D,"deno"],[L,"bun"],[A,"node"],[b,"lagon"]];function G(){const e=F.find(o=>o[0]);if(e)return {name:e[1]}}const P=G();P?.name||"";
 
@@ -233,7 +233,7 @@ const _inlineRuntimeConfig = {
         "tr": "prose-tr"
       },
       "highlight": false,
-      "wsUrl": "ws://localhost:4000/",
+      "wsUrl": "ws://localhost:4001/",
       "documentDriven": false,
       "host": "",
       "trailingSlash": false,
@@ -398,7 +398,7 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
-const serverAssets = [{"baseName":"server","dir":"D:/chat-widget-fpt-play/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"D:/chat-widget-fpt-play-real/server/assets"}];
 
 const assets = createStorage();
 
@@ -410,13 +410,13 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('content:source:content', unstorage_47drivers_47fs({"name":"content:source:content","driver":"fs","base":"D:\\chat-widget-fpt-play\\content","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache:content', unstorage_47drivers_47fs({"driver":"fs","base":"D:\\chat-widget-fpt-play\\.nuxt\\content-cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:\\chat-widget-fpt-play","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:\\chat-widget-fpt-play\\server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:\\chat-widget-fpt-play\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:\\chat-widget-fpt-play\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:\\chat-widget-fpt-play\\.data\\kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('content:source:content', unstorage_47drivers_47fs({"name":"content:source:content","driver":"fs","base":"D:\\chat-widget-fpt-play-real\\content","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache:content', unstorage_47drivers_47fs({"driver":"fs","base":"D:\\chat-widget-fpt-play-real\\.nuxt\\content-cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:\\chat-widget-fpt-play-real","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:\\chat-widget-fpt-play-real\\server","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:\\chat-widget-fpt-play-real\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:\\chat-widget-fpt-play-real\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:\\chat-widget-fpt-play-real\\.data\\kv","ignore":["**/node_modules/**","**/.git/**"]}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -855,7 +855,7 @@ function getRouteRulesForPath(path) {
   return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
 }
 
-const rootDir = "D:/chat-widget-fpt-play";
+const rootDir = "D:/chat-widget-fpt-play-real";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[{"rel":"stylesheet","href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"}],"style":[],"script":[],"noscript":[]};
 
@@ -874,7 +874,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _S0GbyUbsai = (nitroApp) => {
+const _Vkc6q1Vsny = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -2749,7 +2749,7 @@ const json = defineTransformer({
     let parsed;
     if (typeof content === "string") {
       if (_id.endsWith("json5")) {
-        parsed = (await import('file://D:/chat-widget-fpt-play/node_modules/json5/lib/index.js').then((m) => m.default || m)).parse(content);
+        parsed = (await import('file://D:/chat-widget-fpt-play-real/node_modules/json5/lib/index.js').then((m) => m.default || m)).parse(content);
       } else if (_id.endsWith("json")) {
         parsed = destr$1(content);
       }
@@ -3317,7 +3317,7 @@ function serverQueryContent(event, query, ...pathParts) {
   return queryBuilder;
 }
 
-const _bjfoetyuVJ = defineNitroPlugin(async (nitro) => {
+const _nAI7AOk9Ll = defineNitroPlugin(async (nitro) => {
   const storage = useStorage();
   const unwatch = await storage.watch(async (event, key) => {
     if (key.startsWith("content:source")) {
@@ -3330,8 +3330,8 @@ const _bjfoetyuVJ = defineNitroPlugin(async (nitro) => {
 });
 
 const plugins = [
-  _S0GbyUbsai,
-_bjfoetyuVJ
+  _Vkc6q1Vsny,
+_nAI7AOk9Ll
 ];
 
 const errorHandler = (async function errorhandler(error, event) {
@@ -3475,7 +3475,7 @@ const getContentQuery = (event) => {
   return query;
 };
 
-const _H336d5 = defineEventHandler(async (event) => {
+const _6QpGxR = defineEventHandler(async (event) => {
   const query = getContentQuery(event);
   const { advanceQuery } = useRuntimeConfig().public.content.experimental;
   if (query.first) {
@@ -3504,7 +3504,7 @@ const _H336d5 = defineEventHandler(async (event) => {
   return serverQueryContent(event, query).find();
 });
 
-const _Jy1t1v = defineEventHandler(async (event) => {
+const _e2pmIu = defineEventHandler(async (event) => {
   const { content } = useRuntimeConfig();
   const now = Date.now();
   const contents = await serverQueryContent(event).find();
@@ -3614,7 +3614,7 @@ function isObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-const _nyMC9D = defineEventHandler(async (event) => {
+const _QgbI2K = defineEventHandler(async (event) => {
   const query = getContentQuery(event);
   if (!isPreview(event) && Object.keys(query).length === 0) {
     const cache = await cacheStorage().getItem("content-navigation.json");
@@ -3651,20 +3651,20 @@ const _nyMC9D = defineEventHandler(async (event) => {
   return createNav(contents?.result || contents, configs);
 });
 
-const _lazy_o0tPCf = () => Promise.resolve().then(function () { return chatbotWidget$1; });
-const _lazy_NR05Xs = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_y48JVQ = () => Promise.resolve().then(function () { return chatbotWidget$1; });
+const _lazy_TyIIvL = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/api/chatbot-widget', handler: _lazy_o0tPCf, lazy: true, middleware: false, method: undefined },
-  { route: '/__nuxt_error', handler: _lazy_NR05Xs, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_content/query/:qid/**:params', handler: _H336d5, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/query/:qid', handler: _H336d5, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/query', handler: _H336d5, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/cache.json', handler: _Jy1t1v, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/navigation/:qid/**:params', handler: _nyMC9D, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/navigation/:qid', handler: _nyMC9D, lazy: false, middleware: false, method: "get" },
-  { route: '/api/_content/navigation', handler: _nyMC9D, lazy: false, middleware: false, method: "get" },
-  { route: '/**', handler: _lazy_NR05Xs, lazy: true, middleware: false, method: undefined }
+  { route: '/api/chatbot-widget', handler: _lazy_y48JVQ, lazy: true, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_TyIIvL, lazy: true, middleware: false, method: undefined },
+  { route: '/api/_content/query/:qid/**:params', handler: _6QpGxR, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/query/:qid', handler: _6QpGxR, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/query', handler: _6QpGxR, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/cache.json', handler: _e2pmIu, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/navigation/:qid/**:params', handler: _QgbI2K, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/navigation/:qid', handler: _QgbI2K, lazy: false, middleware: false, method: "get" },
+  { route: '/api/_content/navigation', handler: _QgbI2K, lazy: false, middleware: false, method: "get" },
+  { route: '/**', handler: _lazy_TyIIvL, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -3983,8 +3983,8 @@ const renderSSRHeadOptions = {"omitLineBreaks":false};
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
-const getClientManifest = () => import('file://D:/chat-widget-fpt-play/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
-const getServerEntry = () => import('file://D:/chat-widget-fpt-play/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file://D:/chat-widget-fpt-play-real/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file://D:/chat-widget-fpt-play-real/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();

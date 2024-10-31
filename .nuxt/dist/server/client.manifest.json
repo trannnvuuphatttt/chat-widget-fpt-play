@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "D:/chat-widget-fpt-play/node_modules/nuxt/dist/app/entry.js": {
+  "D:/chat-widget-fpt-play-real/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "D:/chat-widget-fpt-play/node_modules/nuxt/dist/app/entry.js"
+    "file": "D:/chat-widget-fpt-play-real/node_modules/nuxt/dist/app/entry.js"
   }
 }

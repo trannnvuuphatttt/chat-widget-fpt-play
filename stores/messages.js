@@ -191,8 +191,7 @@ export const useMessage = defineStore("message", {
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false; 
-        
-    }, 2000)
-    }
+      }, 2000)
+    },
   },
 });
