@@ -45,6 +45,7 @@ export const useMessage = defineStore("message", {
             query: inputData,
             profile_id: userID,
             session_uuid: userID,
+            tw_ws: false,
           },
           {
             headers: {
@@ -94,6 +95,19 @@ export const useMessage = defineStore("message", {
       });
       this.userInput = "";
     },
+    actions: {
+      delayMessageInterval() {
+        // Đặt độ trễ thời gian (ví dụ 1 giây)
+        const delay = 1000; 
+        setTimeout(() => {
+          // Thực hiện các hành động cần thiết sau khi có độ trễ
+          this.setSampleChatTime(); // Gọi hàm setSampleChatTime
+          // Bạn có thể thêm các hành động khác ở đây
+        }, 3000);
+      },
+      // Các hàm khác...
+    },
+
     async getChatHistory(userID) {
       if (this.historyData.length === 0) {
         try {
@@ -161,6 +175,7 @@ export const useMessage = defineStore("message", {
         console.error("Lỗi khi gọi API:", error);
       }
     },
+    
     setInput(input) {
       this.userInput = input;
     },
@@ -174,10 +189,10 @@ export const useMessage = defineStore("message", {
         {
           userMessage: "",
           botMessage: [
-            "Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.",
-            "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.",
-            "Vậy tôi có thể giúp gì cho bạn?",
-          ],
+           
+          ],//"Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.",
+          //   "Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.",
+          //   "Vậy tôi có thể giúp gì cho bạn?",
 
           timestamp: this.sampleChatTimeStamp,
           videos: [],
