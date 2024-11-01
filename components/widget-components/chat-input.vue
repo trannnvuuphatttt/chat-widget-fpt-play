@@ -13,7 +13,7 @@
     v-if="!modalStore.isChatting && userIDStore.userID">
     <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-md rounded-lg"
-      @click="messageStore.emptyArray(), (modalStore.isChatting = false)">
+      @click="messageStore.emptyArray(), (modalStore.isChatting = true)">
       Đoạn chat mới
     </button>
     <button

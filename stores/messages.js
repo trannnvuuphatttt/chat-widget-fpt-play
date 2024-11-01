@@ -22,7 +22,7 @@ export const useMessage = defineStore("message", {
           "Vậy tôi có thể giúp gì cho bạn?",
         ],
 
-        timestamp: this.sampleChatTimeStamp,
+        timestamp: null,
         videos: [],
         images: [],
         contents: [],
@@ -81,6 +81,7 @@ export const useMessage = defineStore("message", {
       }
     },
     sendMessage(userChat, botChat) {
+      this.setSampleChatTime();
       this.newMessageArray.push({
         userMessage: userChat,
         botMessage: [botChat],
@@ -165,8 +166,7 @@ export const useMessage = defineStore("message", {
     },
     setSampleChatTime(){
       this.sampleChatTimeStamp = Date.now();
-      console.log("Created", this.sampleChatTimeStamp)
-      this.newMessageArray[0].timestamp = this.sampleChatTimeStamp;
+      console.log("Created", this.sampleChatTimeStamp);
     },
     emptyArray() {
       this.setSampleChatTime()
