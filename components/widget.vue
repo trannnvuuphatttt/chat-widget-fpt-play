@@ -142,7 +142,7 @@ onMounted(() => {
   let index = 0;
   let isTyping = true;
   let typingSpeed = 100;
-  let pauseTime = 1000;
+  let pauseTime = 2000;
   let deleteSpeed = 50;
 
   function typeText() {
@@ -175,7 +175,7 @@ onMounted(() => {
           boxElement.classList.remove('fadeOut');
           showBoxAndTypeAgain();
         }, pauseTime);
-      }, 1000);
+      }, 2000);
     }
   }
 

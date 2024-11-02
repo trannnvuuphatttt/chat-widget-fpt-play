@@ -55,6 +55,7 @@
       </div>
     </span>
   </div>
+  <RecommendList></RecommendList>
 </template>
 
 <script lang="js" setup>
@@ -146,7 +147,7 @@ watch(
                 if (!receiveMessage.value.length) {
                   clearInterval(delayMessageInterval)
                 }
-              }, 1000);
+              }, 2000);
             }
           }
         }, 3000);

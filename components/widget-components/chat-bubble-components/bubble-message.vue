@@ -15,7 +15,7 @@ const messageLoading = ref(true)
 onMounted(() => {
     setTimeout(() => {
         messageLoading.value = false
-    }, 1000);
+    }, 2000);
     // messageStore.loaderController()
 })
 </script>

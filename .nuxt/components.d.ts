@@ -2,7 +2,8 @@
 import type { DefineComponent, SlotsType } from 'vue'
 type IslandComponent<T extends DefineComponent> = T & DefineComponent<{}, {refresh: () => Promise<void>}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, SlotsType<{ fallback: { error: unknown } }>>
 interface _GlobalComponents {
-      'WidgetComponentsChatBubbleComponentsBotChatBubble': typeof import("../components/widget-components/chat-bubble-components/bot-chat-bubble.vue")['default']
+      'ConnectionTest': typeof import("../components/ConnectionTest.vue")['default']
+    'WidgetComponentsChatBubbleComponentsBotChatBubble': typeof import("../components/widget-components/chat-bubble-components/bot-chat-bubble.vue")['default']
     'WidgetComponentsChatBubbleComponentsBubbleMessage': typeof import("../components/widget-components/chat-bubble-components/bubble-message.vue")['default']
     'WidgetComponentsChatBubbleComponentsMovieList': typeof import("../components/widget-components/chat-bubble-components/movie-list.vue")['default']
     'WidgetComponentsChatBubbleComponentsRecommendList': typeof import("../components/widget-components/chat-bubble-components/recommend-list.vue")['default']
@@ -75,7 +76,8 @@ interface _GlobalComponents {
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
     'NuxtRouteAnnouncer': IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
-      'LazyWidgetComponentsChatBubbleComponentsBotChatBubble': typeof import("../components/widget-components/chat-bubble-components/bot-chat-bubble.vue")['default']
+      'LazyConnectionTest': typeof import("../components/ConnectionTest.vue")['default']
+    'LazyWidgetComponentsChatBubbleComponentsBotChatBubble': typeof import("../components/widget-components/chat-bubble-components/bot-chat-bubble.vue")['default']
     'LazyWidgetComponentsChatBubbleComponentsBubbleMessage': typeof import("../components/widget-components/chat-bubble-components/bubble-message.vue")['default']
     'LazyWidgetComponentsChatBubbleComponentsMovieList': typeof import("../components/widget-components/chat-bubble-components/movie-list.vue")['default']
     'LazyWidgetComponentsChatBubbleComponentsRecommendList': typeof import("../components/widget-components/chat-bubble-components/recommend-list.vue")['default']
@@ -154,6 +156,7 @@ declare module 'vue' {
   export interface GlobalComponents extends _GlobalComponents { }
 }
 
+export const ConnectionTest: typeof import("../components/ConnectionTest.vue")['default']
 export const WidgetComponentsChatBubbleComponentsBotChatBubble: typeof import("../components/widget-components/chat-bubble-components/bot-chat-bubble.vue")['default']
 export const WidgetComponentsChatBubbleComponentsBubbleMessage: typeof import("../components/widget-components/chat-bubble-components/bubble-message.vue")['default']
 export const WidgetComponentsChatBubbleComponentsMovieList: typeof import("../components/widget-components/chat-bubble-components/movie-list.vue")['default']
@@ -227,6 +230,7 @@ export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: IslandComponent<typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']>
+export const LazyConnectionTest: typeof import("../components/ConnectionTest.vue")['default']
 export const LazyWidgetComponentsChatBubbleComponentsBotChatBubble: typeof import("../components/widget-components/chat-bubble-components/bot-chat-bubble.vue")['default']
 export const LazyWidgetComponentsChatBubbleComponentsBubbleMessage: typeof import("../components/widget-components/chat-bubble-components/bubble-message.vue")['default']
 export const LazyWidgetComponentsChatBubbleComponentsMovieList: typeof import("../components/widget-components/chat-bubble-components/movie-list.vue")['default']
