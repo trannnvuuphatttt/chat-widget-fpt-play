@@ -55,7 +55,6 @@
       </div>
     </span>
   </div>
-  <RecommendList></RecommendList>
 </template>
 
 <script lang="js" setup>
