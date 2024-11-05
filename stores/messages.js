@@ -123,7 +123,9 @@ export const useMessage = defineStore('message', {
 
       try {
         const response = await axios.post(
-          'https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/add',
+          `${
+            import.meta.env.VITE_APP_API_DOMAIN
+          }/api/v7.1_w/bigdata/hermes/v1/bot/messages/add`,
           {
             query: inputData,
             profile_id: pfID,
@@ -231,7 +233,9 @@ export const useMessage = defineStore('message', {
       if (this.historyData.length === 0) {
         try {
           const chatHistory = await axios.put(
-            'https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/get',
+            `${
+              import.meta.env.VITE_APP_API_DOMAIN
+            }/api/v7.1_w/bigdata/hermes/v1/bot/messages/get`,
             {
               limit: 10,
               offset: 0,
@@ -273,9 +277,12 @@ export const useMessage = defineStore('message', {
     async messageEvaluate(evaluate, botMessageID, userID) {
       try {
         await axios.put(
-          'https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/' +
-            botMessageID +
-            '/evaluate',
+          // 'https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/' +
+          //   botMessageID +
+          //   '/evaluate',
+          `${
+            import.meta.env.VITE_APP_API_DOMAIN
+          }/api/v7.1_w/bigdata/hermes/v1/bot/messages/${botMessageID}/evaluate`,
           {
             is_liked: evaluate,
             comment: this.userComment,
