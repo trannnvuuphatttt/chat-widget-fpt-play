@@ -1,8 +1,44 @@
+<template>
+  <div class="flex movieList cursor-pointer overflow-x-scroll mb-2">
+    <div
+      class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none w-40 md:w-48 lg:w-64"
+      v-for="(item, index) in items.movieHot"
+      :key="index"
+    >
+      <div>
+        <a :href="item.link">
+          <img
+            :src="item.img"
+            class="object-cover w-full h-40 md:h-48 lg:h-64 rounded-t-lg"
+          />
+        </a>
+      </div>
+      <div class="p-2">
+        <h1
+          class="text-gray-900 truncate text-sm md:text-base font-semibold leading-tight font-sf-pro-display"
+        >
+          {{ item.name }}
+        </h1>
+        <div
+          class="text-gray-500 text-xs md:text-sm truncate flex items-center gap-1 mt-1"
+        >
+          <span>{{ item.year }}</span>
+          <span class="mx-1">&bull;</span>
+          <span>{{ item.age }}</span>
+          <span class="mx-1">&bull;</span>
+          <span>{{ item.practice }}</span>
+          <span class="mx-1">&bull;</span>
+          <span>{{ item.country }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script lang="js" setup>
 import { onMounted } from 'vue';
 import data from "../movieHot.json";
-const items = data
-console.log(items)
+const items = data;
 
 onMounted(() => {
   const container = document.querySelector(".movieList");
@@ -13,75 +49,57 @@ onMounted(() => {
 
     container.addEventListener("mousedown", (e) => {
       isDown = true;
-      container.classList.add("active");
-      startX = e.clientX;
+      startX = e.pageX - container.offsetLeft;
       scrollLeft = container.scrollLeft;
-      container.style.cursor = "pointer";
-
     });
 
     container.addEventListener("mouseleave", () => {
       isDown = false;
-      container.classList.remove("active");
-      container.style.cursor = "pointer";
-
     });
 
     container.addEventListener("mouseup", () => {
       isDown = false;
-      container.classList.remove("active");
-      container.style.cursor = "pointer";
-
     });
 
     container.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
-      const x = e.clientX;
-      const walk = (x - startX) * 3;
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 2; // Tốc độ di chuyển
       container.scrollLeft = scrollLeft - walk;
+    });
 
+    // Thêm sự kiện touch cho thiết bị di động
+    let isDragging = false;
+    let touchStartX = 0;
+
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      touchStartX = e.touches[0].pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const walk = (x - touchStartX) * 2;
+      container.scrollLeft = scrollLeft - walk;
+    });
+
+    container.addEventListener('touchend', () => {
+      isDragging = false;
     });
   }
 });
 </script>
-<template>
-  <div class="flex movieList cursor-pointer overflow-x-scroll mb-2">
-    <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[188px] w-[256px]"
-      v-for="(item) in items.movieHot">
-      <div class="">
-        <a :href="item.link">
-          <img :src="item.img" class="object-cover h-[136px] w-[256px] rounded-t-lg" />
-        </a>
-      </div>
-      <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
-        <h1
-          class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
-          {{ item.name }}</h1>
-        <div
-          class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
-          <span>{{ item.year }}</span>
-          <img src="/assets/images/Ellipse_228.png" />
-          <span>{{ item.age }}</span>
-          <img src="/assets/images/Ellipse_228.png" />
-          <span>{{ item.practice }}</span>
-          <img src="/assets/images/Ellipse_228.png" />
-          <span>{{ item.country }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style>
 .movieList {
-  display: flex;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  -ms-overflow-style: none !important; /* IE và Edge */
+  scrollbar-width: none !important; /* Firefox */
 }
 
 .movieList::-webkit-scrollbar {
-  display: none;
+  display: none !important; /* Chrome, Safari và Opera */
 }
 </style>

@@ -1,56 +1,100 @@
 <template class="relative">
   <div>
-    <div class="flex items-center ">
-      <img src="assets/images/avatar.png" class="h-[24px] w-[24px] inline-block mb-2 mr-1" />
-      <div class="text-[14px] inline-block mb-2 ml-1">FPT Play AI Support</div>
+    <div class="flex items-center">
+      <img
+        src="assets/images/avatar.png"
+        class="h-6 w-6 inline-block mb-2 mr-1"
+      />
+      <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
-    <div class="bg-white text-md mb-2 h-[56px] p-4 text-[16px] w-[84px] rounded-tl rounded-r-2xl rounded-b-2xl"
-      v-if="messageStore.isLoading && flag && Array.isArray(displayMessage) && props.message.length <= 1">
-      <div class="ml-[3px] mt-[6px] flex flex-row gap-3">
-        <!-- <div
-          class="loader border-t-2 rounded-full border-yellow-500 bg-yellow-300 animate-spin aspect-square w-8 flex justify-center items-center text-yellow-700">
-          $</div> -->
-        <div class="w-2 h-2 rounded-full bg-[#949494] animate-pulse"></div>
-        <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div>
-        <div class="w-2 h-2 rounded-full  bg-[#949494] animate-pulse "></div>
+    <div
+      class="bg-white text-md mb-2 h-14 p-4 text-base w-full sm:w-84 rounded-tl rounded-r-2xl rounded-b-2xl"
+      v-if="
+        messageStore.isLoading &&
+        flag &&
+        Array.isArray(displayMessage) &&
+        props.message.length <= 1
+      "
+    >
+      <div class="ml-1 mt-1.5 flex flex-row gap-3">
+        <div class="w-2 h-2 rounded-full bg-gray-600 animate-pulse"></div>
+        <div class="w-2 h-2 rounded-full bg-gray-600 animate-pulse"></div>
+        <div class="w-2 h-2 rounded-full bg-gray-600 animate-pulse"></div>
       </div>
     </div>
     <div v-else>
-      <div v-if="displayMessage && receiveMessage.length >= 1 || displayMessage?.length > 1">
+      <div
+        v-if="
+          (displayMessage && receiveMessage.length >= 1) ||
+          displayMessage?.length > 1
+        "
+      >
         <div
-          class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-[16px] font-sf-pro-display"
-          v-for="(item, index) in displayMessage">
+          class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display"
+          v-for="(item, index) in displayMessage"
+          :key="index"
+        >
           <BubbleMessage :message="item"></BubbleMessage>
         </div>
       </div>
-      <div v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-[16px] font-sf-pro-display">
+      <div
+        v-else
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display"
+      >
         <div v-html="marked(displayMessage[0])"></div>
       </div>
 
-      <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-[16px]"
-        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls">
+      <div
+        class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
+        v-if="Array.isArray(props.urls)"
+        v-for="(item, index) in props.urls"
+        :key="index"
+      >
         <a :href="item" target="_blank" class="underline">{{ item }}</a>
       </div>
     </div>
     <span class="flex flex-row justify-between flex-wrap h-fit">
-      <p class="text-[12px] text-gray-400" v-if="props.timeStamp !== 'NaN ngày trước'">
-
+      <p
+        class="text-xs text-gray-400"
+        v-if="props.timeStamp !== 'NaN ngày trước'"
+      >
         {{ props.timeStamp }}
       </p>
-      <div v-if="
-        props.flag &&
-        modalStore.isChatting &&
-        props.timeStamp !== 'NaN ngày trước'
-      ">
-        <!-- <div v-if="props.flag && modalStore.isChatting"> -->
-        <button class="mr-1 cursor-pointer gap-[8px]" @click="Like()">
-          <img v-if="!reviewStateLike" class=" w-[16px] h-[16px] mr-4" src="/assets/images/like.png" />
-          <img v-if="reviewStateLike" class=" w-[16px] h-[16px] mr-4" src="/assets/images/like_orange.png" />
+      <div
+        v-if="
+          props.flag &&
+          modalStore.isChatting &&
+          props.timeStamp !== 'NaN ngày trước'
+        "
+        class="flex space-x-2"
+      >
+        <button class="cursor-pointer" @click="Like()">
+          <img
+            v-if="!reviewStateLike"
+            class="w-4 h-4"
+            src="/assets/images/like.png"
+            alt="Like"
+          />
+          <img
+            v-else
+            class="w-4 h-4"
+            src="/assets/images/like_orange.png"
+            alt="Liked"
+          />
         </button>
-        <button class="ml-1 cursor-pointer" @click="Dislike()">
-          <img v-if="!reviewStateDislike" class="w-[16px] h-[16px] " src="/assets/images/dislike.png" />
-          <img v-if="reviewStateDislike" class="w-[16px] h-[16px] " src="/assets/images/dislike_orange.png" />
+        <button class="cursor-pointer" @click="Dislike()">
+          <img
+            v-if="!reviewStateDislike"
+            class="w-4 h-4"
+            src="/assets/images/dislike.png"
+            alt="Dislike"
+          />
+          <img
+            v-else
+            class="w-4 h-4"
+            src="/assets/images/dislike_orange.png"
+            alt="Disliked"
+          />
         </button>
       </div>
     </span>
@@ -58,23 +102,18 @@
 </template>
 
 <script lang="js" setup>
-import { onMounted, ref } from "vue";
-
-import MovieList from "./movie-list.vue";
-import RecommendList from "./recommend-list.vue";
+import { onMounted, ref, watch } from "vue";
+import BubbleMessage from "./bubble-message.vue";
 import { useModalStore } from "~/stores/modal";
-import { useSnackBarStore } from "~/stores/snackbar"
+import { useSnackBarStore } from "~/stores/snackbar";
 import { useMessage } from "~/stores/messages";
-import { useFormatDateTime } from "../../../composables/useFormatDateTime";
-import ChatSuggestion from "../chat-suggestion.vue";
-import { useReview } from '~/stores/review';
+import { useReview } from "~/stores/review";
+import { marked } from "marked";
 
-import { marked } from 'marked'
-import BubbleMessage from './bubble-message'
-const reviewStore = useReview()
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 });
+
 const props = defineProps({
   message: Array,
   timeStamp: String,
@@ -85,102 +124,107 @@ const props = defineProps({
   images: Array,
   contents: Array,
   urls: Array,
-  isError: Boolean
+  isError: Boolean,
 });
+
 const modalStore = useModalStore();
 const snackBarStore = useSnackBarStore();
 const messageStore = useMessage();
+const reviewStore = useReview();
 
-let reviewStateLike = ref(false);
-let reviewStateDislike = ref(false);
+const reviewStateLike = ref(false);
+const reviewStateDislike = ref(false);
 const receiveMessage = ref([]);
 const displayMessage = ref([]);
-let delayMessageInterval = null;
 let isTriggerInterval = false;
-// const addItemToDisplayMessage = (item) => {
-//   displayMessage.value.push(item)
-// };
+
 function Like() {
   reviewStateLike.value = !reviewStateLike.value;
   reviewStateDislike.value = false;
   if (reviewStateLike.value) {
-    snackBarStore.showSnackbar()
-    messageStore.messageEvaluate(true, props.chatID, props.userID)
+    snackBarStore.showSnackbar();
+    messageStore.messageEvaluate(true, props.chatID, props.userID);
   }
-
 }
+
 function Dislike() {
   reviewStateDislike.value = !reviewStateDislike.value;
   reviewStateLike.value = false;
   if (reviewStateDislike.value) {
     modalStore.toggleModal();
   }
-  reviewStore.saveID(props.chatID, props.userID)
-
+  reviewStore.saveID(props.chatID, props.userID);
 }
+
 watch(
   () => props.message,
-  (newMessage, oldMessage) => {
-    console.log('wwatch times triggered: ');
-
+  (newMessage) => {
     if (newMessage && newMessage.length) {
-      receiveMessage.value = newMessage
-      console.log('Received message', newMessage, process.client);
-
+      receiveMessage.value = newMessage;
       if (process.client) {
-        console.log('process client');
-
         setTimeout(() => {
           if (Array.isArray(receiveMessage.value) && receiveMessage.value.length) {
-            isTriggerInterval = true
-            const firstMsg = receiveMessage.value.shift()
-            displayMessage.value.push(firstMsg)
-            console.log('process.client before', receiveMessage.value);
+            isTriggerInterval = true;
+            const firstMsg = receiveMessage.value.shift();
+            displayMessage.value.push(firstMsg);
 
             if (receiveMessage.value.length) {
               const delayMessageInterval = setInterval(() => {
-                const newMessage = receiveMessage.value.shift()
-                displayMessage.value.push(newMessage)
-                console.log('displayMessage interval', displayMessage.value);
-                console.log('prop message after', receiveMessage.value)
+                const newMessage = receiveMessage.value.shift();
+                displayMessage.value.push(newMessage);
                 if (!receiveMessage.value.length) {
-                  clearInterval(delayMessageInterval)
+                  clearInterval(delayMessageInterval);
                 }
               }, 2000);
             }
           }
         }, 3000);
       }
-
     }
   },
-  { immediate: true } // Optional: triggers the watcher immediately on mount
+  { immediate: true }
 );
+
 onMounted(() => {
-  messageStore.loaderController()
-  // console.log('mounted', receiveMessage.value);
-
-  // if (!isTriggerInterval) {
-  //   isTriggerInterval = true
-  //   if (Array.isArray(receiveMessage.value) && receiveMessage.value.length) {
-  //     const firstMsg = receiveMessage.value.shift()
-  //     displayMessage.value.push(firstMsg)
-  //     console.log('receiveMessage.value before', receiveMessage.value);
-
-  //     if (receiveMessage.value.length) {
-  //       delayMessageInterval = setInterval(() => {
-  //         const newMessage = receiveMessage.value.shift()
-  //         displayMessage.value.push(newMessage)
-  //         console.log('displayMessage interval', displayMessage.value);
-  //         console.log('prop message after', receiveMessage.value)
-  //         if (!receiveMessage.value.length) {
-  //           clearInterval(delayMessageInterval)
-  //         }
-  //       }, 1000);
-  //     }
-  //   }
-  // }
-})
+  messageStore.loaderController();
+});
 </script>
 
-<style></style>
+<style scoped>
+/* Giảm kích thước font chữ cho màn hình dưới 400px */
+@media (max-width: 400px) {
+  .text-base {
+    font-size: 14px; /* Điều chỉnh theo nhu cầu */
+  }
+  .text-sm {
+    font-size: 12px;
+  }
+  .text-md {
+    font-size: 13px;
+  }
+  .text-xs {
+    font-size: 10px;
+  }
+  .h-6 {
+    height: 20px;
+  }
+  .w-6 {
+    width: 20px;
+  }
+  .h-14 {
+    height: auto; /* Điều chỉnh nếu cần */
+  }
+  .p-4 {
+    padding: 12px;
+  }
+  .w-4 {
+    width: 16px;
+  }
+  .h-4 {
+    height: 16px;
+  }
+  .mb-2 {
+    margin-bottom: 8px;
+  }
+}
+</style>
