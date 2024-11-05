@@ -1,10 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { defineNuxtConfig } from "nuxt/config";
-import { resolve } from "path";
+import { defineNuxtConfig } from 'nuxt/config';
+import { resolve } from 'path';
 export default defineNuxtConfig({
-  compatibilityDate: "2024-04-03",
-  devtools: { enabled: false },
-  css: ["~/assets/css/main.css", "animate.css/animate.min.css"],
+  compatibilityDate: '2024-04-03',
+  devtools: { enabled: true },
+  css: [
+    '~/assets/css/main.css',
+    'animate.css/animate.min.css',
+    '~/assets/css/font-awesome.css',
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -13,28 +17,22 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    "@": resolve(__dirname, "/"),
+    '@': resolve(__dirname, '/'),
   },
 
   app: {
     head: {
-      link: [
-        {
-          rel: "stylesheet",
-          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
-        },
-      ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      ]
+      ],
+      title: 'FPT Play AI Support',
     },
   },
 
   modules: [
-    "nuxt-snackbar",
-    "@pinia/nuxt",
-    "@nuxtjs/tailwindcss",
-    "@nuxt/content",
+    'nuxt-snackbar',
+    '@pinia/nuxt',
+    '@nuxtjs/tailwindcss',
+    '@nuxt/content',
   ],
-  
 });
