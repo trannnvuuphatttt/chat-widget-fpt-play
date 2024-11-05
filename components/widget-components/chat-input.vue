@@ -85,7 +85,6 @@ const handleSendMessage = () => {
   messageStore.sendRequest(messageStore.userInput, pID, userIDStore.userID)
   modalStore.toggleSuggestion()
 }
-
 </script>
 
 <style></style>

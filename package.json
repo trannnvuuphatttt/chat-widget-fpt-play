@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --hostname my.fptplay.net --port 88",
+    "dev": "nuxt dev --hostname my.fptplay.net --port 88 --host --open",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

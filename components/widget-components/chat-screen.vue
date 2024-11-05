@@ -1,20 +1,19 @@
 <template>
   <div
     ref="chatScreen"
-    class="bg-gray-200 overflow-y-auto overflow-x-[12px] flex flex-col relative items-center pb-4 "
+    class="bg-gray-200 overflow-y-auto overflow-x-[12px] flex flex-col relative items-center pb-4"
     @scroll="handleScroll()"
   >
     <div
       v-for="(message, key, index) in messageStore.newMessageArray"
       :key="key"
-      class="w-[338px] mt-[24px] mr-[12px] gap-[24px] "
+      class="w-[338px] mt-[24px] mr-[12px] gap-[24px]"
     >
       <userChatBubble
         :message="message.userMessage"
         :timeStamp="timeAgo(String(message.timestamp))"
         v-if="message.userMessage !== ''"
       />
-      {{ console.log(      message.botMessage,  message.botMessage.length)}}
       <botChatBubble
         :message="message.botMessage"
         :timeStamp="timeAgo(String(message.timestamp))"
@@ -26,7 +25,7 @@
         :contents="message.contents"
         :urls="message.urls"
         class="botMessage"
-        v-if="message.botMessage[0]!== ''"
+        v-if="message.botMessage[0] !== ''"
       />
     </div>
 
@@ -164,10 +163,8 @@ watch(loading, (newVal, oldVal) => {
     scrollToBottomWhenImagesLoaded();
     }
 
-    
+
 });
-
-
 </script>
 
 <style></style>
