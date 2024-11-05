@@ -71,10 +71,6 @@ const handleContinueChatting = () => {
 };
 
 const handleSendMessage = () => {
-  if (messageStore.userInput !== '') {
-    messageStore.sendRequest(messageStore.userInput, userIDStore.userID);
-    modalStore.toggleSuggestion();
-  }
   const inputText = messageStore.userInput.trim()
   if (inputText === "") return
 
