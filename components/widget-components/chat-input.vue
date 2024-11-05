@@ -71,6 +71,9 @@ const handleContinueChatting = () => {
 };
 
 const handleSendMessage = () => {
+  if (!messageStore.userInput) {
+    return
+  }
   const inputText = messageStore.userInput.trim()
   if (inputText === "") return
 
