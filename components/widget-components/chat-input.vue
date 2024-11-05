@@ -50,11 +50,15 @@ const handleContinueChatting = () => {
 }
 
 const handleSendMessage = () => {
-  if (messageStore.userInput !== '') {
+  const inputText = messageStore.userInput.trim()
+  if (inputText === "") return
 
-    messageStore.sendRequest(messageStore.userInput, userIDStore.userID)
-    modalStore.toggleSuggestion()
-  }
+  const { query: { token } } = useRoute()
+
+  const pID = token || userIDStore.userID
+
+  messageStore.sendRequest(messageStore.userInput, pID, userIDStore.userID)
+  modalStore.toggleSuggestion()
 }
 </script>
 
