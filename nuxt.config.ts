@@ -16,10 +16,6 @@ export default defineNuxtConfig({
     },
   },
 
-  alias: {
-    '@': resolve(__dirname, '/'),
-  },
-
   app: {
     head: {
       meta: [
