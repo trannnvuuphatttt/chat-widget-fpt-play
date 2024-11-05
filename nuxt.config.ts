@@ -26,6 +26,12 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ],
       title: 'FPT Play AI Support',
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;700&display=swap',
+        },
+      ],
     },
   },
 

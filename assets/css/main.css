@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'SF Pro Display';
-    src: url('/path-to-your-font/SFProDisplay-Regular.woff2') format('woff2'),
-         url('/path-to-your-font/SFProDisplay-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'SF Pro Display';
+  src: url('fonts/SFProDisplay-Regular.woff2') format('woff2'),
+    url('fonts/SFProDisplay-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
