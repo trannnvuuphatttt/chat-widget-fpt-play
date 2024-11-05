@@ -17,7 +17,6 @@
 
 <script lang="js" setup>
 import { useMessage } from "~/stores/messages";
-const { ref, onMounted, defineProps } = Vue;
 const props = defineProps({
     message: String,
 });
