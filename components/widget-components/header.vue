@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useModalStore } from "~/stores/modal";
+import { useModalStore } from '~/stores/modal';
 
 const modalStore = useModalStore();
 </script>
