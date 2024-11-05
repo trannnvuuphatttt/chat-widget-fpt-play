@@ -140,9 +140,9 @@ watch(
 );
 onMounted(() => {
   UserIDStore.getExistedID();
-
-  messageStore.getChatHistory(UserIDStore.userID);
-
+  const { query: { token } } = useRoute()
+  const pID = token || userIDStore.userID
+  messageStore.getChatHistory(pID, UserIDStore.userID);
 });
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.newMessageArray);
