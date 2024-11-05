@@ -115,23 +115,24 @@ export const useMessage = defineStore("message", {
     //   }
     // },
      
-    async sendRequest(inputData, userID) {
+    async sendRequest(inputData, pfID, ssID) {
       this.isError = false;
       this.isLoading = true;
       this.sendMessage(inputData, "");
       this.userInput = "";
+
       try {
         const response = await axios.post(
           "https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/add",
           {
             query: inputData,
-            profile_id: userID,
-            session_uuid: userID,
+            profile_id: pfID,
+            session_uuid: ssID,
             tw_ws: true,
           },
           {
             headers: {
-              accept: "application/jsonL",
+              accept: "application/json",
               //"Client-Id": userID,
 
               "Content-Type": "application/json",
@@ -228,7 +229,7 @@ export const useMessage = defineStore("message", {
       // Các hàm khác...
     },
 
-    async getChatHistory(userID) {
+    async getChatHistory(pID, userID) {
       if (this.historyData.length === 0) {
         try {
           const chatHistory = await axios.put(
@@ -236,7 +237,7 @@ export const useMessage = defineStore("message", {
             {
               limit: 10,
               offset: 0,
-              profile_id: userID,
+              profile_id: pID,
               session_uuid: userID,
             },
             {

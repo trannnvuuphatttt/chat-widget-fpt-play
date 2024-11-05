@@ -75,7 +75,17 @@ const handleSendMessage = () => {
     messageStore.sendRequest(messageStore.userInput, userIDStore.userID);
     modalStore.toggleSuggestion();
   }
-};
+  const inputText = messageStore.userInput.trim()
+  if (inputText === "") return
+
+  const { query: { token } } = useRoute()
+
+  const pID = token || userIDStore.userID
+
+  messageStore.sendRequest(messageStore.userInput, pID, userIDStore.userID)
+  modalStore.toggleSuggestion()
+}
+
 </script>
 
 <style></style>
