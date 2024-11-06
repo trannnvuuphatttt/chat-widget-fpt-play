@@ -41,7 +41,7 @@
         v-else
         class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display"
       >
-        <div v-html="marked(displayMessage[0])"></div>
+        <div v-html="displayMessage[0]"></div>
       </div>
 
       <div

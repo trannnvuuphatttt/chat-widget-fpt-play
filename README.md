@@ -2,6 +2,7 @@
 
 https://www.figma.com/design/XroFNnMdHp77Uc4nJdz5wf/AI---Chatbot?node-id=1-3&node-type=canvas
 https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/docs/#/bot/post_v1_bot_messages_add
+https://docs.google.com/spreadsheets/d/1Bj6uknUJJo6QnGcduKGc3fPCGffIfNHHXs96rUWQ7pA/edit?gid=1142751435#gid=1142751435
 
 # Nuxt 3 Minimal Starter
 

@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { data } from 'autoprefixer';
 
 export const useMessage = defineStore('message', {
   state: () => ({
@@ -33,95 +31,73 @@ export const useMessage = defineStore('message', {
     ],
     botMessageID: '',
     isLoading: false,
+    isAlreadyJoinedChatRoom: false,
   }),
   actions: {
-    // async joinRoom() {
-    //   try {
-    //     // Cấu hình request với headers và body
-    //     const response = await axios.post(
-    //       'https://livechat-staging.fptplay.net/center/api/v1/web/Channel/c022b6027bdd4c258314c07a81986781/join',
-    //       {
-    //         password: ""
-    //       },
-    //       {
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           'platform': 'web',
-    //           'token': '2795893ee633a1386de1150f7f70c4daeb5a6842df531e8ed9c77968b7d316cfd26c114f3d8d2a07655b26e2b3cb95948afff51596464b19b965a70457c3f2f58778b6c6c031a048ccb395f081bd5dc9fac8a2e769e35cbcb56f086b6cfb79b4859705e1945cb758a555ce82f121f418f28aa2dd473decb7b21de4e9a6218a23031dff7f9d292cd6cc9db5c6bb89c6a667987c832a6a4a7f0d3f85670321e734cf8a4d5fef466f5b81e7840b99308a47cf297d1fbc0cd6bef1b8a068569a711342d865a327a8c29e79403da24000ce8de3fe6ab8fa3a112612834054e435e4e80cb902eb48dd36b79fb1d4cb5a0b0e95',
-    //         },
-    //       }
-    //     );
+    async handleSocket(channelId) {
+      try {
+        if (channelId) {
+          await fetch(
+            `https://livechat-staging.fptplay.net/center/api/v1/web/Channel/${channelId}/join`,
+            {
+              method: 'POST',
+              headers: {
+                token: import.meta.env.VITE_APP_WS_TOKEN,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({}),
+            },
+          )
+            .then(() => {})
+            .catch(() => {});
 
-    //     if (response.data && response.data.roomData) {
-    //       this.message = 'Joined room successfully!';
-    //       this.data = response.data.roomData;
+          // await joinChatRoom({ channelId });
+          //ws-livechat-staging.fptplay.net/livechat/{channel_id}?token=xxx
+          const ws = new WebSocket(
+            `${
+              import.meta.env.VITE_APP_WS_DOMAIN
+            }/livechat/${channelId.replaceAll('"', '')}?token=${
+              import.meta.env.VITE_APP_WS_TOKEN
+            }`,
+          );
+          // const ws = new WebSocket(
+          //   'wss://ws-livechat-staging.fptplay.net/livechat/telegram__805698807?token=fbb516be9a17e5c92c47a2d3a323993a5eddd37b0acdbee44b489a1ee89935ea8d7090a212c0de1962bc851bc899c50999a6f3de4fb357e51c8840f9453d1cbcaac7aa9501f2c4eb3b8ab834cf2c35da9515ad821e8b01798a303f165a9837e3b9a1c0a8e655924cc2fefce35723255d4bbeadde180d4c3cc04235b54322317f46c32975c7e73a6439947fe8c5cf42e38d1e71dd31626076e9a4a446f42fd16ddad282bf5125bdd90d28717f7d802be67f21f899e0b6a4cebd118388bab732dbaede1413bbe9d9fb128f0407b72a1abb445b76c58892ecd8f57823f730d1c0d6',
+          // );
 
-    //       // Kết nối WebSocket nếu URL được cung cấp trong response
-    //       if (response.data.wsUrl) {
-    //         this.initWebSocket(response.data.wsUrl);
-    //       }
-    //     } else {
-    //       this.message = response.data.message || 'Failed to join room.';
-    //     }
-    //   } catch (error) {
-    //     this.message = 'Error joining room.';
-    //   }
-    // },
+          ws.onopen = () => {
+            console.log('WebSocket connection opened');
+          };
 
-    // initWebSocket() {
-    //   const wsUrl = 'wss://ws-livechat-staging.fptplay.net/livechat/c022b6027bdd4c258314c07a81986781?token=2795893ee633a1386de1150f7f70c4daeb5a6842df531e8ed9c77968b7d316cfd26c114f3d8d2a07655b26e2b3cb95948afff51596464b19b965a70457c3f2f58778b6c6c031a048ccb395f081bd5dc9fac8a2e769e35cbcb56f086b6cfb79b4859705e1945cb758a555ce82f121f418f28aa2dd473decb7b21de4e9a6218a23031dff7f9d292cd6cc9db5c6bb89c6a667987c832a6a4a7f0d3f85670321e734cf8a4d5fef466f5b81e7840b99308a47cf297d1fbc0cd6bef1b8a068569a711342d865a327a8c29e79403da24000ce8de3fe6ab8fa3a112612834054e435e4e80cb902eb48dd36b79fb1d4cb5a0b0e95';
+          // Event handler for when a message is received from the server
+          ws.onmessage = (event) => {
+            console.log('Message from server:', event.data);
+          };
 
-    //   this.ws = new WebSocket(wsUrl);
+          // Event handler for when the connection is closed
+          ws.onclose = () => {
+            console.log('WebSocket connection closed');
+          };
 
-    //   this.ws.onopen = () => {
-    //     console.log('WebSocket connected');
-    //   };
-
-    //   this.ws.onclose = () => {
-    //     console.log('WebSocket disconnected');
-    //   };
-
-    //   this.ws.onmessage = (event) => {
-    //     const newData = JSON.parse(event.data);
-    //     console.log('Received from WebSocket:', newData);
-
-    //     // Xử lý dữ liệu nhận được từ WebSocket và cập nhật vào `data`
-    //     this.data = newData;
-    //   };
-    // },
-
-    // initWebSocket() {
-    //   if (!this.ws || this.ws.readyState === WebSocket.CLOSED) {
-    //     this.ws = new WebSocket('wss://ws-livechat-staging.fptplay.net/livechat/c022b6027bdd4c258314c07a81986781?token=2795893ee633a1386de1150f7f70c4daeb5a6842df531e8ed9c77968b7d316cfd26c114f3d8d2a07655b26e2b3cb95948afff51596464b19b965a70457c3f2f58778b6c6c031a048ccb395f081bd5dc9fac8a2e769e35cbcb56f086b6cfb79b4859705e1945cb758a555ce82f121f418f28aa2dd473decb7b21de4e9a6218a23031dff7f9d292cd6cc9db5c6bb89c6a667987c832a6a4a7f0d3f85670321e734cf8a4d5fef466f5b81e7840b99308a47cf297d1fbc0cd6bef1b8a068569a711342d865a327a8c29e79403da24000ce8de3fe6ab8fa3a112612834054e435e4e80cb902eb48dd36b79fb1d4cb5a0b0e95');
-
-    //     this.ws.onopen = () => {
-    //       console.log('WebSocket connected');
-
-    //       // Gửi tin nhắn đầu tiên hoặc gọi hàm khác nếu cần
-    //       this.sendMessage('Initial message');
-    //     };
-
-    //     this.ws.onmessage = (event) => {
-    //       const newData = JSON.parse(event.data);
-    //       console.log('Received from WebSocket:', newData);
-    //       this.data = newData;
-    //     };
-
-    //     // this.ws.onclose = () => {
-    //     //   console.log('WebSocket disconnected');
-    //     // };
-    //   } else {
-    //     console.log('WebSocket is already initialized.');
-    //   }
-    // },
+          // Event handler for errors
+          ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+          };
+        }
+      } catch (error) {}
+    },
 
     async sendRequest(inputData, pfID, ssID) {
+      // add
+      // join
+      // socket
       this.isError = false;
       this.isLoading = true;
       this.sendMessage(inputData, '');
       this.userInput = '';
 
       try {
+        const channelId = localStorage.getItem('chatSession');
+
         const response = await axios.post(
           `${
             import.meta.env.VITE_APP_API_DOMAIN
@@ -156,19 +132,9 @@ export const useMessage = defineStore('message', {
           chatID: this.responseData.message_uuid,
         };
 
-        // if (this.ws) {
-        //   console.log("WebSocket readyState:", this.ws.readyState);
-        //   if (this.ws.readyState === WebSocket.OPEN) {
-        //     this.ws.send(JSON.stringify(this.responseData));
-        //     console.log("Data sent via WebSocket:", this.responseData);
-        //   } else {
-        //     console.warn("WebSocket is not open. Current state:", this.ws.readyState);
-        //   }
-        // } else {
-        //   console.error("WebSocket has not been initialized.");
-        // }
-
         this.userInput = '';
+
+        this.handleSocket(channelId);
       } catch (error) {
         console.error('Lỗi khi gọi API:', error);
         this.isError = true;
@@ -192,29 +158,7 @@ export const useMessage = defineStore('message', {
         urls: [],
         chatID: '',
       });
-      // this.userInput = "";
-      // } else {
-      //   console.error('WebSocket has not been initialized or is not open.');
-      //   // Có thể gọi lại initWebSocket nếu cần
-      //   this.initWebSocket();
-      // }
     },
-
-    // sendMessage(userChat, botChat) {
-    //   this.setSampleChatTime();
-    //   this.newMessageArray.push({
-    //     userMessage: userChat,
-    //     botMessage: [botChat],
-    //     timestamp:this.sampleChatTimeStamp,
-    //     videos: [],
-    //     images: [],
-    //     contents: [],
-    //     urls: [],
-    //     chatID: "",
-    //   });
-    //   this.userInput = "";
-
-    // },
 
     actions: {
       delayMessageInterval() {
