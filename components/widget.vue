@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div
-      class="bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-[95%] sm:w-[400px] lg:w-[450px] xl:w-[500px] h-[90%] sm:h-[668px] lg:h-[700px] xl:h-[750px] right-[2.5%] sm:right-[40px] lg:right-[60px] bottom-[2.5%] sm:bottom-[40px] lg:bottom-[60px]"
+      class="bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg right-[2.5%] sm:right-[40px] lg:right-[60px] bottom-[2.5%] sm:bottom-[40px] lg:bottom-[60px] fixed-height"
       v-show="modalStore.showWidget && userIDStore.userID !== null"
       v-if="!isInactive"
     >
@@ -284,5 +284,16 @@ onMounted(() => {
 
 .zIndex {
   z-index: 1000;
+}
+
+.fixed-height {
+  height: 668px;
+  max-height: 100vh;
+}
+
+@media (max-height: 600px) {
+  .fixed-height {
+    height: calc(100vh - 60px);
+  }
 }
 </style>
