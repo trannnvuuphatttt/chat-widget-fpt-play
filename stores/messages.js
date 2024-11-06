@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { joinChatRoom } from '@/src/api/chat';
 
 export const useMessage = defineStore('message', {
   state: () => ({
@@ -32,55 +33,58 @@ export const useMessage = defineStore('message', {
     botMessageID: '',
     isLoading: false,
     isAlreadyJoinedChatRoom: false,
+    isWaitingSocket: false,
   }),
   actions: {
-    async handleSocket(channelId) {
-      try {
-        if (channelId) {
-          await fetch(
-            `https://livechat-staging.fptplay.net/center/api/v1/web/Channel/${channelId}/join`,
-            {
-              method: 'POST',
-              headers: {
-                token: import.meta.env.VITE_APP_WS_TOKEN,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({}),
-            },
-          )
-            .then(() => {})
-            .catch(() => {});
+    async handleSocket() {
+      const channelId = localStorage.getItem('chatSession');
+      if (!channelId) {
+        return;
+      }
+      const parsed = JSON.parse(channelId);
 
-          // await joinChatRoom({ channelId });
-          //ws-livechat-staging.fptplay.net/livechat/{channel_id}?token=xxx
+      try {
+        if (parsed?.value) {
+          await joinChatRoom({ channelId: parsed?.value });
           const ws = new WebSocket(
             `${
               import.meta.env.VITE_APP_WS_DOMAIN
-            }/livechat/${channelId.replaceAll('"', '')}?token=${
+            }/livechat/${parsed?.value.replaceAll('"', '')}?token=${
               import.meta.env.VITE_APP_WS_TOKEN
             }`,
           );
-          // const ws = new WebSocket(
-          //   'wss://ws-livechat-staging.fptplay.net/livechat/telegram__805698807?token=fbb516be9a17e5c92c47a2d3a323993a5eddd37b0acdbee44b489a1ee89935ea8d7090a212c0de1962bc851bc899c50999a6f3de4fb357e51c8840f9453d1cbcaac7aa9501f2c4eb3b8ab834cf2c35da9515ad821e8b01798a303f165a9837e3b9a1c0a8e655924cc2fefce35723255d4bbeadde180d4c3cc04235b54322317f46c32975c7e73a6439947fe8c5cf42e38d1e71dd31626076e9a4a446f42fd16ddad282bf5125bdd90d28717f7d802be67f21f899e0b6a4cebd118388bab732dbaede1413bbe9d9fb128f0407b72a1abb445b76c58892ecd8f57823f730d1c0d6',
-          // );
 
           ws.onopen = () => {
-            console.log('WebSocket connection opened');
+            this.isWaitingSocket = true;
           };
 
           // Event handler for when a message is received from the server
           ws.onmessage = (event) => {
-            console.log('Message from server:', event.data);
+            console.log('Message socket: ', event.data);
+            if (typeof event.data === 'string') {
+              const parsed = JSON.parse(event.data);
+              if (parsed?.type === 'endAnswer') {
+                ws.close();
+              }
+            } else if (typeof event.data === 'object') {
+              if (event.data?.type === 'endAnswer') {
+                ws.close();
+              }
+            }
+            // if (event?.data?.type)
           };
 
           // Event handler for when the connection is closed
           ws.onclose = () => {
             console.log('WebSocket connection closed');
+            this.isWaitingSocket = false;
           };
 
           // Event handler for errors
           ws.onerror = (error) => {
             console.error('WebSocket error:', error);
+            ws.close();
+            this.isWaitingSocket = false;
           };
         }
       } catch (error) {}
@@ -96,8 +100,6 @@ export const useMessage = defineStore('message', {
       this.userInput = '';
 
       try {
-        const channelId = localStorage.getItem('chatSession');
-
         const response = await axios.post(
           `${
             import.meta.env.VITE_APP_API_DOMAIN
@@ -106,7 +108,7 @@ export const useMessage = defineStore('message', {
             query: inputData,
             profile_id: pfID,
             session_uuid: ssID,
-            tw_ws: true,
+            to_ws: true,
           },
           {
             headers: {
@@ -134,7 +136,7 @@ export const useMessage = defineStore('message', {
 
         this.userInput = '';
 
-        this.handleSocket(channelId);
+        this.handleSocket();
       } catch (error) {
         console.error('Lỗi khi gọi API:', error);
         this.isError = true;
@@ -145,9 +147,6 @@ export const useMessage = defineStore('message', {
     },
 
     sendMessage(userChat, botChat) {
-      // this.setSampleChatTime();
-      // if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      //   this.ws.send(userChat, botChat);
       this.newMessageArray.push({
         userMessage: userChat,
         botMessage: [botChat],
@@ -197,7 +196,6 @@ export const useMessage = defineStore('message', {
           );
 
           this.historyData = chatHistory.data.data.messages;
-          console.log(this.historyData);
 
           for (let i = this.historyData.length - 1; i >= 0; i--) {
             this.newMessageArray.push({
@@ -211,7 +209,6 @@ export const useMessage = defineStore('message', {
               chatID: this.historyData[i].message_uuid,
             });
           }
-          console.log(this.historyData);
         } catch (error) {
           console.error('Lỗi khi gọi API:', error);
         }
@@ -221,9 +218,6 @@ export const useMessage = defineStore('message', {
     async messageEvaluate(evaluate, botMessageID, userID) {
       try {
         await axios.put(
-          // 'https://api-staging.fptplay.net/api/v7.1_w/bigdata/hermes/v1/bot/messages/' +
-          //   botMessageID +
-          //   '/evaluate',
           `${
             import.meta.env.VITE_APP_API_DOMAIN
           }/api/v7.1_w/bigdata/hermes/v1/bot/messages/${botMessageID}/evaluate`,
@@ -253,7 +247,6 @@ export const useMessage = defineStore('message', {
 
     setSampleChatTime() {
       this.sampleChatTimeStamp = Date.now();
-      console.log('Created', this.sampleChatTimeStamp);
     },
 
     emptyArray() {
