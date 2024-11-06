@@ -73,7 +73,7 @@
     class="bg-white widget-container overflow-hidden rounded-[16px] shadow-lg w-[90%] h-[35%] sm:w-[400px] sm-h-[354px] z-40 fixed bottom-[40px] sm:bottom-3 inset-2 sm:right-3 flex flex-col justify-between items-center p-6 gap-[24px] sm:gap-[44px]"
     v-if="userIDStore.userID === null && modalStore.showWidget">
     <button class="relative self-end flex-none" @click="modalStore.toggleWidget">
-      <img src="/assets/images/Icon.png" class="w-[90%] sm:w-[12px] h-[90%] sm:h-[12px]" />
+      <img src="/assets/images/Icon.png" class=" w-[12px] h-[12px]" />
     </button>
     <div class="flex-none w-[90%] sm:w-[352px] h-[45px] sm:h-[45px]gap-[16px] flex flex-col items-center">
       <img src="/assets/images/avatar.png" class="w-[84px] h-[84px] sm:w-[104px] sm:h-[104px] text-center flex-none" />
