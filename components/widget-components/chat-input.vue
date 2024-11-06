@@ -38,15 +38,21 @@ import { useModalStore } from '~/stores/modal';
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "../../stores/userID";
 import { getWithExpiry } from "~/src/utils/setGetExpired"
+import { storeToRefs } from 'pinia'
 
 const modalStore = useModalStore();
 const messageStore = useMessage();
 const userIDStore = useUserIDStore();
-const existTime = useState('existed')
+const existTime = useState('existed');
+const { showWidget } = storeToRefs(modalStore)
 
 defineOptions({
   inheritAttrs: false,
 });
+
+watch(showWidget, () => {
+  existTime.value = getWithExpiry("chatSession")
+})
 
 const handleContinueChatting = () => {
   modalStore.isChatting = true;

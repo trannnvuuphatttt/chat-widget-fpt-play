@@ -15,7 +15,7 @@ export const useUserIDStore = defineStore("userID", {
     createNewID() {
       this.userID = uuidv4()
       try {
-        setWithExpiry("chatSession", uuidv4(), 1000 * 60 * 60 * 24)
+        setWithExpiry("chatSession", this.userID, 1000 * 60 * 60 * 24)
       } catch (e) {
         if (
           e.name === "QuotaExceededError" ||
