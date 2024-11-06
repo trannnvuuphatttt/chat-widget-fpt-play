@@ -114,15 +114,6 @@ const handleScroll = () => {
   };
 };
 
-
-
-onMounted(() => {
-  showScrollDownButton.value=false;
-  if (chatScreen.value) {
-    chatScreen.value.addEventListener('scroll', handleScroll);
-  }
-});
-
 onBeforeUnmount(() => {
   if (chatScreen.value) {
     chatScreen.value.removeEventListener('scroll', handleScroll);
@@ -142,6 +133,10 @@ onMounted(() => {
   const { query: { token } } = useRoute()
   const pID = token || UserIDStore.userID
   messageStore.getChatHistory(pID, UserIDStore.userID);
+  showScrollDownButton.value=false;
+  if (chatScreen.value) {
+    chatScreen.value.addEventListener('scroll', handleScroll);
+  }
 });
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.newMessageArray);

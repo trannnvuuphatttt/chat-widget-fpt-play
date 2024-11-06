@@ -46,6 +46,7 @@
     </button>
     <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-sm sm:text-md rounded-lg"
+      v-if="existTime !== null"
       @click="handleContinueChatting"
     >
       Tiếp tục chat
@@ -57,10 +58,12 @@
 import { useModalStore } from '~/stores/modal';
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "../../stores/userID";
+import { getWithExpiry } from "~/src/utils/setGetExpired"
 
 const modalStore = useModalStore();
 const messageStore = useMessage();
 const userIDStore = useUserIDStore();
+const existTime = useState('existed')
 
 defineOptions({
   inheritAttrs: false,
@@ -84,6 +87,10 @@ const handleSendMessage = () => {
   messageStore.sendRequest(messageStore.userInput, pID, userIDStore.userID)
   modalStore.toggleSuggestion()
 }
+
+onMounted(()=>{
+  existTime.value = getWithExpiry("chatSession")
+})
 </script>
 
 <style></style>

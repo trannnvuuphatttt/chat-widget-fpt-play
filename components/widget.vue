@@ -128,7 +128,7 @@
     </div>
     <button
       class="rounded-lg border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] shadow-md bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-white hover:border-2 hover:border-orange-500 hover:text-orange-500 h-[90%] sm:h-[50px] w-full sm:w-[352px] px-4 sm:px-6 py-3 flex-auto"
-      @click="userIDStore.createNewID(), messageStore.ddelayMessageInterval()"
+      @click="() => userIDStore.createNewID()"
     >
       <p
         class="font-sf-pro-display text-[90%] sm:text-[16px] text-center flex-auto leading-[20.8px] tracking-custom font-normal"
@@ -182,13 +182,10 @@ defineOptions({
 })
 
 onMounted(() => {
-  userIDStore.getExistedID()
-})
-
-onMounted(() => {
   const text = `Xin chào! Tôi có thể giúp gì cho bạn không?`;
   const typingElement = document.getElementById('typing-text');
   const boxElement = document.getElementById('box');
+  userIDStore.getExistedID()
   let index = 0;
   let isTyping = true;
   let typingSpeed = 100;

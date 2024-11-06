@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
+import { setWithExpiry, getWithExpiry } from "../src/utils/setGetExpired"
 
 export const useUserIDStore = defineStore("userID", {
   state: () => ({
@@ -7,12 +8,14 @@ export const useUserIDStore = defineStore("userID", {
   }),
   actions: {
     getExistedID() {
-      this.userID = localStorage.getItem("chatSession");
+      let existed = getWithExpiry("chatSession")
+      if(existed === null || !existed) return 
+      this.userID = existed
     },
     createNewID() {
-      this.userID = uuidv4();
+      this.userID = uuidv4()
       try {
-        localStorage.setItem("chatSession", JSON.stringify(this.userID));
+        setWithExpiry("chatSession", uuidv4(), 1000 * 60 * 60 * 24)
       } catch (e) {
         if (
           e.name === "QuotaExceededError" ||
@@ -23,10 +26,6 @@ export const useUserIDStore = defineStore("userID", {
           alert("An error occurred while saving to local storage.", e);
         }
       }
-    },
-    deleteOldID() {
-      this.userID = null;
-      localStorage.removeItem("chatSession");
     },
   },
 });
