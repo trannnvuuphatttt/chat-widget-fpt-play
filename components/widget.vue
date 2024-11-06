@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div
-      class=" widget-container max-h-[100vh] max-w-[100vw] bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-full sm:w-[400px] lg:w-[450px] xl:w-[400px] h-full sm:h-[668px] lg:h-[400px] xl:h-[668px] right-0 sm:right-[40px] lg:right-[60px] bottom-0 sm:bottom-[40px] lg:bottom-[60px]"
+      class="fit-height widget-container max-h-[100vh] max-w-[100vw] bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-full sm:w-[400px] lg:w-[450px] xl:w-[400px] h-full sm:h-[668px] lg:h-[400px] xl:h-[668px] right-0 sm:right-[40px] lg:right-[60px] bottom-0 sm:bottom-[40px] lg:bottom-[60px]"
       v-show="modalStore.showWidget && userIDStore.userID !== null" v-if="!isInactive">
       <Header class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto" />
@@ -10,31 +10,31 @@
 
       <div v-show="modalStore.showModal"
         class="z-50 bg-black rounded-lg w-full h-full p-2 bg-opacity-60 flex absolute items-center justify-center top-0 left-0">
-        <div class="bg-white rounded-lg p-4 w-[90%] sm:w-[368px] h-fit m-4 flex flex-col gap-2">
+        <div class="bg-white rounded-lg p-4 w-[366px] sm:w-[368px] h-[231px] sm:h-[228px]  m-4 flex flex-col gap-2">
           <div class="flex-initial flex flex-col gap-2">
-            <h1 class="font-sf-pro-display text-lg text-center">
+            <h1 class="font-sf-pro-display text-lg text-center font-semibold tracking-wider leading-[23.4px]">
               Câu trả lời chưa tốt với bạn?
             </h1>
 
             <textarea name="message" rows="10" cols="30"
-              class="rounded-lg shadow-dm h-[90%] sm-h[104px] p-2 border-2 border-gray-200 my-2 focus:outline-none text-lg"
+              class="rounded-lg shadow-dm w-[336px] h-[104px]  p-2 border-2 border-gray-200 my-2 focus:outline-none text-[16px]"
               placeholder="Bạn hãy cho biết lý do câu trả lời chưa tốt và nên được cải thiện như thế nào?"
               v-model="messageStore.userComment"></textarea>
           </div>
           <div class="flex flex-auto justify-between gap-2">
             <button
-              class="flex-auto p-2 border-orange-500 border-2 text-orange-500 w-[90%] sm:w-[120px] rounded-md hover:text-white hover:bg-orange-500"
+              class="flex-auto p-2 border-orange-500 border-2 text-orange-500 w-[163px] h-[40px] rounded-md hover:text-white hover:bg-orange-500"
               @click="modalStore.toggleModal">
               Đóng
             </button>
 
             <button
-              class="flex-auto p-2 border-2 border-[#EFEFEF] text-gray-400 bg-[#EFEFEF]w-[90%] sm:w-[120px] rounded-md"
+              class="flex-auto p-2 border-2 border-[#EFEFEF] text-gray-400 bg-[#EFEFEF] w-[163px] h-[40px] rounded-md"
               v-if="messageStore.userComment === ''">
               Gửi yêu cầu
             </button>
             <button
-              class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[90%] sm:w-[120px] rounded-md hover:text-orange-500 hover:bg-white"
+              class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[163px] h-[40px] rounded-md hover:text-orange-500 hover:bg-white"
               v-if="messageStore.userComment !== ''" @click="() => {
                 modalStore.toggleModal();
                 messageStore.messageEvaluate(
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] right-[20%] bg-[#4caf50] p-4 rounded-lg text-white zIndex"
+        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] right-[20%] bg-[#48DF60] p-4 rounded-[12px] text-white zIndex w-[245px]"
         v-if="snackBarStore.snackBarVisible" id="snackbar" :class="snackBarStore.snackBarClass">
         <img class="flex-shrink-0 flex-grow-0" src="/assets/images/review_snackbar_icon.png" />
         <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
@@ -60,7 +60,7 @@
     </div>
   </div>
   <div v-show="!modalStore.showWidget"
-    class="z-40 fixed bottom-[40px] right-[40px] flex flex-col items-end w-[90%] sm:w-[280px] gap-[16px]">
+    class="z-40 fixed bottom-[90px] sm:bottom-[40px] right-[10px] sm:right-[40px]  flex flex-col items-end w-[90%] sm:w-[280px] gap-[16px]">
     <div id="box"
       class="hidden break-words bg-white leading-5 rounded-t-2xl rounded-br-[4px] rounded-tr-2xl rounded-bl-2xl p-4 z-50 shadow-lg animate__animated w-[280px] h-[90%] sm:h-[74px]">
       <p id="typing-text" class="text-[90%] sm:text-[16px]"></p>
@@ -70,7 +70,7 @@
     </button>
   </div>
   <div
-    class="widget-container bg-white widget-container overflow-hidden rounded-[16px] shadow-lg w-[90%] h-[35%] sm:w-[400px] sm-h-[354px] z-40 fixed bottom-[40px] mx-auto left-3 right-3 flex flex-col justify-between items-center p-6 gap-[24px] sm:gap-[44px]"
+    class="bg-white widget-container overflow-hidden rounded-[16px] shadow-lg w-[90%] h-[35%] sm:w-[400px] sm-h-[354px] z-40 fixed bottom-[40px] sm:bottom-3 inset-2 sm:right-3 flex flex-col justify-between items-center p-6 gap-[24px] sm:gap-[44px]"
     v-if="userIDStore.userID === null && modalStore.showWidget">
     <button class="relative self-end flex-none" @click="modalStore.toggleWidget">
       <img src="/assets/images/Icon.png" class="w-[90%] sm:w-[12px] h-[90%] sm:h-[12px]" />
@@ -237,5 +237,15 @@ onMounted(() => {
 
 .zIndex {
   z-index: 1000;
+}
+
+.fit-height {
+  height: 668px;
+}
+
+@media (max-height: 600px) {
+  .fit-height {
+    height: calc(100% -60px);
+  }
 }
 </style>

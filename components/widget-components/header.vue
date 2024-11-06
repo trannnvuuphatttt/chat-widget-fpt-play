@@ -1,5 +1,6 @@
 <template>
-  <div id="chat-header " class="w-[400px] sm:w-[400px] h-[96px] flex flex-row mt-4 shadow-SM relative mx-auto">
+  <div id="chat-header "
+    class="w-[400px] sm:w-[400px] h-[120px] sm:h-[96px] flex flex-row mt-4 shadow-SM relative mx-auto">
     <div class="ml-6 flex flex-row mt-6 items-start gap-[12px] w-auto h-[48px]">
       <div id="avatar" class="relative col-span-1 h-fit w-fit flex-initial">
         <img src="assets/images/avatar.png" placeholder="avatar" class="w-[48px] h-[48px]" />
@@ -13,8 +14,8 @@
         <!--  <span class="text-sm text-gray-500 w-fit h-fit">Đang hoạt động</span>-->
       </div>
     </div>
-    <div id="closeButton" class="cursor-pointer flex-auto">
-      <button @click="modalStore.closeWidget" class="w-6 h-6 top-4 right-4 absolute">
+    <div id="closeButton" class="cursor-pointer flex-auto mx-auto">
+      <button @click="modalStore.closeWidget" class="w-6 h-6 top-2 left-[85%] sm:top-4 sm:left-[352px] absolute">
         <img src="/assets/images/Icon.png" class="w-[12px] h-[12px]" />
       </button>
     </div>
@@ -22,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useModalStore } from '~/stores/modal';
+import { useModalStore } from "~/stores/modal";
 
 const modalStore = useModalStore();
 </script>
