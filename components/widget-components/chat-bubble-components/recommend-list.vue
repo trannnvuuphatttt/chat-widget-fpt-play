@@ -1,27 +1,17 @@
 <template>
   <div class="flex movieList cursor-pointer overflow-x-scroll mb-2">
-    <div
-      class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none w-40 md:w-48 lg:w-64"
-      v-for="(item, index) in items.movieHot"
-      :key="index"
-    >
+    <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none w-40 md:w-48 lg:w-64"
+      v-for="(item, index) in items.movieHot" :key="index">
       <div>
         <a :href="item.link">
-          <img
-            :src="item.img"
-            class="object-cover w-full h-40 md:h-48 lg:h-64 rounded-t-lg"
-          />
+          <img :src="item.img" class="object-cover w-full h-40 md:h-48 lg:h-64 rounded-t-lg" />
         </a>
       </div>
       <div class="p-2">
-        <h1
-          class="text-gray-900 truncate text-sm md:text-base font-semibold leading-tight font-sf-pro-display"
-        >
+        <h1 class="text-gray-900 truncate text-sm md:text-base font-semibold leading-tight font-sf-pro-display">
           {{ item.name }}
         </h1>
-        <div
-          class="text-gray-500 text-xs md:text-sm truncate flex items-center gap-1 mt-1"
-        >
+        <div class="text-gray-500 text-xs md:text-sm truncate flex items-center gap-1 mt-1">
           <span>{{ item.year }}</span>
           <span class="mx-1">&bull;</span>
           <span>{{ item.age }}</span>
@@ -95,11 +85,14 @@ onMounted(() => {
 
 <style>
 .movieList {
-  -ms-overflow-style: none !important; /* IE và Edge */
-  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE và Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
 }
 
 .movieList::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari và Opera */
+  display: none !important;
+  /* Chrome, Safari và Opera */
 }
 </style>

@@ -29,10 +29,37 @@
         class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display">
         <div v-html="displayMessage[0]"></div>
       </div>
-
-      <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
-        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" :key="index">
+      <!-- <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
+        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" >
         <a :href="item" target="_blank" class="underline">{{ item }}</a>
+      </div> -->
+      <div v-if="Array.isArray(props.urls)" :key="index" class="flex movieList cursor-pointer overflow-x-scroll mb-2 ">
+        <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
+          v-for="(item, index) in props.urls">
+          <div>
+            <div>
+              <a :href="item.link">
+                <img :src="item.icon" class="object-cover h-[136px] w-[256px] rounded-t-lg" />
+              </a>
+            </div>
+            <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
+              <h1
+                class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
+                {{ item.tilte }}
+              </h1>
+              <div
+                class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
+                <span>{{ item.year }}</span>
+                <span class="mx-1">&bull;</span>
+                <span>{{ item.age }}</span>
+                <span class="mx-1">&bull;</span>
+                <span>{{ item.practice }}</span>
+                <span class="mx-1">&bull;</span>
+                <span>{{ item.country }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <span class="flex flex-row justify-between flex-wrap h-fit">
@@ -140,10 +167,59 @@ watch(
   },
   { immediate: true }
 );
+const handleMouseLeave = () => {
+
+  const container = document.querySelector(".movieList");
+
+  if (container) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener("mousedown", (e) => {
+      isDown = true;
+      container.classList.add("active");
+      startX = e.clientX;
+      scrollLeft = container.scrollLeft;
+      container.style.cursor = "grabbing";
+
+    });
+
+    container.addEventListener("mouseleave", () => {
+      isDown = false;
+      container.classList.remove("active");
+      container.style.cursor = "grab";
+
+    });
+
+    container.addEventListener("mouseup", () => {
+      isDown = false;
+      container.classList.remove("active");
+      container.style.cursor = "grab";
+
+    });
+
+    container.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.clientX;
+      const walk = (x - startX) * 3;
+      container.scrollLeft = scrollLeft - walk;
+
+    });
+  }
+};
+
+const loaderControllerData = () => {
+  messageStore.loaderController();
+};
 
 onMounted(() => {
-  messageStore.loaderController();
+  loaderControllerData();
+  handleMouseLeave();
 });
+
+
 </script>
 
 <style scoped>
@@ -194,5 +270,16 @@ onMounted(() => {
   .mb-2 {
     margin-bottom: 8px;
   }
+}
+
+.movieList {
+  display: flex;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.movieList::-webkit-scrollbar {
+  display: none;
 }
 </style>
