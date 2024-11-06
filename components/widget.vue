@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div
-      class="fit-height widget-container max-h-[100vh] max-w-[100vw] bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-full sm:w-[400px] lg:w-[450px] xl:w-[400px] h-full sm:h-[668px] lg:h-[400px] xl:h-[668px] right-0 sm:right-[40px] lg:right-[60px] bottom-0 sm:bottom-[40px] lg:bottom-[60px]"
+      class="widget-container max-h-[100vh] max-w-[100vw] bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-full sm:w-[400px] lg:w-[450px] xl:w-[400px] h-full sm:h-[668px] lg:h-[400px] xl:h-[668px] right-0 sm:right-[40px] lg:right-[60px] bottom-0 sm:bottom-[40px] lg:bottom-[60px]"
       v-show="modalStore.showWidget && userIDStore.userID !== null" v-if="!isInactive">
       <Header class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto" />
@@ -237,15 +237,5 @@ onMounted(() => {
 
 .zIndex {
   z-index: 1000;
-}
-
-.fit-height {
-  height: 668px;
-}
-
-@media (max-height: 600px) {
-  .fit-height {
-    height: calc(100% -60px);
-  }
 }
 </style>
