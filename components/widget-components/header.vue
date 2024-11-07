@@ -1,7 +1,7 @@
 <template>
   <div
     id="chat-header"
-    class="w-full max-w-[400px] h-[96px] flex flex-row items-center shadow-sm relative mx-auto px-4 py-3 bg-white"
+    class="w-full h-[96px] flex flex-row items-center shadow-sm relative mx-auto px-4 py-3 bg-white"
   >
     <!-- Avatar and Online Indicator -->
     <div class="flex items-center gap-3">
