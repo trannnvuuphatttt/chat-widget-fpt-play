@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { joinChatRoom } from '@/src/api/chat';
 import { v4 as uuidv4 } from 'uuid';
 
 export const useMessage = defineStore('message', {
@@ -23,7 +22,6 @@ export const useMessage = defineStore('message', {
           'Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.',
           'Vậy tôi có thể giúp gì cho bạn?',
         ],
-
         timestamp: null,
         videos: [],
         images: [],
@@ -46,7 +44,6 @@ export const useMessage = defineStore('message', {
 
       try {
         if (parsed?.value) {
-          await joinChatRoom({ channelId: parsed?.value });
           const ws = new WebSocket(
             `${
               import.meta.env.VITE_APP_WS_DOMAIN
@@ -60,7 +57,7 @@ export const useMessage = defineStore('message', {
           };
 
           // Event handler for when a message is received from the server
-          ws.onmessage = (event) => {
+          ws.onmessage = async (event) => {
             console.log('Message socket: ', event.data);
             // if (typeof event.data === 'string') {
             //   const parsed = JSON.parse(event.data);
@@ -74,23 +71,37 @@ export const useMessage = defineStore('message', {
 
             //   }
             // }
-            const lastMassage =
-              this.newMessageArray[this.newMessageArray.length - 1];
+            const lastMassage = {
+              ...this.newMessageArray[this.newMessageArray.length - 1],
+            };
             console.log('lastMassage :>> ', lastMassage);
+
+            await new Promise((resolve) => {
+              setTimeout(() => {
+                resolve();
+              }, 10000);
+            });
+
             // if (event?.data?.type)
             const parsed = JSON.parse(event.data);
+            console.log('parsed :>> ', parsed);
             if (parsed) {
-              const type = parsed?.type;
-              if (type === 'create') {
-                lastMassage.botMessage = [parsed?.msg];
-              } else if (type === 'update') {
-                lastMassage.botMessage = [
-                  lastMassage.botMessage[0] + parsed?.msg,
-                ];
-              } else {
-                lastMassage.botMessage = [
-                  lastMassage.botMessage[0] + parsed?.msg,
-                ];
+              // create-tạo mới/update-cập nhật/endAnswer-chatbot kết thúc câu trả lời
+              console.log('this.newMessageArray :>> ', this.newMessageArray);
+              this.newMessageArray = this.newMessageArray.map((item, index) => {
+                if (index < this.newMessageArray.length - 1) {
+                  return item;
+                } else {
+                  let msg = item.botMessage[0];
+                  if (parsed?.type === 'create') {
+                    msg = [parsed?.msg];
+                  } else {
+                    msg = [msg + parsed?.msg];
+                  }
+                  return { ...item, botMessage: [msg] };
+                }
+              });
+              if (parsed?.type === 'endAnswer') {
                 ws.close();
               }
             }
@@ -145,16 +156,33 @@ export const useMessage = defineStore('message', {
 
         //this.messagesArray.push(this.responseData);
         //console.log(this.newMessageArray[this.newMessageArray.length - 1]);
-        this.newMessageArray[this.newMessageArray.length - 1] = {
-          userMessage: inputData,
-          botMessage: [this.responseData.answer.text],
-          timestamp: this.responseData.timestamp,
-          videos: this.responseData.answer.videos,
-          images: this.responseData.answer.images,
-          contents: this.responseData.answer.contents,
-          urls: this.responseData.answer.urls,
-          chatID: this.responseData.message_uuid,
-        };
+        // this.newMessageArray[this.newMessageArray.length - 1] = {
+        //   userMessage: inputData,
+        //   botMessage: [this.responseData.answer.text],
+        //   timestamp: this.responseData.timestamp,
+        //   videos: this.responseData.answer.videos,
+        //   images: this.responseData.answer.images,
+        //   contents: this.responseData.answer.contents,
+        //   urls: this.responseData.answer.urls,
+        //   chatID: this.responseData.message_uuid,
+        // };
+
+        this.newMessageArray = this.newMessageArray.map((item, index) => {
+          if (index < this.newMessageArray.length - 1) {
+            return item;
+          } else {
+            return {
+              userMessage: inputData,
+              botMessage: [this.responseData.answer.text],
+              timestamp: this.responseData.timestamp,
+              videos: this.responseData.answer.videos,
+              images: this.responseData.answer.images,
+              contents: this.responseData.answer.contents,
+              urls: this.responseData.answer.urls,
+              chatID: this.responseData.message_uuid,
+            };
+          }
+        });
 
         this.userInput = '';
 
@@ -219,6 +247,8 @@ export const useMessage = defineStore('message', {
           );
 
           this.historyData = chatHistory.data.data.messages;
+
+          console.log('this.newMessageArray :>> ', this.newMessageArray);
 
           for (let i = this.historyData.length - 1; i >= 0; i--) {
             this.newMessageArray.push({
