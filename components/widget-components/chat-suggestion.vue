@@ -1,8 +1,11 @@
 <script lang="js" setup>
 import { ref, onMounted , onBeforeUnmount } from 'vue';
 import { useMessage } from '../../stores/messages';
+import { useFocusStore } from '~/stores/useFocusStore';
 
 const scrollContainer = ref(null);
+const focusStore = useFocusStore();
+
 
 onMounted(() => {
   const container = document.querySelector(".container");
@@ -81,6 +84,11 @@ const Lists = [
     content: "Ca nhạc",
   },
 ];
+
+const handleClick = (dataItem) => {
+  messageStore.setInput(dataItem)
+  focusStore.focusInput(); // This will focus the input field
+}
 </script>
 
 <template>
@@ -93,7 +101,7 @@ const Lists = [
       v-for="item in Lists"
       :key="item.content"
     >
-      <button class="" @click="messageStore.setInput(item.content)">
+      <button class="" @click="handleClick(item.content)">
         {{ item.content }}
       </button>
     </div>

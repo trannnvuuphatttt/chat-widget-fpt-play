@@ -6,6 +6,7 @@
   >
     <input
       type="text"
+      ref="inputField"
       class="bg-gray-200 flex-auto rounded-lg text-[16px] focus:outline-none h-[40px] p-4 caret-[#FF6500]"
       placeholder="Nhập tin nhắn"
       v-model="messageStore.userInput"
@@ -60,12 +61,16 @@ import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "../../stores/userID";
 import { getWithExpiry } from "~/src/utils/setGetExpired"
 import { storeToRefs } from 'pinia'
+import { useFocusStore } from '~/stores/useFocusStore';
 
 const modalStore = useModalStore();
+
 const messageStore = useMessage();
 const userIDStore = useUserIDStore();
 const existTime = useState('existed');
 const { showWidget } = storeToRefs(modalStore)
+const focusStore = useFocusStore();
+const inputField = ref(null);
 
 defineOptions({
   inheritAttrs: false,
@@ -96,6 +101,7 @@ const handleSendMessage = () => {
 
 onMounted(() => {
   existTime.value = getWithExpiry("chatSession")
+  focusStore.setInputRef(inputField.value);
 })
 </script>
 
