@@ -1,30 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./components/**/*.{js,vue,ts}",
-    "./layouts/**/*.vue",
-    "./pages/**/*.vue",
-    "./plugins/**/*.{js,ts}",
-    "./app.vue",
-    "./error.vue",
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './app.vue',
+    './error.vue',
   ],
-}
+};
 
 module.exports = {
   theme: {
     extend: {
       letterSpacing: {
-        'custom': '2%',
+        custom: '2%',
       },
       fontFamily: {
         'sf-pro-display': ['"SF Pro Display"', 'sans-serif'],
-      }
+      },
     },
     screens: {
-      'sm': '640px',   // mobile
-      'md': '768px',   // tablet
-      'lg': '1024px',  // laptop
-      'xl': '1280px',  // desktop
+      sm: '640px', // mobile
+      md: '768px', // tablet
+      lg: '1024px', // laptop
+      xl: '1280px', // desktop
     },
   },
   content: [
@@ -32,8 +32,21 @@ module.exports = {
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './plugins/**/*.{js,ts}',
-    './nuxt.config.{js,ts}'
+    './nuxt.config.{js,ts}',
   ],
   variants: {},
-  plugins: [],
-}
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.no-scrollbar': {
+          /* Hide scrollbar for WebKit browsers */
+          '-webkit-overflow-scrolling': 'touch',
+          'scrollbar-width': 'none', // Hide scrollbar for Firefox
+          '&::-webkit-scrollbar': {
+            display: 'none', // Hide scrollbar for Chrome, Safari, and Edge
+          },
+        },
+      });
+    },
+  ],
+};

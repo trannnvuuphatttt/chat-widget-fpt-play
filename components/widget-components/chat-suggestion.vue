@@ -1,6 +1,8 @@
 <script lang="js" setup>
-import { onMounted } from 'vue';
+import { ref, onMounted , onBeforeUnmount } from 'vue';
 import { useMessage } from '../../stores/messages';
+
+const scrollContainer = ref(null);
 
 onMounted(() => {
   const container = document.querySelector(".container");
@@ -41,6 +43,20 @@ onMounted(() => {
 
     });
   }
+
+  if (scrollContainer.value) {
+    const handleScroll = (evt) => {
+      evt.preventDefault();
+      scrollContainer.value.scrollLeft += evt.deltaY;
+    };
+
+    scrollContainer.value.addEventListener('wheel', handleScroll);
+
+    // Clean up event listener when the component unmounts
+    onBeforeUnmount(() => {
+      scrollContainer.value.removeEventListener('wheel', handleScroll);
+    });
+  }
 });
 
 const messageStore = useMessage()
@@ -53,7 +69,6 @@ const Lists = [
     content: "Hoa ngữ",
   },
   {
-
     content: "Âu Mỹ",
   },
   {
@@ -70,7 +85,8 @@ const Lists = [
 
 <template>
   <div
-    class="container flex flex-nowrap justify-start overflow-x-hidden cursor-grab items-center bg-gray-200"
+    ref="scrollContainer"
+    class="container flex flex-nowrap justify-start overflow-x-auto cursor-grab items-center bg-gray-200 no-scrollbar"
   >
     <div
       class="text-orange-500 font-md bg-white border-2 border-orange-500 rounded-xl w-fit px-2 cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500 mr-2"

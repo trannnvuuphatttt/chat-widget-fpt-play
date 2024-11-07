@@ -22,7 +22,6 @@
 // Dùng để test giá trị items name
 import data from "../movie.json";
 const items = data;
-console.log(data, items);
 const props = defineProps({
   timeStamp: String,
 });
