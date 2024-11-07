@@ -1,100 +1,83 @@
 <template class="relative">
   <div>
     <div class="flex items-center">
-      <img
-        src="assets/images/avatar.png"
-        class="h-6 w-6 inline-block mb-2 mr-1"
-      />
+      <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
       <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
-    <div
-      class="bg-white text-md mb-2 h-14 p-4 text-base w-full sm:w-84 rounded-tl rounded-r-2xl rounded-b-2xl"
-      v-if="
-        messageStore.isLoading &&
-        flag &&
-        Array.isArray(displayMessage) &&
-        props.message.length <= 1
-      "
-    >
-      <div class="ml-1 mt-1.5 flex flex-row gap-3">
-        <div class="w-2 h-2 rounded-full bg-gray-600 animate-pulse"></div>
-        <div class="w-2 h-2 rounded-full bg-gray-600 animate-pulse"></div>
-        <div class="w-2 h-2 rounded-full bg-gray-600 animate-pulse"></div>
+    <div class="bg-white w-[56px] h-[56px]  rounded-tl rounded-r-2xl rounded-b-2xl items-center justify-center" v-if="
+      messageStore.isLoading &&
+      flag &&
+      Array.isArray(displayMessage) &&
+      props.message.length <= 1
+    ">
+      <div class="flex flex-row ml-[6px] w-[56px] h-[56px] ">
+        <div class="w-1 h-1 ml-[12px] mt-[26px] rounded-full bg-gray-600 animate-pulse "></div>
+        <div class="w-1 h-1 ml-[4px] mt-[26px] rounded-full bg-gray-600 animate-pulse"></div>
+        <div class="w-1 h-1 ml-[4px] mt-[26px] rounded-full bg-gray-600 animate-pulse"></div>
       </div>
     </div>
     <div v-else>
-      <div
-        v-if="
-          (displayMessage && receiveMessage.length >= 1) ||
-          displayMessage?.length > 1
-        "
-      >
-        <div
-          class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display"
-          v-for="(item, index) in displayMessage"
-          :key="index"
-        >
+      <div v-if="
+        (displayMessage && receiveMessage.length >= 1) ||
+        displayMessage?.length > 1
+      ">
+        <div v-for="(item, index) in displayMessage" :key="index">
           <BubbleMessage :message="item"></BubbleMessage>
         </div>
       </div>
-      <div
-        v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display"
-      >
+      <div v-else
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display">
         <div v-html="displayMessage[0]"></div>
       </div>
-
-      <div
-        class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
-        v-if="Array.isArray(props.urls)"
-        v-for="(item, index) in props.urls"
-        :key="index"
-      >
+      <!-- <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
+        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" >
         <a :href="item" target="_blank" class="underline">{{ item }}</a>
+      </div> -->
+      <div v-if="Array.isArray(props.urls)" :key="index" class="flex movieList cursor-pointer overflow-x-scroll mb-2 ">
+        <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
+          v-for="(item, index) in props.urls">
+          <div>
+            <div>
+              <a :href="item.link">
+                <img :src="item.icon" class="object-cover h-[145px] sm:h-[136px] w-[256px] rounded-t-lg" />
+              </a>
+            </div>
+            <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
+              <h1
+                class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
+                {{ item.title }}
+              </h1>
+              <div
+                class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
+                <span>{{ item.year }}</span>
+                <span class="mx-1">&bull;</span>
+                <span>{{ item.age }}</span>
+                <span class="mx-1">&bull;</span>
+                <span>{{ item.practice }}</span>
+                <span class="mx-1">&bull;</span>
+                <span>{{ item.country }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <span class="flex flex-row justify-between flex-wrap h-fit">
-      <p
-        class="text-xs text-gray-400"
-        v-if="props.timeStamp !== 'NaN ngày trước'"
-      >
+      <p class="text-xs text-gray-400" v-if="props.timeStamp !== 'NaN ngày trước'">
         {{ props.timeStamp }}
       </p>
-      <div
-        v-if="
-          props.flag &&
-          modalStore.isChatting &&
-          props.timeStamp !== 'NaN ngày trước'
-        "
-        class="flex w-[48px] space-x-2"
-      >
+      <div v-if="
+        props.flag &&
+        modalStore.isChatting &&
+        props.timeStamp !== 'NaN ngày trước'
+      " class="flex w-[48px] space-x-2">
         <button class="cursor-pointer" @click="Like()">
-          <img
-            v-if="!reviewStateLike"
-            class="w-4 h-4"
-            src="/assets/images/like.png"
-            alt="Like"
-          />
-          <img
-            v-else
-            class="w-4 h-4"
-            src="/assets/images/like_orange.png"
-            alt="Liked"
-          />
+          <img v-if="!reviewStateLike" class="w-4 h-4" src="/assets/images/like.png" alt="Like" />
+          <img v-else class="w-4 h-4" src="/assets/images/like_orange.png" alt="Liked" />
         </button>
         <button class="cursor-pointer right-0" @click="Dislike()">
-          <img
-            v-if="!reviewStateDislike"
-            class="w-4 h-4"
-            src="/assets/images/dislike.png"
-            alt="Dislike"
-          />
-          <img
-            v-else
-            class="w-4 h-4"
-            src="/assets/images/dislike_orange.png"
-            alt="Disliked"
-          />
+          <img v-if="!reviewStateDislike" class="w-4 h-4" src="/assets/images/dislike.png" alt="Dislike" />
+          <img v-else class="w-4 h-4" src="/assets/images/dislike_orange.png" alt="Disliked" />
         </button>
       </div>
     </span>
@@ -184,10 +167,59 @@ watch(
   },
   { immediate: true }
 );
+const handleMouseLeave = () => {
+
+  const container = document.querySelector(".movieList");
+
+  if (container) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener("mousedown", (e) => {
+      isDown = true;
+      container.classList.add("active");
+      startX = e.clientX;
+      scrollLeft = container.scrollLeft;
+      container.style.cursor = "grabbing";
+
+    });
+
+    container.addEventListener("mouseleave", () => {
+      isDown = false;
+      container.classList.remove("active");
+      container.style.cursor = "grab";
+
+    });
+
+    container.addEventListener("mouseup", () => {
+      isDown = false;
+      container.classList.remove("active");
+      container.style.cursor = "grab";
+
+    });
+
+    container.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.clientX;
+      const walk = (x - startX) * 3;
+      container.scrollLeft = scrollLeft - walk;
+
+    });
+  }
+};
+
+const loaderControllerData = () => {
+  messageStore.loaderController();
+};
 
 onMounted(() => {
-  messageStore.loaderController();
+  loaderControllerData();
+  handleMouseLeave();
 });
+
+
 </script>
 
 <style scoped>
@@ -238,5 +270,16 @@ onMounted(() => {
   .mb-2 {
     margin-bottom: 8px;
   }
+}
+
+.movieList {
+  display: flex;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.movieList::-webkit-scrollbar {
+  display: none;
 }
 </style>
