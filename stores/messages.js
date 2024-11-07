@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { joinChatRoom } from '@/src/api/chat';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useMessage = defineStore('message', {
   state: () => ({
@@ -61,17 +62,38 @@ export const useMessage = defineStore('message', {
           // Event handler for when a message is received from the server
           ws.onmessage = (event) => {
             console.log('Message socket: ', event.data);
-            if (typeof event.data === 'string') {
-              const parsed = JSON.parse(event.data);
-              if (parsed?.type === 'endAnswer') {
-                ws.close();
-              }
-            } else if (typeof event.data === 'object') {
-              if (event.data?.type === 'endAnswer') {
+            // if (typeof event.data === 'string') {
+            //   const parsed = JSON.parse(event.data);
+            //   if (parsed?.type === 'endAnswer') {
+            //     ws.close();
+            //   }
+            // } else if (typeof event.data === 'object') {
+            //   if (event.data?.type === 'endAnswer') {
+            //     ws.close();
+            //   } else {
+
+            //   }
+            // }
+            const lastMassage =
+              this.newMessageArray[this.newMessageArray.length - 1];
+            console.log('lastMassage :>> ', lastMassage);
+            // if (event?.data?.type)
+            const parsed = JSON.parse(event.data);
+            if (parsed) {
+              const type = parsed?.type;
+              if (type === 'create') {
+                lastMassage.botMessage = [parsed?.msg];
+              } else if (type === 'update') {
+                lastMassage.botMessage = [
+                  lastMassage.botMessage[0] + parsed?.msg,
+                ];
+              } else {
+                lastMassage.botMessage = [
+                  lastMassage.botMessage[0] + parsed?.msg,
+                ];
                 ws.close();
               }
             }
-            // if (event?.data?.type)
           };
 
           // Event handler for when the connection is closed
@@ -147,6 +169,7 @@ export const useMessage = defineStore('message', {
     },
 
     sendMessage(userChat, botChat) {
+      console.log('sendMessage :>> ', 1);
       this.newMessageArray.push({
         userMessage: userChat,
         botMessage: [botChat],
@@ -155,7 +178,7 @@ export const useMessage = defineStore('message', {
         images: [],
         contents: [],
         urls: [],
-        chatID: '',
+        chatID: uuidv4(),
       });
     },
 
