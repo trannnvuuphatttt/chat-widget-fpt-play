@@ -39,13 +39,13 @@
           <div>
             <div>
               <a :href="item.link">
-                <img :src="item.icon" class="object-cover h-[136px] w-[256px] rounded-t-lg" />
+                <img :src="item.icon" class="object-cover h-[145px] sm:h-[136px] w-[256px] rounded-t-lg" />
               </a>
             </div>
             <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
               <h1
                 class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
-                {{ item.tilte }}
+                {{ item.title }}
               </h1>
               <div
                 class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
