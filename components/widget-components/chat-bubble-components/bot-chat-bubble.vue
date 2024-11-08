@@ -253,7 +253,10 @@ watch(
   { immediate: true }
 );
 
-const handleMouseLeave = () => {
+watch(() => props.message, (value) => {
+  console.log({value})
+})
+const handleMouseLeaveClick = () => {
 
   const container = document.querySelector(".movieList");
 
@@ -275,23 +278,19 @@ const handleMouseLeave = () => {
       isDown = false;
       container.classList.remove("active");
       container.style.cursor = "grab";
-
     });
 
     container.addEventListener("mouseup", () => {
       isDown = false;
       container.classList.remove("active");
       container.style.cursor = "grab";
-
     });
 
     container.addEventListener("mousemove", (e) => {
       if (!isDown) return;
-      e.preventDefault();
       const x = e.clientX;
       const walk = (x - startX) * 3;
       container.scrollLeft = scrollLeft - walk;
-
     });
   }
 };
@@ -302,7 +301,7 @@ const loaderControllerData = () => {
 
 onMounted(() => {
   loaderControllerData();
-  handleMouseLeave();
+  handleMouseLeaveClick();
 });
 </script>
 
