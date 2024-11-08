@@ -1,6 +1,6 @@
 <template class="relative">
   <div>
-    <div class="flex items-center">
+    <div class="flex items-center ml-4">
       <img
         src="assets/images/avatar.png"
         class="h-6 w-6 inline-block mb-2 mr-1"
@@ -8,7 +8,7 @@
       <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
     <div
-      class="bg-white w-[56px] h-[56px] rounded-tl rounded-r-2xl rounded-b-2xl items-center justify-center"
+      class="bg-white w-[56px] h-[56px] rounded-tl rounded-r-2xl rounded-b-2xl items-center justify-center ml-4"
       v-if="
         messageStore.isLoading &&
         flag &&
@@ -47,14 +47,18 @@
       </div>
       <div
         v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display"
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] lg:w-[338px] xl:w[338px] ml-4"
       >
         <div v-html="displayMessage[0]"></div>
       </div>
+      <!-- <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
+        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" >
+        <a :href="item" target="_blank" class="underline">{{ item }}</a>
+      </div> -->
       <div
         v-if="Array.isArray(props.urls)"
         :key="index"
-        class="flex movieList cursor-pointer overflow-x-scroll mb-2"
+        class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4"
       >
         <div
           class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
@@ -113,7 +117,7 @@
     </div>
     <span class="flex flex-row justify-between flex-wrap h-fit">
       <p
-        class="text-xs text-gray-400"
+        class="text-xs text-gray-400 ml-4"
         v-if="props.timeStamp !== 'NaN ngày trước'"
       >
         {{ props.timeStamp }}
