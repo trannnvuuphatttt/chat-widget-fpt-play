@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { joinChatRoom } from '@/src/api/chat';
 
 export const useMessage = defineStore('message', {
   state: () => ({
@@ -33,6 +34,8 @@ export const useMessage = defineStore('message', {
     isLoading: false,
     isAlreadyJoinedChatRoom: false,
     isWaitingSocket: false,
+    apiData: [],
+    inputData: '',
   }),
   actions: {
     async handleSocket() {
@@ -44,6 +47,7 @@ export const useMessage = defineStore('message', {
 
       try {
         if (parsed?.value) {
+          await joinChatRoom({ channelId: parsed?.value });
           const ws = new WebSocket(
             `${
               import.meta.env.VITE_APP_WS_DOMAIN
@@ -72,38 +76,51 @@ export const useMessage = defineStore('message', {
             //   }
             // }
             const lastMassage = {
-              ...this.newMessageArray[this.newMessageArray.length - 1],
+              ...this.apiData[this.apiData.length - 1],
             };
             console.log('lastMassage :>> ', lastMassage);
+            console.log('this.responseData :>> ', this.responseData);
 
             await new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-              }, 10000);
+              }, 5000);
             });
 
             // if (event?.data?.type)
             const parsed = JSON.parse(event.data);
             console.log('parsed :>> ', parsed);
             if (parsed) {
+              const type = parsed?.type;
               // create-tạo mới/update-cập nhật/endAnswer-chatbot kết thúc câu trả lời
+              let socketText = (lastMassage?.botMessage || [])[0];
               console.log('this.newMessageArray :>> ', this.newMessageArray);
+
+              if (type === 'create') {
+                socketText = parsed?.msg;
+              } else {
+                socketText = socketText + parsed?.msg;
+              }
+              if (parsed?.type === 'endAnswer') {
+                ws.close();
+              }
+
               this.newMessageArray = this.newMessageArray.map((item, index) => {
                 if (index < this.newMessageArray.length - 1) {
                   return item;
                 } else {
-                  let msg = item.botMessage[0];
-                  if (parsed?.type === 'create') {
-                    msg = [parsed?.msg];
-                  } else {
-                    msg = [msg + parsed?.msg];
-                  }
-                  return { ...item, botMessage: [msg] };
+                  return {
+                    userMessage: this.inputData,
+                    botMessage: [socketText],
+                    timestamp: this.responseData.timestamp,
+                    videos: this.responseData.answer.videos,
+                    images: this.responseData.answer.images,
+                    contents: this.responseData.answer.contents,
+                    urls: this.responseData.answer.urls,
+                    chatID: this.responseData.message_uuid,
+                  };
                 }
               });
-              if (parsed?.type === 'endAnswer') {
-                ws.close();
-              }
             }
           };
 
@@ -167,7 +184,24 @@ export const useMessage = defineStore('message', {
         //   chatID: this.responseData.message_uuid,
         // };
 
-        this.newMessageArray = this.newMessageArray.map((item, index) => {
+        // this.newMessageArray = this.newMessageArray.map((item, index) => {
+        //   if (index < this.newMessageArray.length - 1) {
+        //     return item;
+        //   } else {
+        //     return {
+        //       userMessage: inputData,
+        //       botMessage: [this.responseData.answer.text],
+        //       timestamp: this.responseData.timestamp,
+        //       videos: this.responseData.answer.videos,
+        //       images: this.responseData.answer.images,
+        //       contents: this.responseData.answer.contents,
+        //       urls: this.responseData.answer.urls,
+        //       chatID: this.responseData.message_uuid,
+        //     };
+        //   }
+        // });
+
+        this.apiData = this.newMessageArray.map((item, index) => {
           if (index < this.newMessageArray.length - 1) {
             return item;
           } else {
@@ -197,6 +231,7 @@ export const useMessage = defineStore('message', {
     },
 
     sendMessage(userChat, botChat) {
+      this.inputData = userChat;
       console.log('sendMessage :>> ', 1);
       this.newMessageArray.push({
         userMessage: userChat,
