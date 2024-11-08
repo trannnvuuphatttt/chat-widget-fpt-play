@@ -29,7 +29,22 @@ export const useMessage = defineStore('message', {
     sessionID: '',
     responseData: [],
     historyData: [],
-    newMessageArray: [defaultMessage],
+    newMessageArray: [
+      {
+        userMessage: '',
+        botMessage: [
+          'Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.',
+          'Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.',
+          'Vậy tôi có thể giúp gì cho bạn?',
+        ],
+
+        timestamp: Date.now(),
+        videos: [],
+        images: [],
+        contents: [],
+        urls: [],
+      },
+    ],
     botMessageID: '',
     isLoading: false,
     isAlreadyJoinedChatRoom: false,

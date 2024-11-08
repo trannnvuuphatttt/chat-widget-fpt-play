@@ -35,7 +35,7 @@
         "
         src="/assets/images/send_icon_grey.png"
         alt="Send Icon"
-        class="w-[24px] h-[24px]"
+        class="w-[21.04px] h-[18.13px]"
       />
       <img
         v-else
@@ -51,21 +51,20 @@
     class="shadow-md flex flex-row p-3 sm:p-4 gap-2 w-full h-[72px] sm:h-[80px] justify-between min-h-[72px]"
     v-if="!modalStore.isChatting && userIDStore.userID"
   >
-    <button
+    <!-- <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-sm sm:text-md rounded-lg"
       @click="
         messageStore.emptyArray();
-        modalStore.isChatting = true;
-      "
-    >
+      modalStore.isChatting = true;
+      ">
       Đoạn chat mới
-    </button>
+    </button> -->
     <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-sm sm:text-md rounded-lg"
       v-if="existTime !== null"
       @click="handleContinueChatting"
     >
-      Tiếp tục chat
+      Bắt đầu
     </button>
   </div>
 </template>

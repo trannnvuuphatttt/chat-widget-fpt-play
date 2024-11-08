@@ -1,39 +1,18 @@
 <template>
-  <div
-    ref="chatScreen"
-    class="bg-gray-200 overflow-y-auto overflow-x-[12px] flex flex-col relative items-center pb-4"
-    @scroll="handleScroll()"
-  >
-    <div
-      v-for="(message, key, index) in messageStore.newMessageArray"
-      :key="key"
-      class="w-[338px] mt-[24px] mr-[12px] gap-[24px]"
-    >
-      <userChatBubble
-        :message="message.userMessage"
-        :timeStamp="timeAgo(String(message.timestamp))"
-        v-if="message.userMessage !== ''"
-      />
-      <botChatBubble
-        :message="message.botMessage"
-        :timeStamp="timeAgo(String(message.timestamp))"
-        :chatID="message.chatID"
-        :userID="UserIDStore.userID"
-        :flag="isLastElement(key)"
-        :videos="message.videos"
-        :images="message.images"
-        :contents="message.contents"
-        :urls="message.urls"
-        class="botMessage"
-        v-if="message.botMessage[0] !== ''"
-      />
+  <div ref="chatScreen" class="bg-gray-200 overflow-y-auto flex flex-col relative items-center pb-4"
+    @scroll="handleScroll()">
+    <div v-for="(message, key, index) in messageStore.newMessageArray" :key="key" class="w-full mt-[24px]">
+      <userChatBubble :message="message.userMessage" :timeStamp="timeAgo(String(message.timestamp))"
+        v-if="message.userMessage !== ''" />
+      <botChatBubble :message="message.botMessage" :timeStamp="timeAgo(String(message.timestamp))"
+        :chatID="message.chatID" :userID="UserIDStore.userID" :flag="isLastElement(key)" :videos="message.videos"
+        :images="message.images" :contents="message.contents" :urls="message.urls" class="botMessage"
+        v-if="message.botMessage[0] !== ''" />
     </div>
 
     <div
       class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center bg-[rgba(148, 148, 148, 0.4)] cursor-pointer"
-      v-if="showScrollDownButton"
-      @click="scrollToBottom(), toggleScrollButton()"
-    >
+      v-if="showScrollDownButton" @click="scrollToBottom(), toggleScrollButton()">
       <img src="/assets/images/chevron.png" />
     </div>
   </div>
@@ -55,11 +34,11 @@ const UserIDStore = useUserIDStore()
 const modalStore = useModalStore()
 
 const messageStore = useMessage();
-const {timeAgo} = useFormatDateTime()
+const { timeAgo } = useFormatDateTime()
 const showScrollDownButton = ref(false)
 
 const chatScreen = ref(null);
-const toggleScrollButton= () => {
+const toggleScrollButton = () => {
   showScrollDownButton.value = !showScrollDownButton.value
 }
 const scrollToBottom = () => {
@@ -67,11 +46,11 @@ const scrollToBottom = () => {
   nextTick(() => {
 
     setTimeout(() => {
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior: 'smooth'
-    });
-  }, 0);
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 0);
   })
 };
 
@@ -107,10 +86,10 @@ const scrollToBottomWhenImagesLoaded = () => {
 const handleScroll = () => {
   const container = chatScreen.value;
 
-  if(container.scrollTop < container.scrollHeight - container.clientHeight -81 ){
-    showScrollDownButton.value=true
-  }else{
-    showScrollDownButton.value=false
+  if (container.scrollTop < container.scrollHeight - container.clientHeight - 81) {
+    showScrollDownButton.value = true
+  } else {
+    showScrollDownButton.value = false
   };
 };
 
@@ -133,7 +112,7 @@ onMounted(() => {
   const { query: { token } } = useRoute()
   const pID = token || UserIDStore.userID
   messageStore.getChatHistory(pID, UserIDStore.userID);
-  showScrollDownButton.value=false;
+  showScrollDownButton.value = false;
   if (chatScreen.value) {
     chatScreen.value.addEventListener('scroll', handleScroll);
   }
@@ -141,7 +120,7 @@ onMounted(() => {
 const isLastElement = (currentKey) => {
   const keys = Object.keys(messageStore.newMessageArray);
 
-  return currentKey === keys.length -1;
+  return currentKey === keys.length - 1;
 };
 const arrayLength = computed(() => messageStore.newMessageArray.length);
 
@@ -154,9 +133,9 @@ watch(arrayLength, (newLength, oldLength) => {
 
 const loading = computed(() => messageStore.isLoading);
 watch(loading, (newVal, oldVal) => {
-   if (!newVal && oldVal) {
+  if (!newVal && oldVal) {
     scrollToBottomWhenImagesLoaded();
-    }
+  }
 
 
 });
