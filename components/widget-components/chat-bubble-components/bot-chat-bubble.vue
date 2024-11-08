@@ -29,7 +29,7 @@
       </div>
     </div>
     <div v-else>
-      <div
+      <!-- <div
         v-if="
           (displayMessage && receiveMessage.length >= 1) ||
           displayMessage?.length > 1
@@ -38,6 +38,12 @@
         <div v-for="(item, index) in displayMessage" :key="index">
           <BubbleMessage :message="item"></BubbleMessage>
         </div>
+      </div> -->
+      <div v-if="props?.message?.length">
+        <div v-for="(message, index) in props?.message">
+          <!-- {{ message }} -->
+          <BubbleMessage :message="message" :key="index"></BubbleMessage>
+        </div>
       </div>
       <div
         v-else
@@ -45,10 +51,6 @@
       >
         <div v-html="displayMessage[0]"></div>
       </div>
-      <!-- <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
-        v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" >
-        <a :href="item" target="_blank" class="underline">{{ item }}</a>
-      </div> -->
       <div
         v-if="Array.isArray(props.urls)"
         :key="index"
@@ -158,13 +160,11 @@
 </template>
 
 <script lang="js" setup>
-import { onMounted, ref, resolveComponent, watch } from "vue";
 import BubbleMessage from "./bubble-message.vue";
 import { useModalStore } from "~/stores/modal";
 import { useSnackBarStore } from "~/stores/snackbar";
 import { useMessage } from "~/stores/messages";
 import { useReview } from "~/stores/review";
-import { marked } from "marked";
 
 defineOptions({
   inheritAttrs: false,
@@ -214,32 +214,44 @@ function Dislike() {
 
 watch(
   () => props.message,
-  (newMessage) => {
-    if (newMessage && newMessage.length) {
-      receiveMessage.value = newMessage;
-      if (process.client) {
-        setTimeout(() => {
-          if (Array.isArray(receiveMessage.value) && receiveMessage.value.length) {
-            isTriggerInterval = true;
-            const firstMsg = receiveMessage.value.shift();
-            displayMessage.value.push(firstMsg);
+  async (newMessage) => {
+    // for (const message of newMessage) {
+    //   await new Promise((resolve) => {
+    //     setTimeout(() => {
+    //       receiveMessage.value.push(message)
+    //       resolve()
+    //     }, 600)
+    //   })
+    // }
+    // if (newMessage && newMessage.length) {
+    //   receiveMessage.value = newMessage;
+    //   if (process.client) {
+    //     setTimeout(() => {
+    //       if (Array.isArray(receiveMessage.value) && receiveMessage.value.length) {
+    //         isTriggerInterval = true;
+    //         const firstMsg = receiveMessage.value.shift();
+    //         displayMessage.value.push(firstMsg);
 
-            if (receiveMessage.value.length) {
-              const delayMessageInterval = setInterval(() => {
-                const newMessage = receiveMessage.value.shift();
-                displayMessage.value.push(newMessage);
-                if (!receiveMessage.value.length) {
-                  clearInterval(delayMessageInterval);
-                }
-              }, 2000);
-            }
-          }
-        }, 3000);
-      }
-    }
+    //         if (receiveMessage.value.length) {
+    //           const delayMessageInterval = setInterval(() => {
+    //             const newMessage = receiveMessage.value.shift();
+    //             displayMessage.value.push(newMessage);
+    //             if (!receiveMessage.value.length) {
+    //               clearInterval(delayMessageInterval);
+    //             }
+    //           }, 2000);
+    //         }
+    //       }
+    //     }, 3000);
+    //   }
+    // }
   },
   { immediate: true }
 );
+
+watch(() => props.message, (value) => {
+  console.log({value})
+})
 const handleMouseLeave = () => {
 
   const container = document.querySelector(".movieList");

@@ -37,4 +37,5 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/content',
   ],
+  ssr: false,
 });
