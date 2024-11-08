@@ -253,9 +253,6 @@ watch(
   { immediate: true }
 );
 
-watch(() => props.message, (value) => {
-  console.log({value})
-})
 const handleMouseLeave = () => {
 
   const container = document.querySelector(".movieList");
