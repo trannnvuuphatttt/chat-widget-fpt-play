@@ -66,11 +66,10 @@ export const useMessage = defineStore('message', {
 
       try {
         if (parsed?.value) {
-          await joinChatRoom({ channelId: parsed?.value });
           const ws = new WebSocket(
             `${
               import.meta.env.VITE_APP_WS_DOMAIN
-            }/livechat/${parsed?.value.replaceAll('"', '')}?token=${
+            }/livechat/bot/${parsed?.value.replaceAll('"', '')}?token=${
               import.meta.env.VITE_APP_WS_TOKEN
             }`,
           );
@@ -85,14 +84,9 @@ export const useMessage = defineStore('message', {
             const lastMassage = {
               ...this.newMessageArray[this.newMessageArray.length - 1],
             };
-            // await new Promise((resolve) => {
-            //   setTimeout(() => {
-            //     resolve();
-            //   }, 5000);
-            // });
-            // if (event?.data?.type)
+
             const parsed = JSON.parse(event.data);
-            console.log('--- SOCKET: ', parsed);
+            // console.log('--- SOCKET: ', parsed);
 
             if (parsed) {
               const type = parsed?.type;
@@ -108,26 +102,10 @@ export const useMessage = defineStore('message', {
                 if (index < this.newMessageArray.length - 1) {
                   return item;
                 } else {
-                  let urlList = [];
-                  if (this.responseData?.answer?.urls?.length) {
-                    urlList = this.responseData?.answer?.urls;
-                  } else if (this.responseData?.answer?.contents?.length) {
-                    urlList = this.responseData?.answer?.contents?.map(
-                      (item) => ({
-                        ...item,
-                        link: item.link,
-                      }),
-                    );
-                  }
                   return {
+                    ...item,
                     userMessage: this.inputData,
-                    botMessage: [socketText || this.responseData?.answer?.text],
-                    timestamp: this.responseData.timestamp,
-                    videos: this.responseData.answer.videos,
-                    images: this.responseData.answer.images,
-                    contents: this.responseData.answer.contents,
-                    urls: urlList,
-                    chatID: this.responseData.message_uuid,
+                    botMessage: [socketText],
                   };
                 }
               });
@@ -140,13 +118,14 @@ export const useMessage = defineStore('message', {
 
           // Event handler for when the connection is closed
           ws.onclose = () => {
-            console.log('WebSocket connection closed');
+            // console.log('WebSocket connection closed');
             this.isWaitingSocket = false;
+            this.responseData = {};
           };
 
           // Event handler for errors
           ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
+            // console.error('WebSocket error:', error);
             ws.close();
             this.isWaitingSocket = false;
           };
@@ -161,6 +140,8 @@ export const useMessage = defineStore('message', {
       this.isLoading = true;
       this.sendMessage(inputData, '');
       this.userInput = '';
+      this.isWaitingSocket = true;
+      this.handleSocket();
 
       try {
         const response = await axios.post(
@@ -181,11 +162,12 @@ export const useMessage = defineStore('message', {
           },
         );
         this.responseData = response.data.data;
-        this.apiData = this.newMessageArray.map((item, index) => {
+        this.newMessageArray = this.newMessageArray.map((item, index) => {
           if (index < this.newMessageArray.length - 1) {
             return item;
           } else {
             let urlList = [];
+            const text = item.botMessage[0];
             if (this.responseData?.answer?.urls?.length) {
               urlList = this.responseData?.answer?.urls;
             } else if (this.responseData?.answer?.contents?.length) {
@@ -196,20 +178,17 @@ export const useMessage = defineStore('message', {
             }
             return {
               userMessage: inputData,
-              botMessage: [this.responseData.answer.text],
+              botMessage: [text || this.responseData.answer.text],
               timestamp: this.responseData.timestamp,
               videos: this.responseData.answer.videos,
               images: this.responseData.answer.images,
-              contents: urlList,
-              urls: this.responseData.answer.urls,
+              contents: this.responseData.answer.contents,
+              urls: urlList,
               chatID: this.responseData.message_uuid,
             };
           }
         });
-
         this.userInput = '';
-        this.isWaitingSocket = true;
-        this.handleSocket();
       } catch (error) {
         console.error('Lỗi khi gọi API:', error);
         this.isError = true;
@@ -220,16 +199,18 @@ export const useMessage = defineStore('message', {
 
     sendMessage(userChat, botChat) {
       this.inputData = userChat;
-      this.newMessageArray.push({
-        userMessage: userChat,
-        botMessage: [botChat],
-        timestamp: this.sampleChatTimeStamp,
-        videos: [],
-        images: [],
-        contents: [],
-        urls: [],
-        chatID: uuidv4(),
-      });
+      this.newMessageArray = this.newMessageArray.concat([
+        {
+          userMessage: userChat,
+          botMessage: [botChat],
+          timestamp: this.sampleChatTimeStamp,
+          videos: [],
+          images: [],
+          contents: [],
+          urls: [],
+          chatID: uuidv4(),
+        },
+      ]);
     },
 
     actions: {
