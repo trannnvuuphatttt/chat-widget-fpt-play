@@ -1,56 +1,33 @@
 <template>
   <!-- Input Container for Chatting -->
-  <div
-    class="flex flex-row shadow-md w-full h-[72px] sm:h-[80px] gap-2 py-2 px-4 sm:px-6 items-center"
-    v-if="modalStore.isChatting"
-  >
-    <input
-      type="text"
-      ref="inputField"
+  <div class="flex flex-row shadow-md w-full h-[72px] sm:h-[80px] gap-2 py-2 px-4 sm:px-6 items-center"
+    v-if="modalStore.isChatting">
+    <input type="text" ref="inputField"
       class="bg-gray-200 flex-auto rounded-lg text-[16px] focus:outline-none h-[40px] p-4 caret-[#FF6500]"
-      placeholder="Nhập tin nhắn"
-      v-model="messageStore.userInput"
-      @keyup.enter="handleSendMessage"
-    />
-    <button
-      class="flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit"
-      @click="handleSendMessage"
-    >
-      <img
-        v-if="messageStore.userInput === ''"
-        src="/assets/images/send_icon_grey.png"
-        alt="Send Icon"
-        class="w-[24px] h-[24px]"
-      />
-      <img
-        v-if="messageStore.userInput !== ''"
-        src="/assets/images/send_icon_orange.png"
-        alt="Send Icon"
-        class="w-[21.04px] h-[18.13px]"
-      />
+      placeholder="Nhập tin nhắn" v-model="messageStore.userInput" @keyup.enter="handleSendMessage" />
+    <button class="flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit" @click="handleSendMessage">
+      <img v-if="messageStore.userInput === ''" src="/assets/images/send_icon_grey.png" alt="Send Icon"
+        class="w-[21.04px] h-[18.13px]" />
+      <img v-if="messageStore.userInput !== ''" src="/assets/images/send_icon_orange.png" alt="Send Icon"
+        class="w-[21.04px] h-[18.13px]" />
     </button>
   </div>
 
   <!-- Buttons Container for Chat Options -->
-  <div
-    class="shadow-md flex flex-row p-3 sm:p-4 gap-2 w-full h-[72px] sm:h-[80px] justify-between min-h-[72px]"
-    v-if="!modalStore.isChatting && userIDStore.userID"
-  >
-    <button
+  <div class="shadow-md flex flex-row p-3 sm:p-4 gap-2 w-full h-[72px] sm:h-[80px] justify-between min-h-[72px]"
+    v-if="!modalStore.isChatting && userIDStore.userID">
+    <!-- <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-sm sm:text-md rounded-lg"
       @click="
         messageStore.emptyArray();
-        modalStore.isChatting = true;
-      "
-    >
+      modalStore.isChatting = true;
+      ">
       Đoạn chat mới
-    </button>
+    </button> -->
     <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white hover:bg-gradient-to-r hover:from-[#FFF] hover:text-orange-500 text-sm sm:text-md rounded-lg"
-      v-if="existTime !== null"
-      @click="handleContinueChatting"
-    >
-      Tiếp tục chat
+      v-if="existTime !== null" @click="handleContinueChatting">
+      Bắt đầu
     </button>
   </div>
 </template>

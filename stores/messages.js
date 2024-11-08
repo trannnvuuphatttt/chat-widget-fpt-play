@@ -23,7 +23,7 @@ export const useMessage = defineStore('message', {
           'Vậy tôi có thể giúp gì cho bạn?',
         ],
 
-        timestamp: null,
+        timestamp: Date.now(),
         videos: [],
         images: [],
         contents: [],
