@@ -5,7 +5,7 @@
       v-show="modalStore.showWidget && userIDStore.userID !== null"
       v-if="!isInactive"
     >
-      <Header class="flex-shrink-0 flex-grow-0" />
+      <Header v-if="!isMobile" class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto" />
       <chatSuggestion
         class="flex-grow-0 pl-6 pb-2"
@@ -152,14 +152,17 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useMessage } from "~/stores/messages";
 import { useSnackBarStore } from "~/stores/snackbar";
 import { useReview } from '~/stores/review';
+import { useRoute } from 'vue-router';
+
 
 const modalStore = useModalStore();
 const userIDStore = useUserIDStore()
 const messageStore = useMessage();
 const snackBarStore = useSnackBarStore()
 const reviewStore = useReview()
-
+const route = useRoute();
 const arrayLength = computed(() => messageStore.newMessageArray.length);
+const isMobile = route.query.is_mobile === '1'; // Checks if `is_mobile` is set to "1"
 
 watch(arrayLength, (newLength, oldLength) => {
   if (newLength !== oldLength && newLength > 1) {
