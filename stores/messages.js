@@ -108,6 +108,17 @@ export const useMessage = defineStore('message', {
                 if (index < this.newMessageArray.length - 1) {
                   return item;
                 } else {
+                  let urlList = [];
+                  if (this.responseData?.answer?.urls?.length) {
+                    urlList = this.responseData?.answer?.urls;
+                  } else if (this.responseData?.answer?.contents?.length) {
+                    urlList = this.responseData?.answer?.contents?.map(
+                      (item) => ({
+                        ...item,
+                        link: item.link,
+                      }),
+                    );
+                  }
                   return {
                     userMessage: this.inputData,
                     botMessage: [socketText || this.responseData?.answer?.text],
@@ -115,7 +126,7 @@ export const useMessage = defineStore('message', {
                     videos: this.responseData.answer.videos,
                     images: this.responseData.answer.images,
                     contents: this.responseData.answer.contents,
-                    urls: this.responseData.answer.urls,
+                    urls: urlList,
                     chatID: this.responseData.message_uuid,
                   };
                 }
@@ -174,13 +185,22 @@ export const useMessage = defineStore('message', {
           if (index < this.newMessageArray.length - 1) {
             return item;
           } else {
+            let urlList = [];
+            if (this.responseData?.answer?.urls?.length) {
+              urlList = this.responseData?.answer?.urls;
+            } else if (this.responseData?.answer?.contents?.length) {
+              urlList = this.responseData?.answer?.contents?.map((item) => ({
+                ...item,
+                link: item.link,
+              }));
+            }
             return {
               userMessage: inputData,
               botMessage: [this.responseData.answer.text],
               timestamp: this.responseData.timestamp,
               videos: this.responseData.answer.videos,
               images: this.responseData.answer.images,
-              contents: this.responseData.answer.contents,
+              contents: urlList,
               urls: this.responseData.answer.urls,
               chatID: this.responseData.message_uuid,
             };
@@ -247,15 +267,25 @@ export const useMessage = defineStore('message', {
           );
           this.historyData = chatHistory.data.data.messages;
           for (let i = this.historyData.length - 1; i >= 0; i--) {
+            const x = this.historyData[i];
+            let urlList = [];
+            if (x?.answer?.urls?.length) {
+              urlList = x?.answer?.urls;
+            } else if (x?.answer?.contents?.length) {
+              urlList = x?.answer?.contents?.map((item) => ({
+                ...item,
+                link: item.link,
+              }));
+            }
             this.newMessageArray.push({
-              userMessage: this.historyData[i].query,
-              botMessage: [this.historyData[i].answer.text],
-              timestamp: this.historyData[i].timestamp,
-              videos: this.historyData[i].answer.videos,
-              images: this.historyData[i].answer.images,
-              contents: this.historyData[i].answer.contents,
-              urls: this.historyData[i].answer.urls,
-              chatID: this.historyData[i].message_uuid,
+              userMessage: x.query,
+              botMessage: [x.answer.text],
+              timestamp: x.timestamp,
+              videos: x.answer.videos,
+              images: x.answer.images,
+              contents: x.answer.contents,
+              urls: urlList,
+              chatID: x.message_uuid,
             });
           }
         } catch (error) {

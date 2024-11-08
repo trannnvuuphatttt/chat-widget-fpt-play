@@ -16,7 +16,7 @@
       :class="{
         'flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit': true,
         'hover:cursor-not-allowed':
-          messageStore.userInput !== '' ||
+          !messageStore.userInput ||
           messageStore.isWaitingSocket ||
           messageStore?.isLoading,
       }"

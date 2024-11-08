@@ -66,7 +66,7 @@
         >
           <div>
             <div>
-              <a :href="item.link">
+              <a :href="item.link" target="_blank">
                 <img
                   :src="item.icon"
                   class="object-cover h-[145px] sm:h-[136px] w-[256px] rounded-t-lg"
