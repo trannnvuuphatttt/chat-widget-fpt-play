@@ -173,7 +173,7 @@ export const useMessage = defineStore('message', {
             } else if (this.responseData?.answer?.contents?.length) {
               urlList = this.responseData?.answer?.contents?.map((item) => ({
                 ...item,
-                link: item.link,
+                link: item.url,
               }));
             }
             return {
@@ -255,7 +255,7 @@ export const useMessage = defineStore('message', {
             } else if (x?.answer?.contents?.length) {
               urlList = x?.answer?.contents?.map((item) => ({
                 ...item,
-                link: item.link,
+                link: item.url,
               }));
             }
             this.newMessageArray.push({
