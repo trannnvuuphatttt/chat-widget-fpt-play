@@ -1,6 +1,21 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import { joinChatRoom } from '@/src/api/chat';
+
+const defaultMessage = {
+  userMessage: '',
+  botMessage: [
+    'Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.',
+    'Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.',
+    'Vậy tôi có thể giúp gì cho bạn?',
+  ],
+  timestamp: null,
+  videos: [],
+  images: [],
+  contents: [],
+  urls: [],
+};
 
 export const useMessage = defineStore('message', {
   state: () => ({
@@ -14,29 +29,20 @@ export const useMessage = defineStore('message', {
     sessionID: '',
     responseData: [],
     historyData: [],
-    newMessageArray: [
-      {
-        userMessage: '',
-        botMessage: [
-          'Xin chào 👋 ! Tôi là trợ lý thông minh của bạn.',
-          'Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.',
-          'Vậy tôi có thể giúp gì cho bạn?',
-        ],
-
-        timestamp: null,
-        videos: [],
-        images: [],
-        contents: [],
-        urls: [],
-      },
-    ],
+    newMessageArray: [defaultMessage],
     botMessageID: '',
     isLoading: false,
     isAlreadyJoinedChatRoom: false,
     isWaitingSocket: false,
+    apiData: [],
+    inputData: '',
+    socketInstance: null,
   }),
   actions: {
     async handleSocket() {
+      if (this.socketInstance?.close) {
+        this.socketInstance.close();
+      }
       const channelId = localStorage.getItem('chatSession');
       if (!channelId) {
         return;
@@ -53,25 +59,57 @@ export const useMessage = defineStore('message', {
               import.meta.env.VITE_APP_WS_TOKEN
             }`,
           );
+          this.socketInstance = ws;
 
           ws.onopen = () => {
             this.isWaitingSocket = true;
           };
 
           // Event handler for when a message is received from the server
-          ws.onmessage = (event) => {
-            console.log('Message socket: ', event.data);
-            if (typeof event.data === 'string') {
-              const parsed = JSON.parse(event.data);
+          ws.onmessage = async (event) => {
+            const lastMassage = {
+              ...this.newMessageArray[this.newMessageArray.length - 1],
+            };
+            // await new Promise((resolve) => {
+            //   setTimeout(() => {
+            //     resolve();
+            //   }, 5000);
+            // });
+            // if (event?.data?.type)
+            const parsed = JSON.parse(event.data);
+            console.log('--- SOCKET: ', parsed);
+
+            if (parsed) {
+              const type = parsed?.type;
+              // create-tạo mới/update-cập nhật/endAnswer-chatbot kết thúc câu trả lời
+              let socketText = (lastMassage?.botMessage || [])[0];
+              if (type === 'create') {
+                socketText = parsed?.msg;
+              } else {
+                socketText = socketText + parsed?.msg;
+              }
+
+              this.newMessageArray = this.newMessageArray.map((item, index) => {
+                if (index < this.newMessageArray.length - 1) {
+                  return item;
+                } else {
+                  return {
+                    userMessage: this.inputData,
+                    botMessage: [socketText || this.responseData?.answer?.text],
+                    timestamp: this.responseData.timestamp,
+                    videos: this.responseData.answer.videos,
+                    images: this.responseData.answer.images,
+                    contents: this.responseData.answer.contents,
+                    urls: this.responseData.answer.urls,
+                    chatID: this.responseData.message_uuid,
+                  };
+                }
+              });
+
               if (parsed?.type === 'endAnswer') {
                 ws.close();
               }
-            } else if (typeof event.data === 'object') {
-              if (event.data?.type === 'endAnswer') {
-                ws.close();
-              }
             }
-            // if (event?.data?.type)
           };
 
           // Event handler for when the connection is closed
@@ -87,13 +125,12 @@ export const useMessage = defineStore('message', {
             this.isWaitingSocket = false;
           };
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log('error handleSocket', error);
+      }
     },
 
     async sendRequest(inputData, pfID, ssID) {
-      // add
-      // join
-      // socket
       this.isError = false;
       this.isLoading = true;
       this.sendMessage(inputData, '');
@@ -113,40 +150,41 @@ export const useMessage = defineStore('message', {
           {
             headers: {
               accept: 'application/json',
-              //"Client-Id": userID,
-
               'Content-Type': 'application/json',
             },
           },
         );
         this.responseData = response.data.data;
-
-        //this.messagesArray.push(this.responseData);
-        //console.log(this.newMessageArray[this.newMessageArray.length - 1]);
-        this.newMessageArray[this.newMessageArray.length - 1] = {
-          userMessage: inputData,
-          botMessage: [this.responseData.answer.text],
-          timestamp: this.responseData.timestamp,
-          videos: this.responseData.answer.videos,
-          images: this.responseData.answer.images,
-          contents: this.responseData.answer.contents,
-          urls: this.responseData.answer.urls,
-          chatID: this.responseData.message_uuid,
-        };
+        this.apiData = this.newMessageArray.map((item, index) => {
+          if (index < this.newMessageArray.length - 1) {
+            return item;
+          } else {
+            return {
+              userMessage: inputData,
+              botMessage: [this.responseData.answer.text],
+              timestamp: this.responseData.timestamp,
+              videos: this.responseData.answer.videos,
+              images: this.responseData.answer.images,
+              contents: this.responseData.answer.contents,
+              urls: this.responseData.answer.urls,
+              chatID: this.responseData.message_uuid,
+            };
+          }
+        });
 
         this.userInput = '';
-
+        this.isWaitingSocket = true;
         this.handleSocket();
       } catch (error) {
         console.error('Lỗi khi gọi API:', error);
         this.isError = true;
       } finally {
-        console.log('Dữ liệu trả về:', this.responseData);
         this.isLoading = false;
       }
     },
 
     sendMessage(userChat, botChat) {
+      this.inputData = userChat;
       this.newMessageArray.push({
         userMessage: userChat,
         botMessage: [botChat],
@@ -155,7 +193,7 @@ export const useMessage = defineStore('message', {
         images: [],
         contents: [],
         urls: [],
-        chatID: '',
+        chatID: uuidv4(),
       });
     },
 
@@ -188,15 +226,11 @@ export const useMessage = defineStore('message', {
             {
               headers: {
                 accept: 'application/jsonL',
-                //"Client-Id": userID,
-
                 'Content-Type': 'application/json',
               },
             },
           );
-
           this.historyData = chatHistory.data.data.messages;
-
           for (let i = this.historyData.length - 1; i >= 0; i--) {
             this.newMessageArray.push({
               userMessage: this.historyData[i].query,
@@ -230,8 +264,6 @@ export const useMessage = defineStore('message', {
           {
             headers: {
               accept: 'application/jsonL',
-              //"Client-Id": userID,
-
               'Content-Type': 'application/json',
             },
           },
@@ -254,7 +286,7 @@ export const useMessage = defineStore('message', {
       this.newMessageArray = [
         {
           userMessage: '',
-          botMessage: [],
+          botMessage: [defaultMessage],
           timestamp: this.sampleChatTimeStamp,
           videos: [],
           images: [],

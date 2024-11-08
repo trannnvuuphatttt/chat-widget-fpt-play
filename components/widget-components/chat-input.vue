@@ -13,17 +13,32 @@
       @keyup.enter="handleSendMessage"
     />
     <button
-      class="flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit"
+      :class="{
+        'flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit': true,
+        'hover:cursor-not-allowed':
+          messageStore.userInput !== '' ||
+          messageStore.isWaitingSocket ||
+          messageStore?.isLoading,
+      }"
+      :disabled="
+        !messageStore.userInput ||
+        messageStore.isWaitingSocket ||
+        messageStore?.isLoading
+      "
       @click="handleSendMessage"
     >
       <img
-        v-if="messageStore.userInput === ''"
+        v-if="
+          !messageStore.userInput ||
+          messageStore.isWaitingSocket ||
+          messageStore?.isLoading
+        "
         src="/assets/images/send_icon_grey.png"
         alt="Send Icon"
         class="w-[24px] h-[24px]"
       />
       <img
-        v-if="messageStore.userInput !== ''"
+        v-else
         src="/assets/images/send_icon_orange.png"
         alt="Send Icon"
         class="w-[21.04px] h-[18.13px]"
