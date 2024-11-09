@@ -5,13 +5,13 @@
       v-show="modalStore.showWidget && userIDStore.userID !== null"
       v-if="!isInactive"
     >
-      <Header v-if="!isMobile" class="flex-shrink-0 flex-grow-0" />
+      <Header v-if="!isMobileQueryParams" class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto" />
       <chatSuggestion
         class="flex-grow-0 pl-6 pb-2"
         v-show="modalStore.isSuggestion"
       />
-      <ChatInput class="flex-shrink-0 flex-grow-0" />
+      <ChatInput class="flex-shrink-0 flex-grow-0" :isMobileOrTablet="isMobileOrTablet"/>
 
       <div
         v-show="modalStore.showModal"
@@ -95,7 +95,7 @@
     >
       <p id="typing-text" class="text-[90%] sm:text-[16px]"></p>
     </div>
-    <button @click="modalStore.toggleWidget" class="z-40">
+    <button @click="handleClick" class="z-40">
       <img src="/assets/images/avatar.png" class="w-[80px] h-[80px]" />
     </button>
   </div>
@@ -153,7 +153,7 @@ import { useMessage } from "~/stores/messages";
 import { useSnackBarStore } from "~/stores/snackbar";
 import { useReview } from '~/stores/review';
 import { useRoute } from 'vue-router';
-
+import useInactivity from '~/composables/useInactiveTimeOut';
 
 const modalStore = useModalStore();
 const userIDStore = useUserIDStore()
@@ -162,26 +162,33 @@ const snackBarStore = useSnackBarStore()
 const reviewStore = useReview()
 const route = useRoute();
 const arrayLength = computed(() => messageStore.newMessageArray.length);
-const isMobile = route.query.is_mobile === '1'; // Checks if `is_mobile` is set to "1"
-
-watch(arrayLength, (newLength, oldLength) => {
-  if (newLength !== oldLength && newLength > 1) {
-
-    modalStore.isSuggestion = false;
-
-  } else {
-    modalStore.isSuggestion = true;
-  }
-
-});
-import useInactivity from '~/composables/useInactiveTimeOut';
-
+const isMobileQueryParams = route.query.is_mobile === '1'; // Checks if `is_mobile` is set to "1"
+// Define a global isMobileOrTablet state
+const isMobileOrTablet = ref(false)
 const { isInactive } = useInactivity(60000);
-
 
 defineOptions({
   inheritAttrs: false
 })
+
+function handleClick() {
+  if (isMobileOrTablet.value) {
+    if (userIDStore.userID === null) {
+      userIDStore.createNewID()
+    }
+    modalStore.clickToShowWidget()
+  } else {
+    modalStore.toggleWidget()
+  }
+}
+
+watch(arrayLength, (newLength, oldLength) => {
+  if (newLength !== oldLength && newLength > 1) {
+    modalStore.isSuggestion = false;
+  } else {
+    modalStore.isSuggestion = true;
+  }
+});
 
 onMounted(() => {
   const text = `Xin chào! Tôi có thể giúp gì cho bạn không?`
@@ -193,6 +200,11 @@ onMounted(() => {
   let typingSpeed = 100;
   let pauseTime = 2000;
   let deleteSpeed = 50;
+  if (process.client) {
+    // Check the user agent to determine if the device is mobile
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera
+    isMobileOrTablet.value = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent)
+  }
 
   function typeText() {
     if (index < text.length && isTyping) {
@@ -229,16 +241,20 @@ onMounted(() => {
   }
 
   function showBoxAndTypeAgain() {
-
-    boxElement.style.display = 'block';
-    boxElement.classList.add('fadeIn');
-    index = 0;
-    isTyping = true;
-    setTimeout(typeText, 500);
+    if (!isMobileOrTablet.value) {
+      boxElement.style.display = 'block';
+      boxElement.classList.add('fadeIn');
+      index = 0;
+      isTyping = true;
+      setTimeout(typeText, 500);
+    }
   }
 
-
-  showBoxAndTypeAgain();
+  if (!isMobileOrTablet.value) {
+    showBoxAndTypeAgain();
+  }
+ 
+  
 })
 </script>
 

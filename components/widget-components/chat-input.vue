@@ -16,13 +16,13 @@
       :class="{
         'flex-shrink-0 flex-grow-0 cursor-pointer w-fit h-fit': true,
         'hover:cursor-not-allowed':
-          !messageStore.userInput ||
-          messageStore.isWaitingSocket ||
+          !messageStore?.userInput ||
+          messageStore?.isWaitingSocket ||
           messageStore?.isLoading,
       }"
       :disabled="
-        !messageStore.userInput ||
-        messageStore.isWaitingSocket ||
+        !messageStore?.userInput ||
+        messageStore?.isWaitingSocket ||
         messageStore?.isLoading
       "
       @click="handleSendMessage"
@@ -134,30 +134,45 @@ import { storeToRefs } from 'pinia'
 import { useFocusStore } from '~/stores/useFocusStore';
 
 const modalStore = useModalStore();
-
 const messageStore = useMessage();
 const userIDStore = useUserIDStore();
 const existTime = useState('existed');
 const { showWidget } = storeToRefs(modalStore)
 const focusStore = useFocusStore();
 const inputField = ref(null);
+const isMobileOrTabletAction = ref(false)
+const hasTriggered = ref(false) // Flag to control one-time trigger
 
 defineOptions({
   inheritAttrs: false,
 });
 
-watch(showWidget, () => {
+const props = defineProps({
+  isMobileOrTablet: Boolean
+})
+
+watch(showWidget, (val) => {
   existTime.value = getWithExpiry("chatSession")
+  if (val === true && props.isMobileOrTablet && userIDStore.userID && existTime !== null) {
+    isMobileOrTabletAction.value = true
+  }
+})
+
+watch(isMobileOrTabletAction, (newVal) => {
+  if (newVal) {
+    // Perform your actions
+    handleContinueChatting()
+    isMobileOrTabletAction.value = false
+  }
 })
 
 const handleContinueChatting = () => {
   modalStore.isChatting = true;
-
   messageStore.sendMessage(
-            '',
-            'Mừng bạn đã quay trở lại, tôi chờ bạn mãi! 🥰',
-          ),
-          modalStore.toggleSuggestion()
+    '',
+    'Mừng bạn đã quay trở lại, tôi chờ bạn mãi! 🥰',
+  ),
+  modalStore.toggleSuggestion()
 };
 
 const handleSendMessage = () => {

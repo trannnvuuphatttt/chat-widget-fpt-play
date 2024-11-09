@@ -190,8 +190,8 @@ export const useMessage = defineStore('message', {
         });
         this.userInput = '';
       } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
-        this.isError = true;
+        console.error('sendRequest - Lỗi khi gọi API:', error);
+        this.isError = true; 
       } finally {
         this.isLoading = false;
       }
@@ -270,7 +270,7 @@ export const useMessage = defineStore('message', {
             });
           }
         } catch (error) {
-          console.error('Lỗi khi gọi API:', error);
+          console.error('getChatHistory - Lỗi khi gọi API:', error);
         }
       }
     },
@@ -295,7 +295,7 @@ export const useMessage = defineStore('message', {
           },
         );
       } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
+        console.error('messageEvaluate - Lỗi khi gọi API:', error);
       }
     },
 
