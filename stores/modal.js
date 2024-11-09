@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { ref } from 'vue'
 
 export const useModalStore = defineStore("modal", {
   state: () => ({
@@ -11,6 +12,10 @@ export const useModalStore = defineStore("modal", {
     toggleWidget() {
       this.showWidget = !this.showWidget;
       this.showModal = false;
+    },
+
+    clickToShowWidget() {
+      this.showWidget = true
     },
 
     closeWidget() {
