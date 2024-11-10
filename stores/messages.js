@@ -10,7 +10,7 @@ const defaultMessage = {
     'Tôi có thể giúp bạn tìm kiếm tất cả các nội dung liên quan đến FPT Play.',
     'Vậy tôi có thể giúp gì cho bạn?',
   ],
-  timestamp: null,
+  timestamp: Date.now(),
   videos: [],
   images: [],
   contents: [],
