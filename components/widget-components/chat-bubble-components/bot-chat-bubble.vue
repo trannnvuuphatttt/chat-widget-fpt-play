@@ -185,7 +185,7 @@ const stopDragging = () => {
   isDragging = false;
 };
 
-//const flag = ref(false);
+const flag = ref(false);
 
 function Like() {
   reviewStateLike.value = !reviewStateLike.value;
@@ -212,15 +212,17 @@ function Dislike() {
 //     flag.value = true;  // Cập nhật flag thành true khi displayMessage có nội dung
 //   }
 // });
-
-watch(() => props.message.length, (newLength) => {
-  if (newLength === 3) {
-    flag.value = false;
-  } else {
-    flag.value = true;
-  }
+watchEffect(() => {
+  flag.value = props.message.length !== 3;
 });
 
+// watch(() => props.message.length, (newLength) => {
+//   if (newLength === 3) {
+//     flag.value = false;
+//   } else {
+//     flag.value = true;
+//   }
+// });
 watch(
   () => props.message,
   async (newMessage) => {
