@@ -57,6 +57,11 @@
       </div> -->
       <div
         v-if="Array.isArray(props.urls)"
+        ref="scrollContainer"
+        @mousedown="startDragging"
+        @mousemove="onDragging"
+        @mouseup="stopDragging"
+        @mouseleave="stopDragging"
         :key="index"
         class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4"
       >
@@ -198,6 +203,28 @@ const receiveMessage = ref([]);
 const displayMessage = ref([]);
 let isTriggerInterval = false;
 
+const scrollContainer = ref(null);
+let isDragging = false;
+let startX, scrollLeft;
+
+const startDragging = (event) => {
+  isDragging = true;
+  startX = event.pageX - scrollContainer.value.offsetLeft;
+  scrollLeft = scrollContainer.value.scrollLeft;
+};
+
+const onDragging = (event) => {
+  if (!isDragging) return;
+  event.preventDefault();
+  const x = event.pageX - scrollContainer.value.offsetLeft;
+  const walk = (x - startX) * 1.5; // Adjust scroll speed here
+  scrollContainer.value.scrollLeft = scrollLeft - walk;
+};
+
+const stopDragging = () => {
+  isDragging = false;
+};
+
 function Like() {
   reviewStateLike.value = !reviewStateLike.value;
   reviewStateDislike.value = false;
@@ -256,44 +283,6 @@ watch(
 watch(() => props.message, (value) => {
   console.log({value})
 })
-const handleMouseLeaveClick = () => {
-
-  const container = document.querySelector(".movieList");
-
-  if (container) {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    container.addEventListener("mousedown", (e) => {
-      isDown = true;
-      container.classList.add("active");
-      startX = e.clientX;
-      scrollLeft = container.scrollLeft;
-      container.style.cursor = "grabbing";
-
-    });
-
-    container.addEventListener("mouseleave", () => {
-      isDown = false;
-      container.classList.remove("active");
-      container.style.cursor = "grab";
-    });
-
-    container.addEventListener("mouseup", () => {
-      isDown = false;
-      container.classList.remove("active");
-      container.style.cursor = "grab";
-    });
-
-    container.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      const x = e.clientX;
-      const walk = (x - startX) * 3;
-      container.scrollLeft = scrollLeft - walk;
-    });
-  }
-};
 
 const loaderControllerData = () => {
   messageStore.loaderController();
@@ -301,7 +290,6 @@ const loaderControllerData = () => {
 
 onMounted(() => {
   loaderControllerData();
-  handleMouseLeaveClick();
 });
 </script>
 
@@ -364,5 +352,9 @@ onMounted(() => {
 
 .movieList::-webkit-scrollbar {
   display: none;
+}
+
+.movieList:active {
+  cursor: grabbing;
 }
 </style>
