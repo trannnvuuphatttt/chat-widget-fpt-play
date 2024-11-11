@@ -5,7 +5,7 @@
         src="assets/images/avatar.png"
         class="h-6 w-6 inline-block mb-2 mr-1"
       />
-      <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
+      <div class="text-sm inline-block mb-2 ml-1">Gati</div>
     </div>
     <div
       class="bg-white w-[56px] h-[56px] rounded-tl rounded-r-2xl rounded-b-2xl items-center ml-4"
