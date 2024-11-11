@@ -120,7 +120,7 @@
         </div>
       </div>
       <span
-        class="flex flex-row justify-between flex-wrap h-fit w-[338px] sm:w-[420px] lg:w-[338px] xl:w[338px] ml-4"
+        class="flex flex-row justify-between flex-wrap h-fit max-w-[100vw] ml-4"
       >
         <p
           class="text-xs text-gray-400 ml-4"
@@ -134,7 +134,7 @@
             modalStore.isChatting &&
             props.timeStamp !== 'NaN ngày trước'
           "
-          class="flex"
+          class="flex mr-4"
         >
           <button class="cursor-pointer mr-6" @click="Like()">
             <img
@@ -145,7 +145,7 @@
             />
             <img
               v-else
-              class="w-4 h-4 mr-8"
+              class="w-4 h-4"
               src="/assets/images/like_orange.png"
               alt="Liked"
             />
