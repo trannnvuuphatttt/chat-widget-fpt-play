@@ -28,7 +28,7 @@
         v-if="message.botMessage[0] !== ''"
       />
     </div>
-    <div v-if="isWaitingSocket || isLoading" class="w-full mt-[24px]">
+    <div v-if="isWaitingSocket" class="w-full mt-[24px]">
       <LoadingMessage />
     </div>
     <div
