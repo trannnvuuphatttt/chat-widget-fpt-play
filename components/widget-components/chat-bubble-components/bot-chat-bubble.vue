@@ -1,10 +1,10 @@
 <template class="relative">
   <div class="p-[16px]">
-    <div class="flex items-center">
+    <div class="flex items-center ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
       <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
       <div class="text-sm inline-block mb-2 ml-1">Gati</div>
     </div>
-    <div>
+    <div class="w-full mr-4 ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
       <div v-if="props?.message?.length">
         <div v-for="(message, index) in props?.message">
           <!-- {{ message }} -->
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
         <div ref="messageContainer" v-html="displayMessage[0]"></div>
       </div>
       <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
@@ -287,5 +287,13 @@ onMounted(() => {
 
 .movieList:active {
   cursor: grabbing;
+}
+
+.wrap-buble {
+  width: max-content;
+}
+
+.msg-buble {
+  width: max-content;
 }
 </style>

@@ -10,7 +10,7 @@
         :isFullWidth="message.urls && Array.isArray(message.urls) ? true : false"
         :listChat="messageStore.newMessageArray" class="botMessage" v-if="message.botMessage[0] !== ''" />
     </div>
-    <div v-if="isWaitingSocket" class="w-full mt-[24px]">
+    <div v-if="isWaitingSocket" class="w-full mt-[24px] ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
       <LoadingMessage />
     </div>
     <div
