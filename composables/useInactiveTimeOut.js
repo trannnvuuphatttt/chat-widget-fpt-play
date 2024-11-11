@@ -1,5 +1,5 @@
-import { ref, onMounted, onUnmounted } from "vue";
-import { useModalStore } from "~/stores/modal";
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useModalStore } from '~/stores/modal';
 
 export default function useInactivity(timeoutDuration = 60000) {
   const modalStore = useModalStore();
@@ -16,21 +16,21 @@ export default function useInactivity(timeoutDuration = 60000) {
   };
 
   const onUserInactive = () => {
-    modalStore.closeWidget();
+    // modalStore.closeWidget();
   };
 
   const setupInactivityListener = () => {
-    window.addEventListener("mousemove", resetTimeout);
-    window.addEventListener("keydown", resetTimeout);
-    window.addEventListener("click", resetTimeout);
-    window.addEventListener("scroll", resetTimeout);
+    window.addEventListener('mousemove', resetTimeout);
+    window.addEventListener('keydown', resetTimeout);
+    window.addEventListener('click', resetTimeout);
+    window.addEventListener('scroll', resetTimeout);
   };
 
   const removeInactivityListener = () => {
-    window.removeEventListener("mousemove", resetTimeout);
-    window.removeEventListener("keydown", resetTimeout);
-    window.removeEventListener("click", resetTimeout);
-    window.removeEventListener("scroll", resetTimeout);
+    window.removeEventListener('mousemove', resetTimeout);
+    window.removeEventListener('keydown', resetTimeout);
+    window.removeEventListener('click', resetTimeout);
+    window.removeEventListener('scroll', resetTimeout);
   };
 
   onMounted(() => {

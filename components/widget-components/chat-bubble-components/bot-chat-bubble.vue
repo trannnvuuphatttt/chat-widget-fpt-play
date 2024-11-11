@@ -94,7 +94,7 @@
           </div>
         </div>
       </div>
-      <span class="flex flex-row justify-between flex-wrap h-fit ml-4">
+      <span class="flex flex-row justify-between flex-wrap h-fit max-w-[100vw] ml-4">
         <p class="text-xs text-gray-400 ml-4" v-if="props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp }}
         </p>
@@ -102,8 +102,8 @@
           flag &&
           modalStore.isChatting &&
           props.timeStamp !== 'NaN ngày trước'
-        " class="flex">
-          <button class="cursor-pointer " @click="Like()">
+        " class="flex mr-4">
+          <button class="cursor-pointer mr-6" @click="Like()">
             <img v-if="!reviewStateLike" class="w-4 h-4" src="/assets/images/like.png" alt="Like" />
             <img v-else class="w-4 h-4" src="/assets/images/like_orange.png" alt="Liked" />
           </button>
@@ -235,9 +235,6 @@ watch(
   { immediate: true }
 );
 
-watch(() => props.message, (value) => {
-  console.log({ value })
-})
 
 const loaderControllerData = () => {
   messageStore.loaderController();
