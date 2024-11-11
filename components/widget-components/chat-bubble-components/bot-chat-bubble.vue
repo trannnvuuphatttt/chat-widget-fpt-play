@@ -1,6 +1,6 @@
 <template class="relative">
-  <div>
-    <div class="flex items-center ml-4">
+  <div class="p-[16px]">
+    <div class="flex items-center">
       <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
       <div class="text-sm inline-block mb-2 ml-1">Gati</div>
     </div>
@@ -12,12 +12,12 @@
         </div>
       </div>
       <div v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px] ml-4">
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
         <div ref="messageContainer" v-html="displayMessage[0]"></div>
       </div>
       <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
         @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
-        class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4">
+        class="flex movieList cursor-pointer overflow-x-scroll mb-2">
         <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
           v-for="(item, index) in props.urls">
           <div>
@@ -59,20 +59,20 @@
           </div>
         </div>
       </div>
-      <span :class="['flex flex-row justify-between flex-wrap h-fit ml-4', widthClass]">
-        <p class="text-xs text-gray-400 ml-4" v-if="props.timeStamp !== 'NaN ngày trước'">
+      <span :class="['flex flex-row justify-between flex-wrap h-fit', widthClass]">
+        <p class="text-xs text-gray-400" v-if="props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp }}
         </p>
         <div v-if="
           flag &&
           modalStore.isChatting &&
           props.timeStamp !== 'NaN ngày trước'
-        " class="flex mr-4">
-          <button class="cursor-pointer mr-6" @click="Like()">
+        " class="flex">
+          <button class="cursor-pointer mr-3" @click="Like()">
             <img v-if="!reviewStateLike" class="w-4 h-4" src="/assets/images/like.png" alt="Like" />
             <img v-else class="w-4 h-4" src="/assets/images/like_orange.png" alt="Liked" />
           </button>
-          <button class="cursor-pointer mr-1" @click="Dislike()">
+          <button class="cursor-pointer" @click="Dislike()">
             <img v-if="!reviewStateDislike" class="w-4 h-4" src="/assets/images/dislike.png" alt="Dislike" />
             <img v-else class="w-4 h-4" src="/assets/images/dislike_orange.png" alt="Disliked" />
           </button>
