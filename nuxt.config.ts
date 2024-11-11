@@ -18,7 +18,11 @@ export default defineNuxtConfig({
   app: {
     head: {
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          name: 'viewport',
+          content:
+            'width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, user-scalable=no',
+        },
       ],
       title: 'FPT Play AI Support',
       link: [
