@@ -1,10 +1,7 @@
 <template class="relative">
   <div>
     <div class="flex items-center ml-4">
-      <img
-        src="assets/images/avatar.png"
-        class="h-6 w-6 inline-block mb-2 mr-1"
-      />
+      <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
       <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
     <!-- <div
@@ -28,7 +25,7 @@
         ></div>
       </div>
     </div> -->
-    <div>
+    <div class="w-full mr-4">
       <!-- <div
         v-if="
           (displayMessage && receiveMessage.length >= 1) ||
@@ -39,71 +36,49 @@
           <BubbleMessage :message="item"></BubbleMessage>
         </div>
       </div> -->
-      <div v-if="props?.message?.length">
-        <div v-for="(message, index) in props?.message">
+      <div v-if="props?.message?.length" class="wrap-buble">
+        <div v-for="(message, index) in props?.message" class="msg-bubble">
           <!-- {{ message }} -->
           <BubbleMessage :message="message" :key="index"></BubbleMessage>
         </div>
       </div>
-      <div
-        v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] lg:w-[338px] xl:w[338px] ml-4"
-      >
+      <div v-else
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] lg:w-[338px] xl:w[338px] ml-4">
         <div v-html="displayMessage[0]"></div>
       </div>
       <!-- <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
         v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" >
         <a :href="item" target="_blank" class="underline">{{ item }}</a>
       </div> -->
-      <div
-        v-if="Array.isArray(props.urls)"
-        ref="scrollContainer"
-        @mousedown="startDragging"
-        @mousemove="onDragging"
-        @mouseup="stopDragging"
-        @mouseleave="stopDragging"
-        :key="index"
-        class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4"
-      >
-        <div
-          class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
-          v-for="(item, index) in props.urls"
-        >
+      <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
+        @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
+        class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4 ">
+        <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] "
+          v-for="(item, index) in props.urls">
           <div>
             <div>
               <a :href="item.link" target="_blank">
-                <img
-                  :src="item.icon"
-                  class="object-cover h-[145px] sm:h-[136px] w-[256px] rounded-t-lg"
-                />
+                <img :src="item.icon" class="object-cover h-[145px] sm:h-[136px] w-[256px] rounded-t-lg" />
               </a>
             </div>
             <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
               <h1
-                class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display"
-              >
+                class="text[#121212] truncate text-[14px] font-semibold leading-[18.2px] tracking-custom font-sf-pro-display">
                 {{ item.title }}
               </h1>
               <div
-                class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]"
-              >
+                class="ml-0 font-normal leading-[14.32px] w-[224px] h-[14px] text-[#949494] text-[12px] truncate flex items-center gap-1 gap-y-[6px]">
                 <span v-if="item.year">{{ item.year }}</span>
 
-                <span
-                  v-if="
-                    item.year && (item.age || item.practice || item.country)
-                  "
-                  class="mx-1"
-                >
+                <span v-if="
+                  item.year && (item.age || item.practice || item.country)
+                " class="mx-1">
                   &bull;
                 </span>
 
                 <span v-if="item.age">{{ item.age }}</span>
 
-                <span
-                  v-if="item.age && (item.practice || item.country)"
-                  class="mx-1"
-                >
+                <span v-if="item.age && (item.practice || item.country)" class="mx-1">
                   &bull;
                 </span>
 
@@ -119,73 +94,26 @@
           </div>
         </div>
       </div>
-      <span
-        class="flex flex-row justify-between flex-wrap h-fit w-[338px] sm:w-[420px] lg:w-[338px] xl:w[338px] ml-4"
-      >
-        <p
-          class="text-xs text-gray-400 ml-4"
-          v-if="props.timeStamp !== 'NaN ngày trước'"
-        >
+      <span class="flex flex-row justify-between flex-wrap h-fit ml-4">
+        <p class="text-xs text-gray-400 ml-4" v-if="props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp }}
         </p>
-        <div
-          v-if="
-            flag &&
-            modalStore.isChatting &&
-            props.timeStamp !== 'NaN ngày trước'
-          "
-          class="flex"
-        >
-          <button class="cursor-pointer mr-6" @click="Like()">
-            <img
-              v-if="!reviewStateLike"
-              class="w-4 h-4"
-              src="/assets/images/like.png"
-              alt="Like"
-            />
-            <img
-              v-else
-              class="w-4 h-4 mr-8"
-              src="/assets/images/like_orange.png"
-              alt="Liked"
-            />
+        <div v-if="
+          flag &&
+          modalStore.isChatting &&
+          props.timeStamp !== 'NaN ngày trước'
+        " class="flex">
+          <button class="cursor-pointer " @click="Like()">
+            <img v-if="!reviewStateLike" class="w-4 h-4" src="/assets/images/like.png" alt="Like" />
+            <img v-else class="w-4 h-4" src="/assets/images/like_orange.png" alt="Liked" />
           </button>
-          <button class="cursor-pointer mr-1" @click="Dislike()">
-            <img
-              v-if="!reviewStateDislike"
-              class="w-4 h-4"
-              src="/assets/images/dislike.png"
-              alt="Dislike"
-            />
-            <img
-              v-else
-              class="w-4 h-4"
-              src="/assets/images/dislike_orange.png"
-              alt="Disliked"
-            />
+          <button class="cursor-pointer " @click="Dislike()">
+            <img v-if="!reviewStateDislike" class="w-4 h-4" src="/assets/images/dislike.png" alt="Dislike" />
+            <img v-else class="w-4 h-4" src="/assets/images/dislike_orange.png" alt="Disliked" />
           </button>
         </div>
       </span>
     </div>
-    <!-- <span class="flex flex-row justify-between flex-wrap h-fit">
-      <p class="text-xs text-gray-400 ml-4" v-if="props.timeStamp !== 'NaN ngày trước'">
-        {{ props.timeStamp }}
-      </p>
-      <div v-if="
-        props.flag &&
-        modalStore.isChatting &&
-        props.timeStamp !== 'NaN ngày trước'
-      " class="flex w-[48px] space-x-2">
-        <button class="cursor-pointer" @click="Like()">
-          <img v-if="!reviewStateLike" class="w-4 h-4" src="/assets/images/like.png" alt="Like" />
-          <img v-else class="w-4 h-4" src="/assets/images/like_orange.png" alt="Liked" />
-        </button>
-        <button class="cursor-pointer right-0" @click="Dislike()">
-          <img v-if="!reviewStateDislike" class="w-4 h-4" src="/assets/images/dislike.png" alt="Dislike" />
-          <img v-else class="w-4 h-4" src="/assets/images/dislike_orange.png" alt="Disliked" />
-        </button>
-      </div>
-    </span> -->
   </div>
 </template>
 
@@ -383,5 +311,13 @@ onMounted(() => {
 
 .movieList:active {
   cursor: grabbing;
+}
+
+.wrap-buble {
+  width: max-content;
+}
+
+.msg-buble {
+  width: max-content;
 }
 </style>
