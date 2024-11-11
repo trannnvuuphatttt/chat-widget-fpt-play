@@ -17,12 +17,12 @@
     </div>
 
     <!-- Trường hợp không có lỗi -->
-    <div class="text-md mb-2 h-fit w-fit ml-auto py-4 pl-4 mr-4" v-else>
+    <div class="text-md mb-2 h-fit w-fit ml-auto py-4 pl-4 mr-3" v-else>
       <div
-        class="bg-orange-500 rounded-tl-2xl rounded-tr rounded-l-2xl rounded-b-2xl text-md mb-2 h-fit w-fit text-[16px] p-4 break-words max-w-full sm:max-w-[338px] font-sf-pro-display mr-4">
+        class="bg-orange-500 rounded-tl-2xl rounded-tr rounded-l-2xl rounded-b-2xl text-md mb-2 h-fit w-fit text-[16px] p-4 break-words max-w-full sm:max-w-[338px] font-sf-pro-display">
         <p class="text-white text-right">{{ message }}</p>
       </div>
-      <span class="flex flex-row-reverse justify-between flex-wrap h-fit font-sf-pro-display mr-4">
+      <span class="flex flex-row-reverse justify-between flex-wrap h-fit font-sf-pro-display mr-3">
         <p class="text-[12px] text-gray-400 text-left" v-if="props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp }}
         </p>
