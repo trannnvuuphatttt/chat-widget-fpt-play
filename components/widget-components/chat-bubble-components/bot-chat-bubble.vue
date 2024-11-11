@@ -7,7 +7,7 @@
       />
       <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
-    <div
+    <!-- <div
       class="bg-white w-[56px] h-[56px] rounded-tl rounded-r-2xl rounded-b-2xl items-center justify-center ml-4"
       v-if="
         messageStore.isLoading &&
@@ -27,8 +27,7 @@
           class="w-1 h-1 ml-[4px] mt-[26px] rounded-full bg-gray-600 animate-pulse"
         ></div>
       </div>
-    </div>
-    -->
+    </div> -->
     <div>
       <!-- <div
         v-if="
