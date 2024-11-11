@@ -70,6 +70,7 @@
       ">
       Đoạn chat mới
     </button> -->
+    <div>{{ existTime }}</div>
     <button
       class="flex-auto border-2 border-l-[#FE592A] border-b-[#FE592A] border-r-[#E93013] border-t-[#E93013] bg-gradient-to-r from-[#FE592A] to-[#E93013] text-white text-sm sm:text-md rounded-lg"
       v-if="existTime !== null" @click="handleContinueChatting">

@@ -42,11 +42,11 @@
         v-if="Array.isArray(props.urls)" v-for="(item, index) in props.urls" >
         <a :href="item" target="_blank" class="underline">{{ item }}</a>
       </div> -->
-      <div v-if="Array.isArray(props.contents)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
+      <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
         @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
         class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4">
         <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
-          v-for="(item, index) in props.contents">
+          v-for="(item, index) in props.urls">
           <div>
             <div>
               <a :href="item.link" target="_blank">
@@ -205,24 +205,10 @@ function Dislike() {
   reviewStore.saveID(props.chatID, props.userID);
 }
 
-// const newVal = ref([])
-
-// watch(props.message, (newVal) => {
-//   if (newVal.length > 0) {
-//     flag.value = true;  // Cập nhật flag thành true khi displayMessage có nội dung
-//   }
-// });
 watchEffect(() => {
   flag.value = props.message.length !== 3;
 });
 
-// watch(() => props.message.length, (newLength) => {
-//   if (newLength === 3) {
-//     flag.value = false;
-//   } else {
-//     flag.value = true;
-//   }
-// });
 watch(
   () => props.message,
   async (newMessage) => {
