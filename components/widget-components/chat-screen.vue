@@ -92,7 +92,7 @@ const onMessageChange = debounce(() => {
     top: container.scrollHeight,
     behavior: 'smooth'
   });
-}, 200);
+}, 100);
 
 watch(() => scrollTime.value, (v) => {
   onMessageChange()
