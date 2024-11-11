@@ -1,6 +1,6 @@
 <template class="relative">
   <div>
-    <div class="flex items-center ml-4">
+    <div class="flex items-center ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
       <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
       <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
@@ -25,7 +25,7 @@
         ></div>
       </div>
     </div> -->
-    <div class="w-full mr-4">
+    <div class="w-full mr-4 ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
       <!-- <div
         v-if="
           (displayMessage && receiveMessage.length >= 1) ||
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div v-else
-        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-[338px] sm:w-[420px] lg:w-[338px] xl:w[338px] ml-4">
+        class="bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md mb-2 h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[480px] lg:w-[480px] xl:w-[338px]">
         <div v-html="displayMessage[0]"></div>
       </div>
       <!-- <div class="bg-white rounded-tl-sm rounded-r-lg rounded-b-lg text-md mb-2 h-fit p-4 text-base"
@@ -52,7 +52,7 @@
       </div> -->
       <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
         @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
-        class="flex movieList cursor-pointer overflow-x-scroll mb-2 ml-4 ">
+        class="flex movieList cursor-pointer overflow-x-scroll mb-2 ">
         <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] "
           v-for="(item, index) in props.urls">
           <div>
@@ -94,8 +94,8 @@
           </div>
         </div>
       </div>
-      <span class="flex flex-row justify-between flex-wrap h-fit max-w-[100vw] ml-4">
-        <p class="text-xs text-gray-400 ml-4" v-if="props.timeStamp !== 'NaN ngày trước'">
+      <span class="flex flex-row justify-between flex-wrap h-fit max-w-[100vw]">
+        <p class="text-xs text-gray-400" v-if="props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp }}
         </p>
         <div v-if="

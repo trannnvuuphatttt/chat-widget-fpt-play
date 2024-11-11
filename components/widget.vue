@@ -37,15 +37,15 @@
             <button
               class="flex-auto p-2 border-2 border-orange-500 text-white bg-orange-500 w-[163px] h-[40px] rounded-md hover:text-orange-500 hover:bg-white"
               v-if="messageStore.userComment !== ''" @click="() => {
-                  modalStore.toggleModal();
-                  messageStore.messageEvaluate(
-                    false,
+                modalStore.toggleModal();
+                messageStore.messageEvaluate(
+                  false,
 
-                    reviewStore.chatID,
-                    reviewStore.userID,
-                  );
-                  snackBarStore.showSnackbar();
-                }
+                  reviewStore.chatID,
+                  reviewStore.userID,
+                );
+                snackBarStore.showSnackbar();
+              }
                 ">
               Gửi yêu cầu
             </button>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] right-[20%] bg-[#48DF60] p-4 rounded-[12px] text-white zIndex w-[245px]"
+        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] sm:left-[40%]  right-[20%] sm:right-[40%] bg-[#48DF60] p-4 rounded-[12px] text-white zIndex w-[245px] items-center justify-center"
         v-if="snackBarStore.snackBarVisible" id="snackbar" :class="snackBarStore.snackBarClass">
         <img class="flex-shrink-0 flex-grow-0" src="/assets/images/review_snackbar_icon.png" />
         <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>

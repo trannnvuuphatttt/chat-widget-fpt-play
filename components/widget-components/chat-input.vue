@@ -1,6 +1,6 @@
 <template>
   <!-- Input Container for Chatting -->
-  <div class="flex flex-row shadow-md w-full h-[72px] sm:h-[80px] gap-2 py-2 px-4 sm:px-6 items-center"
+  <div class="flex flex-row shadow-2xl w-full h-[72px] sm:h-[80px] gap-2 py-2 px-4 sm:px-6 items-center"
     v-if="modalStore.isChatting">
     <input type="text" ref="inputField"
       class="bg-gray-200 flex-auto rounded-lg text-[16px] focus:outline-none h-[40px] p-4 caret-[#FF6500]"

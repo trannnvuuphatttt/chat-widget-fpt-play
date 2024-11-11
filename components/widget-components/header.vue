@@ -1,20 +1,12 @@
 <template>
-  <div
-    id="chat-header"
-    class="w-full h-[96px] flex flex-row items-center shadow-sm relative mx-auto px-4 py-3 bg-white"
-  >
+  <div id="chat-header"
+    class="w-full h-[96px] flex flex-row items-center relative mx-auto px-4 py-3 bg-white shadow-2xl">
     <!-- Avatar and Online Indicator -->
     <div class="flex items-center gap-3">
       <div id="avatar" class="relative">
-        <img
-          src="assets/images/avatar.png"
-          placeholder="avatar"
-          class="w-[48px] h-[48px] rounded-full"
-        />
+        <img src="assets/images/avatar.png" placeholder="avatar" class="w-[48px] h-[48px] rounded-full" />
         <!-- Online Status Indicator -->
-        <div
-          class="w-[12px] h-[12px] border-2 border-white rounded-full bg-[#00FF38] absolute bottom-0 right-0"
-        ></div>
+        <div class="w-[12px] h-[12px] border-2 border-white rounded-full bg-[#00FF38] absolute bottom-0 right-0"></div>
       </div>
 
       <!-- Status Text -->
