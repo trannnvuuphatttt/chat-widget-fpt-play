@@ -20,22 +20,22 @@ export default function useInactivity(timeoutDuration = 60000) {
   };
 
   const setupInactivityListener = () => {
-    window.addEventListener('mousemove', resetTimeout);
-    window.addEventListener('keydown', resetTimeout);
-    window.addEventListener('click', resetTimeout);
-    window.addEventListener('scroll', resetTimeout);
+    // window.addEventListener('mousemove', resetTimeout);
+    // window.addEventListener('keydown', resetTimeout);
+    // window.addEventListener('click', resetTimeout);
+    // window.addEventListener('scroll', resetTimeout);
   };
 
   const removeInactivityListener = () => {
-    window.removeEventListener('mousemove', resetTimeout);
-    window.removeEventListener('keydown', resetTimeout);
-    window.removeEventListener('click', resetTimeout);
-    window.removeEventListener('scroll', resetTimeout);
+    // window.removeEventListener('mousemove', resetTimeout);
+    // window.removeEventListener('keydown', resetTimeout);
+    // window.removeEventListener('click', resetTimeout);
+    // window.removeEventListener('scroll', resetTimeout);
   };
 
   onMounted(() => {
-    resetTimeout();
-    setupInactivityListener();
+    // resetTimeout();
+    // setupInactivityListener();
   });
 
   onUnmounted(() => {
