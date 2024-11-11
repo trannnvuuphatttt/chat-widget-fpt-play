@@ -1,18 +1,41 @@
 <template>
-  <div ref="chatScreen" class="bg-gray-200 overflow-y-auto flex flex-col relative items-center pb-4"
-    @scroll="handleScroll()">
-    <div v-for="(message, key, index) in messageStore.newMessageArray" :key="key" class="w-full mt-[24px]">
-      <userChatBubble :message="message.userMessage" :timeStamp="timeAgo(String(message.timestamp))"
-        v-if="message.userMessage !== ''" />
-      <botChatBubble :message="message.botMessage" :timeStamp="timeAgo(String(message.timestamp))"
-        :chatID="message.chatID" :userID="UserIDStore.userID" :flag="isLastElement(key)" :videos="message.videos"
-        :images="message.images" :contents="message.contents" :urls="message.urls" class="botMessage"
-        v-if="message.botMessage[0] !== ''" />
+  <div
+    ref="chatScreen"
+    class="bg-gray-200 overflow-y-auto flex flex-col relative items-center pb-4"
+    @scroll="handleScroll()"
+  >
+    <div
+      v-for="(message, key, index) in messageStore.newMessageArray"
+      :key="key"
+      class="w-full mt-[24px]"
+    >
+      <userChatBubble
+        :message="message.userMessage"
+        :timeStamp="timeAgo(String(message.timestamp))"
+        v-if="message.userMessage !== ''"
+      />
+      <botChatBubble
+        :message="message.botMessage"
+        :timeStamp="timeAgo(String(message.timestamp))"
+        :chatID="message.chatID"
+        :userID="UserIDStore.userID"
+        :flag="isLastElement(key)"
+        :videos="message.videos"
+        :images="message.images"
+        :contents="message.contents"
+        :urls="message.urls"
+        class="botMessage"
+        v-if="message.botMessage[0] !== ''"
+      />
     </div>
-
+    <div v-if="isWaitingSocket || isLoading" class="w-full mt-[24px]">
+      <LoadingMessage />
+    </div>
     <div
       class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center bg-[rgba(148, 148, 148, 0.4)] cursor-pointer"
-      v-if="showScrollDownButton" @click="scrollToBottom(), toggleScrollButton()">
+      v-if="showScrollDownButton"
+      @click="scrollToBottom(), toggleScrollButton()"
+    >
       <img src="/assets/images/chevron.png" />
     </div>
   </div>
@@ -24,11 +47,10 @@ import userChatBubble from "./chat-bubble-components/user-chat-bubble.vue";
 import { useMessage } from "../../stores/messages";
 import { useUserIDStore } from "~/stores/userID";
 import { useFormatDateTime } from "~/composables/useFormatDateTime";
-import { useScrollStore } from "~/stores/scroll";
 import { nextTick, onMounted } from "vue";
 import { useModalStore } from "~/stores/modal";
-import ChatSuggestion from "./chat-suggestion.vue";
 import { watch } from 'vue';
+import LoadingMessage from "./loading-message.vue";
 
 const UserIDStore = useUserIDStore()
 const modalStore = useModalStore()
@@ -36,6 +58,7 @@ const modalStore = useModalStore()
 const messageStore = useMessage();
 const { timeAgo } = useFormatDateTime()
 const showScrollDownButton = ref(false)
+const {isWaitingSocket,isLoading} = storeToRefs(messageStore)
 
 const chatScreen = ref(null);
 const toggleScrollButton = () => {
