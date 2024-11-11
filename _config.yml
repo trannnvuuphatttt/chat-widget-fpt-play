@@ -1,0 +1,44 @@
+# _config.yml
+
+# Site settings
+title: 'My Jekyll Site'
+description: 'A simple Jekyll site hosted on GitHub Pages.'
+author: 'FPT Play'
+email: tranvuphato@gmail.com
+url: 'https://github.com/trannnvuuphatttt/chat-widget-fpt-play'
+
+# GitHub Pages theme
+theme: minima
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed # Adds RSS feed
+  - jekyll-seo-tag # Adds SEO tags
+
+# Defaults (optional, but can help structure content)
+defaults:
+  - scope:
+      path: ''
+      type: 'posts'
+    values:
+      layout: 'post'
+      author: 'Your Name'
+
+# Permalinks (optional)
+permalink: /:categories/:title/
+
+# Exclude (optional - prevents these folders from being processed by Jekyll)
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - README.md
+  - .git
+  - .github
+
+# Optional social links (for theme configuration)
+twitter_username: yourtwitterusername
+github_username: yourgithubusername
+linkedin_username: yourlinkedinusername
