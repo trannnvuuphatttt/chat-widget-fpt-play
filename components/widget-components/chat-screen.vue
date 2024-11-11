@@ -58,7 +58,7 @@ const modalStore = useModalStore()
 const messageStore = useMessage();
 const { timeAgo } = useFormatDateTime()
 const showScrollDownButton = ref(false)
-const {isWaitingSocket,isLoading} = storeToRefs(messageStore)
+const {isWaitingSocket, scrollTime} = storeToRefs(messageStore)
 
 const chatScreen = ref(null);
 const toggleScrollButton = () => {
@@ -67,15 +67,36 @@ const toggleScrollButton = () => {
 const scrollToBottom = () => {
   const container = chatScreen.value;
   nextTick(() => {
-
     setTimeout(() => {
       container.scrollTo({
         top: container.scrollHeight,
         behavior: 'smooth'
       });
-    }, 0);
+    }, 200);
   })
 };
+
+function debounce(func, wait) {
+  let timeout;
+
+  return function(...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+}
+
+const onMessageChange = debounce(() => {
+  const container = chatScreen.value;
+  container.scrollTo({
+    top: container.scrollHeight,
+    behavior: 'smooth'
+  });
+}, 200);
+
+watch(() => scrollTime.value, (v) => {
+  onMessageChange()
+})
 
 const scrollToBottomWhenImagesLoaded = () => {
   const container = chatScreen.value;
@@ -108,7 +129,6 @@ const scrollToBottomWhenImagesLoaded = () => {
 
 const handleScroll = () => {
   const container = chatScreen.value;
-
   if (container.scrollTop < container.scrollHeight - container.clientHeight - 81) {
     showScrollDownButton.value = true
   } else {
