@@ -85,12 +85,12 @@ export const useMessage = defineStore('message', {
             const lastMassage = {
               ...this.newMessageArray[this.newMessageArray.length - 1],
             };
-
             const parsed = JSON.parse(event.data);
             // console.log('--- SOCKET: ', parsed);
 
             if (parsed) {
               const type = parsed?.type;
+              // console.log('parsed?.msg :>> ', parsed?.msg);
               // create-tạo mới/update-cập nhật/endAnswer-chatbot kết thúc câu trả lời
               let socketText = (lastMassage?.botMessage || [])[0];
               if (type === 'create') {
@@ -154,7 +154,7 @@ export const useMessage = defineStore('message', {
           {
             query: inputData,
             profile_id: pfID,
-            session_uuid: ssID,
+            session_uuid: pfID,
             to_ws: true,
           },
           {
@@ -241,7 +241,7 @@ export const useMessage = defineStore('message', {
               limit: 10,
               offset: 0,
               profile_id: pID,
-              session_uuid: userID,
+              session_uuid: pID,
             },
             {
               headers: {
