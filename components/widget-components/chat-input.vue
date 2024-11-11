@@ -139,7 +139,7 @@ const handleSendMessage = () => {
 
   const pID = token || userIDStore.userID
 
-  messageStore.sendRequest(messageStore.userInput, pID, userIDStore.userID)
+  messageStore.sendRequest(messageStore.userInput, pID, pID)
   modalStore.toggleSuggestion()
 }
 
