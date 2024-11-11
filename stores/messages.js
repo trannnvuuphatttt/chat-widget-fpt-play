@@ -52,6 +52,7 @@ export const useMessage = defineStore('message', {
     apiData: [],
     inputData: '',
     socketInstance: null,
+    scrollTime: null,
   }),
   actions: {
     async handleSocket() {
@@ -113,6 +114,8 @@ export const useMessage = defineStore('message', {
               if (parsed?.type === 'endAnswer') {
                 ws.close();
               }
+
+              this.scrollTime = new Date().getTime();
             }
           };
 

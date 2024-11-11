@@ -8,10 +8,10 @@
       <div class="text-sm inline-block mb-2 ml-1">FPT Play AI Support</div>
     </div>
     <div
-      class="bg-white w-[56px] h-[56px] rounded-tl rounded-r-2xl rounded-b-2xl items-center justify-center ml-4"
+      class="bg-white w-[56px] h-[56px] rounded-tl rounded-r-2xl rounded-b-2xl items-center ml-4"
     >
-      <div class="flex flex-row ml-[6px] h-[56px] w-full">
-        <div class="flex items-center gap-[4px] w-full">
+      <div class="flex flex-row h-[56px] w-full">
+        <div class="flex items-center justify-center gap-[4px] w-full">
           <div class="dot"></div>
           <div class="dot"></div>
           <div class="dot"></div>

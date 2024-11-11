@@ -307,9 +307,6 @@ watch(
   { immediate: true }
 );
 
-watch(() => props.message, (value) => {
-  console.log({ value })
-})
 
 const loaderControllerData = () => {
   messageStore.loaderController();
