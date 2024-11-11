@@ -191,7 +191,8 @@ export const useMessage = defineStore('message', {
         this.userInput = '';
       } catch (error) {
         console.error('sendRequest - Lỗi khi gọi API:', error);
-        this.isError = true; 
+        this.isError = true;
+        this.isWaitingSocket = false;
       } finally {
         this.isLoading = false;
       }
