@@ -6,7 +6,7 @@
       <div class="text-sm inline-block mb-2 ml-1">Gati</div>
     </div>
     <div class="w-full">
-      <div v-if="props?.message?.length" class="flex flex-col gap-[8px]">
+      <div v-if="props?.message?.length" class="flex flex-col">
         <div v-for="(message, index) in props?.message">
           <!-- {{ message }} -->
           <ClientOnly>
@@ -15,12 +15,12 @@
         </div>
       </div>
       <div v-else
-        class="flex flex-col gap-[8px] bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
+        class="flex flex-col bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
         <div ref="messageContainer" v-html="displayMessage[0]"></div>
       </div>
       <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
         @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
-        class="flex movieList cursor-pointer overflow-x-scroll mt-[8px]">
+        class="flex movieList cursor-pointer overflow-x-scroll">
         <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
           v-for="(item, index) in props.urls">
 
