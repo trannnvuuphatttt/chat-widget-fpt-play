@@ -145,6 +145,12 @@ export const useMessage = defineStore('message', {
       this.userInput = '';
       this.isWaitingSocket = true;
       this.handleSocket();
+      const mobileToken = localStorage.getItem('MOBILE_TOKEN');
+      const channelId = localStorage.getItem('chatSession');
+      if (!channelId) {
+        return;
+      }
+      const parsed = JSON.parse(channelId);
 
       try {
         const response = await axios.post(
@@ -153,9 +159,10 @@ export const useMessage = defineStore('message', {
           }/api/v7.1_w/bigdata/hermes/v1/bot/messages/add`,
           {
             query: inputData,
-            profile_id: pfID,
-            session_uuid: pfID,
+            profile_id: parsed?.value || '',
+            session_uuid: parsed?.value || '',
             to_ws: true,
+            mobile_token: mobileToken,
           },
           {
             headers: {
@@ -231,6 +238,12 @@ export const useMessage = defineStore('message', {
     },
 
     async getChatHistory(pID, userID) {
+      const channelId = localStorage.getItem('chatSession');
+      if (!channelId) {
+        return;
+      }
+      const mobileToken = localStorage.getItem('MOBILE_TOKEN');
+      const parsed = JSON.parse(channelId);
       if (this.historyData.length === 0) {
         try {
           const chatHistory = await axios.put(
@@ -240,8 +253,9 @@ export const useMessage = defineStore('message', {
             {
               limit: 10,
               offset: 0,
-              profile_id: pID,
-              session_uuid: pID,
+              profile_id: parsed?.value,
+              session_uuid: parsed?.value,
+              mobile_token: mobileToken,
             },
             {
               headers: {
@@ -280,6 +294,13 @@ export const useMessage = defineStore('message', {
     },
 
     async messageEvaluate(evaluate, botMessageID, userID) {
+      const channelId = localStorage.getItem('chatSession');
+      if (!channelId) {
+        return;
+      }
+      const parsed = JSON.parse(channelId);
+      const mobileToken = localStorage.getItem('MOBILE_TOKEN');
+
       try {
         await axios.put(
           `${
@@ -288,8 +309,9 @@ export const useMessage = defineStore('message', {
           {
             is_liked: evaluate,
             comment: this.userComment,
-            profile_id: userID,
-            session_uuid: userID,
+            profile_id: parsed?.value,
+            session_uuid: parsed?.value,
+            mobile_token: mobileToken,
           },
           {
             headers: {
