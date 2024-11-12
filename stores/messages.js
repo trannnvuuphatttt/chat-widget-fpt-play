@@ -349,10 +349,10 @@ export const useMessage = defineStore('message', {
     },
 
     loaderController() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 2000);
+      // this.isLoading = true;
+      // setTimeout(() => {
+      //   this.isLoading = false;
+      // }, 2000);
     },
   },
 });
