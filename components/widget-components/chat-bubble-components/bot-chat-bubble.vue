@@ -3,11 +3,11 @@
     <div class="flex items-center">
       <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
 
-      <div class="text-sm inline-block mb-2 ml-1">Gati</div>
+      <div class="text-sm inline-block mb-2 ml-1">Trợ lý Gati</div>
     </div>
     <div class="w-full">
-      <div v-if="props?.message?.length" class="flex flex-col">
-        <div v-for="(message, index) in props?.message">
+      <div v-if="props?.message?.length">
+        <div v-for="(message, index) in props?.message" class="mb-2">
           <!-- {{ message }} -->
           <ClientOnly>
             <BubbleMessage ref="messageContainer" :message="message" :key="index"></BubbleMessage>
@@ -15,20 +15,18 @@
         </div>
       </div>
       <div v-else
-        class="flex flex-col bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
+        class="flex flex-col mb-2 bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
         <div ref="messageContainer" v-html="displayMessage[0]"></div>
       </div>
       <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
         @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
         class="flex movieList cursor-pointer overflow-x-scroll">
-        <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
+        <div class="inline-block bg-white mr-1 rounded-lg flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
           v-for="(item, index) in props.urls">
-
-          <div>
+          <a :href="item.link" target="_blank" class="select-none" @mousedown.prevent>
             <div>
-              <a :href="item.link" target="_blank">
-                <img :src="item.icon" class="object-cover h-[145px] sm:h-[136px] w-[256px] rounded-t-lg" />
-              </a>
+              <div :style="{ backgroundImage: `url(${item.icon})` }"
+                class="select-none bg-cover bg-center h-[145px] sm:h-[136px] w-[256px] rounded-t-lg"></div>
             </div>
             <div class="w-[256px] h-[52px] pt-2 pr-4 pb-2 pl-4 gap-1">
               <h1
@@ -60,10 +58,10 @@
                 <span v-if="item.country">{{ item.country }}</span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
-      <span :class="['flex flex-row justify-between flex-wrap h-fit mt-[8px]', widthClass]">
+      <span :class="['flex flex-row justify-between flex-wrap h-fit mt-2', widthClass]">
         <p class="text-xs text-[12px] text-gray-400 font-sf-pro-display"
           v-if="props.getLastTimeStamp && props.getLastTimeStamp !== 'NaN ngày trước' && props.timeStamp && props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp === 'Vừa xong' && !props.chatID

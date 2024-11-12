@@ -11,7 +11,7 @@
 
       <!-- Status Text -->
       <div id="status" class="flex flex-col">
-        <h3 class="font-semibold text-[16px] sm:text-[20px]">Gati</h3>
+        <h3 class="font-semibold text-[16px] sm:text-[20px]">Trợ lý Gati</h3>
         <h2 class="text-sm text-gray-500">Chúng tôi sẵn sàng hỗ trợ bạn!</h2>
       </div>
     </div>
