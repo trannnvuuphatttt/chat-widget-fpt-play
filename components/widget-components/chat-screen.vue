@@ -1,49 +1,22 @@
 <template>
-  <div
-    ref="chatScreen"
-    class="bg-gray-200 overflow-y-auto flex flex-col relative items-center pb-4"
-    @scroll="handleScroll()"
-  >
-    <div
-      v-for="(message, key) in messageStore.newMessageArray"
-      :key="key"
-      class="w-full mt-[24px]"
-    >
-      <userChatBubble
-        :message="message.userMessage"
-        :timeStamp="timeAgo(String(message.timestamp))"
-        :is-final="key === messageStore.newMessageArray.length - 1"
-        v-if="message.userMessage !== ''"
-      />
-      <botChatBubble
-        :message="message.botMessage"
-        :timeStamp="timeAgo(String(message.timestamp))"
-        :chatID="message.chatID"
-        :userID="UserIDStore.userID"
-        :flag="isLastElement(key)"
-        :videos="message.videos"
-        :images="message.images"
-        :contents="message.contents"
-        :urls="message.urls"
-        :isFullWidth="
-          message.urls && Array.isArray(message.urls) ? true : false
-        "
-        :listChat="messageStore.newMessageArray"
-        class="botMessage"
-        v-if="message.botMessage[0] !== ''"
-      />
+  <div ref="chatScreen" class="bg-customBackground overflow-y-auto flex flex-col relative items-center pb-4"
+    @scroll="handleScroll()">
+    <div v-for="(message, key, index) in messageStore.newMessageArray" :key="key" class="w-full mt-[24px]">
+      <userChatBubble :message="message.userMessage" :timeStamp="timeAgo(String(message.timestamp))"
+        v-if="message.userMessage !== ''" />
+      <botChatBubble :message="message.botMessage" :timeStamp="timeAgo(String(message.timestamp))"
+        :chatID="message.chatID" :userID="UserIDStore.userID" :flag="isLastElement(key)" :videos="message.videos"
+        :images="message.images" :contents="message.contents" :urls="message.urls"
+        :isFullWidth="message.urls && Array.isArray(message.urls) ? true : false"
+        :listChat="messageStore.newMessageArray" :getLastTimeStamp="getLastTimeStamp().formattedTimestamp"
+        class="botMessage" v-if="message.botMessage[0] !== ''" />
     </div>
-    <div
-      v-if="isWaitingSocket || isLoading"
-      class="w-full mt-[24px] ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]"
-    >
+    <div v-if="isWaitingSocket" class="w-full mt-[24px]">
       <LoadingMessage />
     </div>
     <div
       class="bottom-0 sticky w-[40px] h-[40px] ml-6 mb-6 z-50 rounded-full flex justify-center items-center bg-[rgba(148, 148, 148, 0.4)] cursor-pointer"
-      v-if="showScrollDownButton"
-      @click="scrollToBottom(), toggleScrollButton()"
-    >
+      v-if="showScrollDownButton" @click="scrollToBottom(), toggleScrollButton()">
       <img src="/assets/images/chevron.png" />
     </div>
   </div>
@@ -85,6 +58,25 @@ const scrollToBottom = () => {
       });
     }, 200);
   })
+};
+
+const getLastTimeStamp = () => {
+  // Get the last item from the array
+  const lastItem = messageStore.newMessageArray[1] && messageStore.newMessageArray[1].userMessage !== ''
+    ? messageStore.newMessageArray[1]
+    : (messageStore.newMessageArray[2] && messageStore.newMessageArray[2].userMessage !== '')
+      ? messageStore.newMessageArray[2]
+      : messageStore.newMessageArray[messageStore.newMessageArray.length - 1];
+
+  // Check if lastItem and timestamp exist, otherwise set a default message
+  const formattedTimestamp = lastItem && lastItem.timestamp
+    ? timeAgo(String(lastItem.timestamp))
+    : null
+
+  // Return an array with an object containing timestampHistory
+  return {
+    formattedTimestamp
+  }
 };
 
 function debounce(func, wait) {

@@ -19,6 +19,12 @@ module.exports = {
       fontFamily: {
         'sf-pro-display': ['"SF Pro Display"', 'sans-serif'],
       },
+      colors: {
+        customDark: '#121212',
+        customWhite: '#F7F7F7',
+        customBackground: '#EFEFEF',
+        customRed: '#FF090D',
+      },
     },
     screens: {
       sm: '640px', // mobile

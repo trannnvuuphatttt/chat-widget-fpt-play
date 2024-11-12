@@ -1,28 +1,16 @@
 <template>
   <div>
     <!-- Trường hợp có lỗi -->
-    <div
-      class="flex flex-col gap-[8px]"
-      v-if="messageStore.isError && props.isFinal"
-    >
+    <div class="flex flex-col pr-[16px] sm:pr-[24px] lg:pr-[24px] xl:pr-[16px]" v-if="messageStore.isError">
       <div class="flex flex-row justify-end items-center gap-[8px]">
-        <img
-          src="/assets/images/Frame_2120412613.png"
-          class="flex-grow-0 flex-shrink-0 w-[24px] h-[24px]"
-        />
+        <img src="/assets/images/Frame_2120412613.png" class="flex-grow-0 flex-shrink-0 w-[24px] h-[24px]" />
         <div
-          class="flex-0 w-fit max-h-[53px] gap-[8px] border-[#FF0944] border-[1px] bg-white p-4 rounded-l-lg rounded-b-lg break-words max-w-full sm:max-w-[338px]"
-        >
-          <p class="text-[#121212] text-right">{{ message }}</p>
+          class="rounded-tl-2xl rounded-tr rounded-l-2xl rounded-b-2xl text-md mb-2 h-fit text-[16px] p-4 break-words font-sf-pro-display border border-customRed">
+          <p class="text-customDark text-left">{{ message }}</p>
         </div>
       </div>
-      <span
-        class="flex flex-row-reverse justify-between flex-wrap h-fit flex-grow-0 flex-1"
-      >
-        <p
-          class="text-[12px] text-right text-[#FF0944] mr-2 cursor-pointer"
-          @click="retryFunction"
-        >
+      <span class="flex flex-row-reverse justify-between flex-wrap h-fit flex-grow-0 flex-1">
+        <p class="text-[12px] text-right text-customRed mr-2 cursor-pointer" @click="retryFunction">
           Thử lại
         </p>
       </span>
@@ -30,21 +18,14 @@
 
     <!-- Trường hợp không có lỗi -->
     <div
-      class="text-md mb-2 h-fit ml-auto py-4 pl-4 w-fit sm:w-fix lg:w-fix xl:w-fit max-w-[342px] sm:max-w-[480px] md:max-w-[338px] lg:max-w-[338px] mr-[16px] sm:mr-[24px] lg:mr-[24px] xl:mr-[16px]"
-      v-else
-    >
+      class="text-left text-md mb-2 h-fit ml-auto py-4 pl-4 w-fit sm:w-fix lg:w-fix xl:w-fit max-w-[342px] sm:max-w-[480px] md:max-w-[338px] lg:max-w-[338px] pr-[16px] sm:pr-[24px] lg:pr-[24px] xl:pr-[16px]"
+      v-else>
       <div
-        class="bg-orange-500 rounded-tl-2xl rounded-tr rounded-l-2xl rounded-b-2xl text-md mb-2 h-fit text-[16px] p-4 break-words font-sf-pro-display"
-      >
-        <p class="text-white text-right">{{ message }}</p>
+        class="bg-orange-500 rounded-tl-2xl rounded-tr rounded-l-2xl rounded-b-2xl text-md mb-2 h-fit text-[16px] p-4 break-words font-sf-pro-display">
+        <p class="text-white text-customWhite">{{ message }}</p>
       </div>
-      <span
-        class="flex flex-row-reverse justify-between flex-wrap h-fit font-sf-pro-display"
-      >
-        <p
-          class="text-[12px] text-gray-400 text-left"
-          v-if="props.timeStamp !== 'NaN ngày trước'"
-        >
+      <span class="flex flex-row-reverse justify-between flex-wrap h-fit font-sf-pro-display">
+        <p class="text-[12px] text-gray-400 text-left" v-if="props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp }}
         </p>
       </span>

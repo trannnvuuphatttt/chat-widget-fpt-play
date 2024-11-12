@@ -1,14 +1,9 @@
 <template>
-  <div
-    v-if="suggestQuestions?.length"
-    ref="scrollContainer"
-    class="container flex flex-nowrap justify-start overflow-x-auto cursor-grab items-center bg-gray-200 no-scrollbar"
-  >
+  <div v-if="suggestQuestions?.length" ref="scrollContainer"
+    class="container flex flex-nowrap justify-start overflow-x-auto cursor-grab items-center bg-customBackground no-scrollbar">
     <div
       class="text-orange-500 font-md bg-white border-2 border-orange-500 rounded-xl w-fit px-2 cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500 mr-2"
-      v-for="(item, index) in suggestQuestions"
-      :key="index"
-    >
+      v-for="(item, index) in suggestQuestions" :key="index">
       <button class="" @click="handleClick(item)">
         <span v-html="item" />
       </button>
@@ -17,11 +12,11 @@
 </template>
 
 <script lang="js" setup>
-import { ref, onMounted , onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useMessage } from '../../stores/messages';
 import { useChatStore } from '../../stores/chat';
 const chatStore = useChatStore()
-const {suggestQuestions} = storeToRefs(chatStore)
+const { suggestQuestions } = storeToRefs(chatStore)
 
 const scrollContainer = ref(null);
 const messageStore = useMessage()
