@@ -1,7 +1,16 @@
-import { joinChatRoom } from '@/src/api/chat';
+import { getSuggestTexts, joinChatRoom } from '@/src/api/chat';
 import { defineStore } from 'pinia';
 
 export const useChatStore = defineStore('chat-store', () => {
+  const suggestQuestions = ref();
+  const handleGetSuggestQuestions = async () => {
+    try {
+      const res = await getSuggestTexts();
+      if (res?.data) {
+        suggestQuestions.value = res?.data;
+      }
+    } catch (error) {}
+  };
   const handleJoinChatRoom = async () => {
     if (localStorage.getItem('chatSession')) {
       try {
@@ -16,5 +25,5 @@ export const useChatStore = defineStore('chat-store', () => {
       return { success: false };
     }
   };
-  return { handleJoinChatRoom };
+  return { handleJoinChatRoom, suggestQuestions, handleGetSuggestQuestions };
 });
