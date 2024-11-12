@@ -5,7 +5,7 @@
       v-show="modalStore.showWidget && userIDStore.userID !== null" v-if="!isInactive">
       <Header v-if="!isMobileQueryParams" class="flex-shrink-0 flex-grow-0" />
       <ChatScreen class="flex-auto bg-customBackground" />
-      <chatSuggestion class="flex-grow-0 pl-6 pb-2" v-show="modalStore.isSuggestion" />
+      <chatSuggestion v-show="modalStore.isSuggestion" />
       <ChatInput class="flex-shrink-0 flex-grow-0" :isMobileOrTablet="isMobileOrTablet" />
 
       <div v-show="modalStore.showModal"
