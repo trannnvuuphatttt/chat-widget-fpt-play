@@ -15,13 +15,14 @@
         </div>
       </div>
       <div v-else
-        class="flex flex-col mb-2 bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
+        class="flex flex-col g-[8px] bg-white rounded-tl rounded-r-2xl rounded-b-2xl text-md h-fit p-4 text-base font-sf-pro-display w-fit sm:w-[420px] md:w-[480px] lg:w-[338px] xl:w-[338px]">
         <div ref="messageContainer" v-html="displayMessage[0]"></div>
       </div>
       <div v-if="Array.isArray(props.urls)" ref="scrollContainer" @mousedown="startDragging" @mousemove="onDragging"
         @mouseup="stopDragging" @mouseleave="stopDragging" :key="index"
         class="flex movieList cursor-pointer overflow-x-scroll">
-        <div class="inline-block bg-white mr-1 rounded-lg flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
+        <div
+          class="inline-block bg-white mr-2 rounded-lg flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px] mb-2"
           v-for="(item, index) in props.urls">
           <a :href="item.link" target="_blank" class="select-none" @mousedown.prevent>
             <div>
@@ -61,7 +62,7 @@
           </a>
         </div>
       </div>
-      <span :class="['flex flex-row justify-between flex-wrap h-fit mt-2', widthClass]">
+      <span :class="['flex flex-row justify-between flex-wrap h-fit', widthClass]">
         <p class="text-xs text-[12px] text-gray-400 font-sf-pro-display"
           v-if="props.getLastTimeStamp && props.getLastTimeStamp !== 'NaN ngày trước' && props.timeStamp && props.timeStamp !== 'NaN ngày trước'">
           {{ props.timeStamp === 'Vừa xong' && !props.chatID
