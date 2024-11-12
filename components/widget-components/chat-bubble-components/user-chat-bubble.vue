@@ -41,6 +41,7 @@ const messageStore = useMessage();
 const props = defineProps({
   message: String,
   timeStamp: String,
+  isFinal: Boolean
 });
 
 // Thêm hàm retryFunction nếu cần

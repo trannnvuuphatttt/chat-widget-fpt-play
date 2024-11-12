@@ -2,13 +2,16 @@
   <div class="pl-[16px] sm:pl-[24px] lg:pl-[24px] xl:pl-[16px]">
     <div class="flex items-center">
       <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
+
       <div class="text-sm inline-block mb-2 ml-1">Gati</div>
     </div>
     <div class="w-full">
       <div v-if="props?.message?.length" class="flex flex-col gap-[8px]">
         <div v-for="(message, index) in props?.message">
           <!-- {{ message }} -->
-          <BubbleMessage ref="messageContainer" :message="message" :key="index"></BubbleMessage>
+          <ClientOnly>
+            <BubbleMessage ref="messageContainer" :message="message" :key="index"></BubbleMessage>
+          </ClientOnly>
         </div>
       </div>
       <div v-else
@@ -20,6 +23,7 @@
         class="flex movieList cursor-pointer overflow-x-scroll mt-[8px]">
         <div class="inline-block bg-white rounded-lg m-1 flex-shrink-0 select-none h-[199px] sm:h-[188px] w-[256px]"
           v-for="(item, index) in props.urls">
+
           <div>
             <div>
               <a :href="item.link" target="_blank">
