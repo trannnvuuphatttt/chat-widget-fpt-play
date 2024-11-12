@@ -1,13 +1,39 @@
+<template>
+  <div
+    v-if="suggestQuestions?.length"
+    ref="scrollContainer"
+    class="container flex flex-nowrap justify-start overflow-x-auto cursor-grab items-center bg-gray-200 no-scrollbar"
+  >
+    <div
+      class="text-orange-500 font-md bg-white border-2 border-orange-500 rounded-xl w-fit px-2 cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500 mr-2"
+      v-for="(item, index) in suggestQuestions"
+      :key="index"
+    >
+      <button class="" @click="handleClick(item)">
+        <span v-html="item" />
+      </button>
+    </div>
+  </div>
+</template>
+
 <script lang="js" setup>
 import { ref, onMounted , onBeforeUnmount } from 'vue';
 import { useMessage } from '../../stores/messages';
-import { useFocusStore } from '~/stores/useFocusStore';
+import { useChatStore } from '../../stores/chat';
+const chatStore = useChatStore()
+const {suggestQuestions} = storeToRefs(chatStore)
 
 const scrollContainer = ref(null);
-const focusStore = useFocusStore();
+const messageStore = useMessage()
 
+const handleClick = (dataItem) => {
+  if (dataItem) {
+    messageStore.sendRequest(dataItem, '', '')
+  }
+}
 
 onMounted(() => {
+  chatStore.handleGetSuggestQuestions()
   const container = document.querySelector(".container");
   if (container) {
     let isDown = false;
@@ -61,49 +87,4 @@ onMounted(() => {
     });
   }
 });
-
-const messageStore = useMessage()
-const Lists = [
-  {
-
-    content: "Anime",
-  },
-  {
-    content: "Hoa ngữ",
-  },
-  {
-    content: "Âu Mỹ",
-  },
-  {
-    content: "Hoạt hình",
-  },
-  {
-    content: "Giáo dục",
-  },
-  {
-    content: "Ca nhạc",
-  },
-];
-
-const handleClick = (dataItem) => {
-  messageStore.setInput(dataItem)
-  focusStore.focusInput(); // This will focus the input field
-}
 </script>
-
-<template>
-  <div
-    ref="scrollContainer"
-    class="container flex flex-nowrap justify-start overflow-x-auto cursor-grab items-center bg-gray-200 no-scrollbar"
-  >
-    <div
-      class="text-orange-500 font-md bg-white border-2 border-orange-500 rounded-xl w-fit px-2 cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500 mr-2"
-      v-for="item in Lists"
-      :key="item.content"
-    >
-      <button class="" @click="handleClick(item.content)">
-        {{ item.content }}
-      </button>
-    </div>
-  </div>
-</template>
