@@ -66,7 +66,10 @@ const modalStore = useModalStore()
 const messageStore = useMessage();
 const { timeAgo } = useFormatDateTime()
 const showScrollDownButton = ref(false)
-const { isWaitingSocket, scrollTime, isLoading } = storeToRefs(messageStore)
+const { isWaitingSocket, scrollTime, isLoading, newMessageArray } = storeToRefs(messageStore)
+
+const scrollTimeout1 = ref()
+const scrollTimeout2 = ref()
 
 const chatScreen = ref(null);
 const toggleScrollButton = () => {
@@ -75,7 +78,7 @@ const toggleScrollButton = () => {
 const scrollToBottom = () => {
   const container = chatScreen.value;
   nextTick(() => {
-    setTimeout(() => {
+    scrollTimeout1.value = setTimeout(() => {
       container.scrollTo({
         top: container.scrollHeight,
         behavior: 'smooth'
@@ -103,7 +106,15 @@ const onMessageChange = debounce(() => {
 }, 100);
 
 watch(() => scrollTime.value, (v) => {
-  onMessageChange()
+  // onMessageChange()
+})
+
+watch(() => newMessageArray.value, () => {
+  nextTick(() => {
+    scrollTimeout2.value = setTimeout(() => {
+      onMessageChange()
+    }, 500);
+  })
 })
 
 const scrollToBottomWhenImagesLoaded = () => {
@@ -148,6 +159,8 @@ onBeforeUnmount(() => {
   if (chatScreen.value) {
     chatScreen.value.removeEventListener('scroll', handleScroll);
   }
+  clearTimeout(scrollTimeout1.value)
+  clearTimeout(scrollTimeout2.value)
 });
 watch(
   () => modalStore.showWidget,
