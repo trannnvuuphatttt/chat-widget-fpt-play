@@ -53,7 +53,7 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] sm:left-[40%]  right-[20%] sm:right-[40%] bg-[#48DF60] p-4 rounded-[12px] text-white zIndex w-[245px] items-center justify-center"
+        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] sm:left-[40%]  right-[20%] sm:right-[40%] bg-[#48DF60] p-4 rounded-[12px] text-white zIndex w-[245px] bg-opacity-60 items-center justify-center"
         v-if="snackBarStore.snackBarVisible" id="snackbar" :class="snackBarStore.snackBarClass">
         <img class="flex-shrink-0 flex-grow-0" src="/assets/images/review_snackbar_icon.png" />
         <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
