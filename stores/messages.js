@@ -203,6 +203,9 @@ export const useMessage = defineStore('message', {
         console.error('sendRequest - Lỗi khi gọi API:', error);
         this.isError = true;
         this.isWaitingSocket = false;
+        if (this.socketInstance?.close) {
+          this.socketInstance.close();
+        }
       } finally {
         this.isLoading = false;
       }

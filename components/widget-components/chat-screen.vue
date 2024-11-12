@@ -5,13 +5,14 @@
     @scroll="handleScroll()"
   >
     <div
-      v-for="(message, key, index) in messageStore.newMessageArray"
+      v-for="(message, key) in messageStore.newMessageArray"
       :key="key"
       class="w-full mt-[24px]"
     >
       <userChatBubble
         :message="message.userMessage"
         :timeStamp="timeAgo(String(message.timestamp))"
+        :is-final="key === messageStore.newMessageArray.length - 1"
         v-if="message.userMessage !== ''"
       />
       <botChatBubble
