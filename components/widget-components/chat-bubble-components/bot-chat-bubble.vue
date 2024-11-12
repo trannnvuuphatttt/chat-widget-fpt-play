@@ -1,5 +1,5 @@
 <template class="relative">
-  <div class="p-[16px]">
+  <div>
     <div class="flex items-center ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
       <img src="assets/images/avatar.png" class="h-6 w-6 inline-block mb-2 mr-1" />
       <div class="text-sm inline-block mb-2 ml-1">Gati</div>
