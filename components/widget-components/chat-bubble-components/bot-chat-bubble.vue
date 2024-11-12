@@ -238,55 +238,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Giảm kích thước font chữ cho màn hình dưới 400px */
-@media (max-width: 400px) {
-  .text-base {
-    font-size: 14px;
-    /* Điều chỉnh theo nhu cầu */
-  }
-
-  .text-sm {
-    font-size: 12px;
-  }
-
-  .text-md {
-    font-size: 13px;
-  }
-
-  .text-xs {
-    font-size: 12px;
-  }
-
-  .h-6 {
-    height: 20px;
-  }
-
-  .w-6 {
-    width: 20px;
-  }
-
-  .h-14 {
-    height: auto;
-    /* Điều chỉnh nếu cần */
-  }
-
-  .p-4 {
-    padding: 12px;
-  }
-
-  .w-4 {
-    width: 16px;
-  }
-
-  .h-4 {
-    height: 16px;
-  }
-
-  .mb-2 {
-    margin-bottom: 8px;
-  }
-}
-
 .movieList {
   display: flex;
   overflow-x: scroll;
