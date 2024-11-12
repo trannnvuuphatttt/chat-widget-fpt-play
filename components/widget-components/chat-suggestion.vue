@@ -63,7 +63,9 @@ const setupScrollEvents = () => {
 
   const handleScroll = (evt) => {
     evt.preventDefault();
-    container.scrollLeft += evt.deltaY;
+    if (evt.deltaX > 0) {
+      container.scrollLeft += evt.deltaX;
+    }
   };
 
   container.addEventListener('wheel', handleScroll);
