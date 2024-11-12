@@ -1,24 +1,24 @@
 <template>
   <div class="">
     <div
-      class="widget-container max-h-[100vh] max-w-[100vw] bg-white z-40 fixed widget-container rounded-lg flex flex-col overflow-hidden shadow-lg w-full xl:w-[400px] h-full xl:h-[668px] right-0 xl:right-[60px] bottom-0 xl:bottom-[60px]"
+      class="widget-container max-h-[100vh] max-w-[100vw] bg-white z-40 fixed rounded-lg flex flex-col shadow-lg w-full xl:w-[400px] h-full xl:h-[668px] right-0 xl:right-[60px] bottom-0 xl:bottom-[60px]"
       v-show="modalStore.showWidget && userIDStore.userID !== null" v-if="!isInactive">
       <Header v-if="!isMobileQueryParams" class="flex-shrink-0 flex-grow-0" />
-      <ChatScreen class="flex-auto" />
+      <ChatScreen class="flex-auto bg-customBackground" />
       <chatSuggestion class="flex-grow-0 pl-6 pb-2" v-show="modalStore.isSuggestion" />
       <ChatInput class="flex-shrink-0 flex-grow-0" :isMobileOrTablet="isMobileOrTablet" />
 
       <div v-show="modalStore.showModal"
         class="z-50 bg-black rounded-lg w-full h-full p-2 bg-opacity-60 flex absolute items-center justify-center top-0 left-0">
         <div
-          class="bg-white rounded-lg p-4 w-[336px] sm:w-[420px] lg:w-[420px] xl:w[338px] h-[231px] sm:h-[228px] m-4 flex flex-col gap-2">
+          class="bg-white rounded-lg p-4 w-[334px] sm:w-[420px] lg:w-[336px] xl:w[336px] h-[231px] sm:h-[228px] m-4 flex flex-col gap-2">
           <div class="flex-initial flex flex-col gap-2">
             <h1 class="font-sf-pro-display text-lg text-center font-semibold tracking-wider leading-[23.4px]">
               Câu trả lời chưa tốt với bạn?
             </h1>
 
             <textarea name="message" rows="10" cols="30"
-              class="rounded-lg shadow-dm w-[304px] sm:w-[388px] lg:w-[388px] xl:w[336px] h-[104px] p-2 border-2 border-gray-200 my-2 focus:outline-none text-[16px]"
+              class="rounded-lg shadow-dm w-[302px] sm:w-[388px] lg:w-[304px] xl:w[304px] h-[104px] p-2 border-2 border-gray-200 my-2 focus:outline-none text-[16px]"
               placeholder="Bạn hãy cho biết lý do câu trả lời chưa tốt và nên được cải thiện như thế nào?"
               v-model="messageStore.userComment"></textarea>
           </div>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div
-        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] sm:left-[40%]  right-[20%] sm:right-[40%] bg-[#48DF60] p-4 rounded-[12px] zIndex w-[245px] items-center justify-center"
+        class="flex flex-row gap-2 absolute bottom-[120px] left-[20%] sm:left-[40%] lg:left-[40%] xl:left-[20%] right-[20%] sm:right-[40%] lg:right-[40%] xl:right-[20%] bg-[#48DF60] p-4 rounded-[12px] text-white zIndex w-[245px] items-center justify-center"
         v-if="snackBarStore.snackBarVisible" id="snackbar" :class="snackBarStore.snackBarClass">
         <img class="flex-shrink-0 flex-grow-0" src="/assets/images/review_snackbar_icon.png" />
         <p class="flex-shrink-0 flex-grow-0">{{ snackBarStore.message }}</p>
@@ -82,16 +82,16 @@
     <div class="flex flex-col items-center gap-[16px]">
       <img src="/assets/images/avatar.png" class="w-[84px] h-[84px] sm:w-[104px] sm:h-[104px] text-center" />
       <p class="font-sf-pro-display text-[16px] text-center leading-[20.8px] tracking-custom font-normal">
-        Xin chào! chúng tôi sẵn sàng hỗ trợ bạn.
+        Xin chào! chúng tôi sẵn sàng hỗ trợ bạn
       </p>
     </div>
 
     <!-- Start Chat button aligned to the bottom -->
     <button @click="() => userIDStore.createNewID()"
-      class="w-[352px] h-[45px] px-6 py-0 rounded-lg border-2 opacity-100 bg-gradient-to-r from-[#FE592A] bg-[#E93013] text-white border-l-2 border-b-2 border-r-[#E93013] border-t-[#E93013] shadow-md flex items-center justify-center">
+      class="w-[352px] h-[45px] px-6 py-0 rounded-lg border-2 opacity-100 bg-gradient-to-r from-[#FE592A] bg-[#E93013] text-white shadow-md flex items-center justify-center">
       <p
         class="font-sf-pro-display text-[90%] sm:text-[16px] text-center flex-auto leading-[20.8px] tracking-custom font-normal">
-        Bắt đầu trò chuyện.
+        Bắt đầu trò chuyện
       </p>
     </button>
   </div>

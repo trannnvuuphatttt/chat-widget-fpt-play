@@ -1,5 +1,5 @@
 <template>
-  <div ref="chatScreen" class="bg-gray-200 overflow-y-auto flex flex-col relative items-center pb-4"
+  <div ref="chatScreen" class="bg-customBackground overflow-y-auto flex flex-col relative items-center pb-4"
     @scroll="handleScroll()">
     <div v-for="(message, key, index) in messageStore.newMessageArray" :key="key" class="w-full mt-[24px]">
       <userChatBubble :message="message.userMessage" :timeStamp="timeAgo(String(message.timestamp))"
@@ -8,9 +8,10 @@
         :chatID="message.chatID" :userID="UserIDStore.userID" :flag="isLastElement(key)" :videos="message.videos"
         :images="message.images" :contents="message.contents" :urls="message.urls"
         :isFullWidth="message.urls && Array.isArray(message.urls) ? true : false"
-        :listChat="messageStore.newMessageArray" class="botMessage" v-if="message.botMessage[0] !== ''" />
+        :listChat="messageStore.newMessageArray" :getLastTimeStamp="getLastTimeStamp().formattedTimestamp"
+        class="botMessage" v-if="message.botMessage[0] !== ''" />
     </div>
-    <div v-if="isWaitingSocket" class="w-full mt-[24px] ml-[16px] sm:ml-[24px] lg:ml-[24px] xl:ml-[16px]">
+    <div v-if="isWaitingSocket" class="w-full mt-[24px]">
       <LoadingMessage />
     </div>
     <div
@@ -54,6 +55,25 @@ const scrollToBottom = () => {
       });
     }, 200);
   })
+};
+
+const getLastTimeStamp = () => {
+  // Get the last item from the array
+  const lastItem = messageStore.newMessageArray[1] && messageStore.newMessageArray[1].userMessage !== ''
+    ? messageStore.newMessageArray[1]
+    : (messageStore.newMessageArray[2] && messageStore.newMessageArray[2].userMessage !== '')
+      ? messageStore.newMessageArray[2]
+      : messageStore.newMessageArray[messageStore.newMessageArray.length - 1];
+
+  // Check if lastItem and timestamp exist, otherwise set a default message
+  const formattedTimestamp = lastItem && lastItem.timestamp
+    ? timeAgo(String(lastItem.timestamp))
+    : null
+
+  // Return an array with an object containing timestampHistory
+  return {
+    formattedTimestamp
+  }
 };
 
 function debounce(func, wait) {

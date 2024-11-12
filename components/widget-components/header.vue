@@ -1,5 +1,6 @@
 <template>
-  <div id="chat-header" class="w-full h-[96px] flex flex-row items-center shadow-2xl relative mx-auto px-4 py-3">
+  <div id="chat-header"
+    class="w-full h-[96px] flex flex-row items-center justify-between shadow-2xl relative mx-auto pr-[16px] sm:pr-[24px] lg:pr-[24px] xl:pr-[16px] pl-[16px] sm:pl-[24px] lg:pl-[24px] xl:pl-[16px] py-3">
     <!-- Avatar and Online Indicator -->
     <div class="flex items-center gap-3">
       <div id="avatar" class="relative">
@@ -16,7 +17,7 @@
     </div>
 
     <!-- Close Button -->
-    <div id="closeButton" class="absolute top-4 right-4 sm:static sm:ml-auto">
+    <div id="closeButton">
       <button @click="modalStore.closeWidget" class="w-6 h-6">
         <img src="/assets/images/Icon.png" class="w-[12px] h-[12px]" />
       </button>
