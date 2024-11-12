@@ -1,6 +1,6 @@
 <template>
   <div v-show="suggestQuestions?.length" ref="scrollContainer"
-    class="container flex flex-nowrap justify-start overflow-x-auto cursor-grab items-center max-w-[100vw] bg-customBackground no-scrollbar p-[16px] sm:p-[24px] lg:p-[24px] xl:p-[16px]">
+    class="container flex flex-nowrap justify-start overflow-x-auto overflow-y-hidden cursor-grab items-center max-w-[100vw] bg-customBackground no-scrollbar p-[16px] sm:p-[24px] lg:p-[24px] xl:p-[16px]">
     <div v-for="(item, index) in suggestQuestions" :key="index"
       class="text-orange-500 font-medium bg-white border border-orange-500 rounded-full w-fit cursor-pointer whitespace-nowrap select-none h-fit hover:text-white hover:bg-orange-500 mr-2">
       <button class="px-3 py-1" @click="handleClick(item)">
@@ -63,7 +63,9 @@ const setupScrollEvents = () => {
 
   const handleScroll = (evt) => {
     evt.preventDefault();
-    container.scrollLeft += evt.deltaY;
+    if (evt.deltaX > 0) {
+      container.scrollLeft += evt.deltaX;
+    }
   };
 
   container.addEventListener('wheel', handleScroll);
