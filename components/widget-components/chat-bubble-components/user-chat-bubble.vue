@@ -18,7 +18,7 @@
 
     <!-- Trường hợp không có lỗi -->
     <div
-      class="text-left text-md mb-2 h-fit ml-auto py-4 pl-4 w-fit sm:w-fix lg:w-fix xl:w-fit max-w-[342px] sm:max-w-[480px] md:max-w-[338px] lg:max-w-[338px] pr-[16px] sm:pr-[24px] lg:pr-[24px] xl:pr-[16px]"
+      class="text-left text-md mb-2 h-fit ml-auto py-4 pl-4 w-fit sm:w-fix lg:w-fix xl:w-fit max-w-[342px] sm:max-w-[480px] lg:max-w-[338px] xl:max-w-[338px] pr-[16px] sm:pr-[24px] lg:pr-[24px] xl:pr-[16px]"
       v-else>
       <div
         class="bg-orange-500 rounded-tl-2xl rounded-tr rounded-l-2xl rounded-b-2xl text-md mb-2 h-fit text-[16px] p-4 break-words font-sf-pro-display">
