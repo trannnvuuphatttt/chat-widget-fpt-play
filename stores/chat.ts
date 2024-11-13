@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 
 export const useChatStore = defineStore('chat-store', () => {
   const suggestQuestions = ref();
+  const showSuggestions = ref(true);
   const handleGetSuggestQuestions = async () => {
     try {
       const res = await getSuggestTexts();
@@ -25,5 +26,10 @@ export const useChatStore = defineStore('chat-store', () => {
       return { success: false };
     }
   };
-  return { handleJoinChatRoom, suggestQuestions, handleGetSuggestQuestions };
+  return {
+    showSuggestions,
+    suggestQuestions,
+    handleJoinChatRoom,
+    handleGetSuggestQuestions,
+  };
 });
