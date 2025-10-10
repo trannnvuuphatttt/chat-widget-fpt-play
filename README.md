@@ -1,2 +1,2 @@
-# chat-widget-fpt-play
+# chat-widget
 Hello mọi người
